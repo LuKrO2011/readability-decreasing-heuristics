@@ -20,12 +20,7 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
 
     @Override
     protected void refactorNoCheck() {
-        getTarget().map(new VariableReferenceFunction()).forEach(new CtConsumer<CtReference>() {
-            @Override
-            public void accept(CtReference t) {
-                t.setSimpleName(newName);
-            }
-        });
+        getTarget().map(new VariableReferenceFunction()).forEach((CtConsumer<CtReference>) t -> t.setSimpleName(newName));
         target.setSimpleName(newName);
     }
 }
