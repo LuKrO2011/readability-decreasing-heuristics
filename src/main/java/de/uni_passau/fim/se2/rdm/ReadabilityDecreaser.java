@@ -1,11 +1,20 @@
 package de.uni_passau.fim.se2.rdm;
 
+import de.uni_passau.fim.se2.rdm.printer.RdcJavaPrettyPrinter;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
+import spoon.reflect.visitor.PrettyPrinter;
+import spoon.reflect.visitor.RDJavaPrettyPrinter;
 import spoon.support.gui.SpoonModelTree;
+import spoon.support.modelobs.ActionBasedChangeListenerImpl;
+import spoon.support.modelobs.ChangeCollector;
+import spoon.support.modelobs.FineModelChangeListener;
+import spoon.support.modelobs.SourceFragmentCreator;
+import spoon.support.sniper.SniperJavaPrettyPrinter;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ReadabilityDecreaser {
 
@@ -38,6 +47,24 @@ public class ReadabilityDecreaser {
         this.methodRenamer = new MethodRenamer(spoon);
         this.allRenamer = new AllRenamer(spoon);
         this.fieldRenamer = new FieldRenamer(spoon);
+
+        setupSpoon();
+    }
+
+    private void setupSpoon() {
+        Environment env = spoon.getEnvironment();
+
+        // Imports and comment settings
+        env.setAutoImports(true);
+        env.setCommentEnabled(true);
+
+        PrettyPrinter prettyPrinter = new RdcJavaPrettyPrinter(env);
+
+        // Sniper keeps structure of original and replaces only changes
+        env.setPrettyPrinterCreator(() -> prettyPrinter);
+
+        // where to write
+        spoon.setSourceOutputDirectory(outputDir.getAbsolutePath());
     }
 
     public static void checkFiles(File... files) {
@@ -84,17 +111,6 @@ public class ReadabilityDecreaser {
     }
 
     public void writeOutput() {
-        Environment env = spoon.getEnvironment();
-
-        // replace FQN with imports and short names
-        env.setAutoImports(true);
-
-        // remove comments
-        env.setCommentEnabled(false);
-
-        // where to write
-        spoon.setSourceOutputDirectory(outputDir.getAbsolutePath());
-
         // check if the output directory exists
         checkFile(outputDir);
 
@@ -120,6 +136,23 @@ public class ReadabilityDecreaser {
     public void display() {
         // Get a graphical overview, constructing is enough
         SpoonModelTree tree = new SpoonModelTree(spoon.getFactory());
+    }
+
+    public void runSniperJavaPrettyPrinter() {
+        final Launcher launcher = new Launcher();
+        final Environment e = launcher.getEnvironment();
+        e.setLevel("INFO");
+
+        new ChangeCollector().attachTo(e);
+
+        ChangeCollector x = ChangeCollector.getChangeCollector(e);
+
+        e.setPrettyPrinterCreator(() -> new RdcJavaPrettyPrinter(e));
+
+        launcher.addInputResource(inputDir.getAbsolutePath());
+        launcher.setSourceOutputDirectory(outputDir.getAbsolutePath());
+
+        launcher.run();
     }
 
 }
