@@ -9,6 +9,7 @@ public class RenameManager {
         new VariableRenamer()
                 .readClasses()
                 .renameVariable()
+                .renameMethod()
                 .writeTransformedClasses();
     }
 }
