@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdm.old;
+package de.uni_passau.fim.se2.rdm;
 
 import spoon.Launcher;
 import spoon.SpoonAPI;

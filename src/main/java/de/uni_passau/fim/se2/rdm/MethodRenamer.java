@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdm.old;
+package de.uni_passau.fim.se2.rdm;
 
 import spoon.SpoonAPI;
 import spoon.reflect.declaration.CtMethod;
@@ -6,6 +6,7 @@ import spoon.reflect.declaration.CtType;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class MethodRenamer {
@@ -29,15 +30,15 @@ public class MethodRenamer {
 
         // Return if there are no method declarations
         if (allMethods.isEmpty()) {
-            // log...
             return;
         }
 
-        // Get the first method declaration
-        CtMethod<?> firstMethod = allMethods.iterator().next();
-
-        // Set the name of the first method to "foo"
-        firstMethod.setSimpleName("UPDATED_METHOD_NAME");
+        // Rename all methods to m0 ... mN
+        Iterator<CtMethod<?>> iterator = allMethods.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            CtMethod<?> method = iterator.next();
+            method.setSimpleName("m" + i);
+        }
     }
 
 
