@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdm;
 
+import com.sun.jdi.Method;
 import de.uni_passau.fim.se2.rdm.printer.RdcJavaPrettyPrinter;
 import de.uni_passau.fim.se2.rdm.printer.RdcPrintHelper;
 import spoon.Launcher;
@@ -30,6 +31,7 @@ public class ReadabilityDecreaser {
 
     private final SpoonAPI spoon;
     private final FieldRenamer fieldRenamer;
+    private final MethodInliner methodInliner;
 
     public ReadabilityDecreaser(String inputDirPath) {
         this(inputDirPath, DEFAULT_OUTPUT_DIR);
@@ -47,6 +49,7 @@ public class ReadabilityDecreaser {
         this.methodRenamer = new MethodRenamer(spoon);
         this.allRenamer = new AllRenamer(spoon);
         this.fieldRenamer = new FieldRenamer(spoon);
+        this.methodInliner = new MethodInliner(spoon);
 
         setupSpoon();
     }
@@ -127,9 +130,10 @@ public class ReadabilityDecreaser {
 
     public void process() {
         readInput();
-        fieldRenamer.rename();
-        localVariableRenamer.rename();
-        methodRenamer.rename();
+        methodInliner.inline();
+        //fieldRenamer.rename();
+        //localVariableRenamer.rename();
+        //methodRenamer.rename();
         writeOutput();
     }
 
