@@ -11,7 +11,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import spoon.OutputType;
 import spoon.SpoonException;
 import spoon.compiler.Environment;
+import spoon.reflect.code.CtBlock;
 import spoon.reflect.code.CtComment;
+import spoon.reflect.code.CtStatement;
 import spoon.reflect.cu.CompilationUnit;
 import spoon.reflect.cu.position.NoSourcePosition;
 import spoon.reflect.declaration.CtCompilationUnit;
@@ -21,6 +23,7 @@ import spoon.reflect.declaration.CtType;
 import spoon.reflect.path.CtRole;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrettyPrinter;
+import spoon.reflect.visitor.RdcTokenWriter;
 import spoon.reflect.visitor.TokenWriter;
 import spoon.support.Experimental;
 import spoon.support.comparator.CtLineElementComparator;
@@ -33,29 +36,30 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * {@link PrettyPrinter} implementation, which copies as much as possible from the origin sources
- * and tries to only print the changed elements.
+ * The goal of this pretty printer is to reduce readability of the code.
  */
-@Experimental
 public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter implements TokenWriterProxy.Listener {
 
     private final MutableTokenWriter mutableTokenWriter;
     private ChangeResolver changeResolver;
     private final Deque<SourceFragmentPrinter> sourceFragmentContextStack = new ArrayDeque<>();
 
-    /**
-     * Creates a new {@link PrettyPrinter} which copies origin sources and prints only changes.
-     */
+    private TokenWriter printer;
+
     public RdcJavaPrettyPrinter(Environment env) {
         super(env);
+
         inlineElseIf = false;
+
         // required for sniper mode
         env.useTabulations(true);
         env.setCommentEnabled(true);
         env.setOutputType(OutputType.COMPILATION_UNITS);
-        //create a TokenWriter which can be configured to ignore tokens coming from DJPP
+
+        // create a TokenWriter which can be configured to ignore tokens coming from DJPP
         mutableTokenWriter = new MutableTokenWriter(env);
-        //wrap that TokenWriter to listen on all incoming events and set wrapped version to DJPP
+
+        // wrap that TokenWriter to listen on all incoming events and set wrapped version to DJPP
         setPrinterTokenWriter(createTokenWriterListener(mutableTokenWriter));
 
         // newly added elements are not fully qualified
@@ -63,6 +67,40 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter implements To
 
         // don't print redundant parentheses
         this.setMinimizeRoundBrackets(true);
+
+        this.printer = new RdcTokenWriter();
+    }
+
+    @Override
+    public <R> void visitCtBlock(CtBlock<R> block) {
+        enterCtStatement(block);
+        if (!block.isImplicit()) {
+            printer.writeSeparator("{");
+        }
+        printer.incTab();
+        for (CtStatement statement : block.getStatements()) {
+            if (!statement.isImplicit()) {
+                printer.writeln();
+                printer.writeln();
+                printer.writeln();
+                printer.writeln();
+                printer.writeln();
+                super.visitCtBlock(block);
+            }
+        }
+        printer.decTab();
+        // getPrinterHelper().adjustEndPosition(block);
+        if (env.isPreserveLineNumbers()) {
+            if (!block.isImplicit()) {
+                printer.writeSeparator("}");
+            }
+        } else {
+            printer.writeln();
+            if (!block.isImplicit()) {
+                printer.writeSeparator("}");
+            }
+        }
+        exitCtStatement(block);
     }
 
     /**
@@ -72,8 +110,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter implements To
         ChangeCollector changeCollector = ChangeCollector.getChangeCollector(env);
         if (changeCollector == null) {
             throw new SpoonException(ChangeCollector.class.getSimpleName() + " was not attached to the Environment. "
-                    + "This typically means that the Sniper printer was set after building the model. "
-                    + "It must be set before building the model.");
+                    + "Please attach a change collector using 'new ChangeCollector().attachTo(env)' before buildModel()");
         }
         return changeCollector;
     }

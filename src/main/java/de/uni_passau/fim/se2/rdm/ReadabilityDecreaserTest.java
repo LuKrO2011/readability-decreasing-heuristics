@@ -5,9 +5,7 @@ class ReadabilityDecreaserTest {
 
     public static void main(String[] args) {
         ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser("input");
-        //readabilityDecreaser.process();
-
-        readabilityDecreaser.runSniperJavaPrettyPrinter();
+        readabilityDecreaser.process();
     }
 
 

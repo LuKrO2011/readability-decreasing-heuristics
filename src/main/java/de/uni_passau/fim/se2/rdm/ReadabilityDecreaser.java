@@ -4,8 +4,10 @@ import de.uni_passau.fim.se2.rdm.printer.RdcJavaPrettyPrinter;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
+import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrettyPrinter;
 import spoon.reflect.visitor.RDJavaPrettyPrinter;
+import spoon.reflect.visitor.RdcTokenWriter;
 import spoon.support.gui.SpoonModelTree;
 import spoon.support.modelobs.ActionBasedChangeListenerImpl;
 import spoon.support.modelobs.ChangeCollector;
@@ -58,7 +60,12 @@ public class ReadabilityDecreaser {
         env.setAutoImports(true);
         env.setCommentEnabled(true);
 
-        PrettyPrinter prettyPrinter = new RdcJavaPrettyPrinter(env);
+        // Add a change listener that is needed for RdcJavaPrettyPrinter
+        // new ChangeCollector().attachTo(env);
+
+        // Create own prittyprinter
+        DefaultJavaPrettyPrinter prettyPrinter = new DefaultJavaPrettyPrinter(env);
+        prettyPrinter.setPrinterTokenWriter(new RdcTokenWriter());
 
         // Sniper keeps structure of original and replaces only changes
         env.setPrettyPrinterCreator(() -> prettyPrinter);
@@ -137,22 +144,4 @@ public class ReadabilityDecreaser {
         // Get a graphical overview, constructing is enough
         SpoonModelTree tree = new SpoonModelTree(spoon.getFactory());
     }
-
-    public void runSniperJavaPrettyPrinter() {
-        final Launcher launcher = new Launcher();
-        final Environment e = launcher.getEnvironment();
-        e.setLevel("INFO");
-
-        new ChangeCollector().attachTo(e);
-
-        ChangeCollector x = ChangeCollector.getChangeCollector(e);
-
-        e.setPrettyPrinterCreator(() -> new RdcJavaPrettyPrinter(e));
-
-        launcher.addInputResource(inputDir.getAbsolutePath());
-        launcher.setSourceOutputDirectory(outputDir.getAbsolutePath());
-
-        launcher.run();
-    }
-
 }
