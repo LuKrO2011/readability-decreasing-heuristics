@@ -13,6 +13,8 @@ public class MethodRenamer {
 
     private final SpoonAPI spoon;
 
+    // TODO: DOES NOT RENAME ALL OCCURRENCES OF METHODS BUT ONLY THE DECLARATIONS
+
     // private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
     public MethodRenamer(SpoonAPI spoon) {

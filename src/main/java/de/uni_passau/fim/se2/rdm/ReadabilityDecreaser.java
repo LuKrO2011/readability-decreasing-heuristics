@@ -13,13 +13,14 @@ public class ReadabilityDecreaser {
     private final File inputDir; // TODO: Make getter and setter
     private final File outputDir; // TODO: Make getter and setter
 
-    private final VariableRenamer variableRenamer;
+    private final LocalVariableRenamer localVariableRenamer;
     private final MethodRenamer methodRenamer;
     private final AllRenamer allRenamer;
 
     // private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
     private final SpoonAPI spoon;
+    private final FieldRenamer fieldRenamer;
 
     public ReadabilityDecreaser(String inputDirPath) {
         this(inputDirPath, DEFAULT_OUTPUT_DIR);
@@ -33,9 +34,10 @@ public class ReadabilityDecreaser {
 
         this.spoon = new Launcher();
 
-        this.variableRenamer = new VariableRenamer(spoon);
+        this.localVariableRenamer = new LocalVariableRenamer(spoon);
         this.methodRenamer = new MethodRenamer(spoon);
         this.allRenamer = new AllRenamer(spoon);
+        this.fieldRenamer = new FieldRenamer(spoon);
     }
 
     public static void checkFiles(File... files) {
@@ -102,7 +104,9 @@ public class ReadabilityDecreaser {
 
     public void process() {
         readInput();
-        allRenamer.rename();
+        fieldRenamer.rename();
+        localVariableRenamer.rename();
+        methodRenamer.rename();
         writeOutput();
     }
 
