@@ -9,12 +9,16 @@ import java.util.List;
 
 @Data
 public class RdcProbabilities {
-    private double doubleNewLine = 0.3;
-    private double noNewLine = 0.1;
+    private double doubleNewLine = 0.2;
+    private double noNewLine = 0.2;
 
+    // TODO: Distinguish inctab and dectab
     private double doubleTab = 0.1;
-    private double noTab = 0.3;
+    private double noTab = 0.1;
 
     private double doubleSpace = 0.2;
     private double noSpace = 0.2;
+
+    private double newLineInsteadOfSpace = 0.2;
+    private double spaceInsteadOfNewline = 0.2;
 }

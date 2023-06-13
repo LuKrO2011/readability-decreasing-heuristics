@@ -70,6 +70,14 @@ public class RdcTokenWriter implements TokenWriter {
             return this;
         }
 
+        if (random.nextDouble() < probabilities.getNoNewLine()) {
+            return this;
+        }
+
+        if (random.nextDouble() < probabilities.getSpaceInsteadOfNewline()) {
+            printerHelper.writeSpace();
+            return this;
+        }
 
         printerHelper.writeln();
         return this;
@@ -112,13 +120,18 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public TokenWriter writeSpace() {
-        if(random.nextDouble() < probabilities.getDoubleSpace()) {
+        if (random.nextDouble() < probabilities.getDoubleSpace()) {
             printerHelper.writeSpace();
             printerHelper.writeSpace();
             return this;
         }
 
-        if(random.nextDouble() < probabilities.getNoSpace()) {
+        if (random.nextDouble() < probabilities.getNoSpace()) {
+            return this;
+        }
+
+        if (random.nextDouble() < probabilities.getNewLineInsteadOfSpace()) {
+            printerHelper.writeln();
             return this;
         }
 
