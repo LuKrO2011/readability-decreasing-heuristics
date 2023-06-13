@@ -1,17 +1,24 @@
 package spoon.reflect.visitor;
 
+import de.uni_passau.fim.se2.rdm.printer.RdcProbabilities;
 import spoon.reflect.code.CtComment;
+
+import java.util.Random;
 
 public class RdcTokenWriter implements TokenWriter {
 
+    private final Random random = new Random();
+
     private final PrinterHelper printerHelper;
+    private final RdcProbabilities probabilities;
 
     public RdcTokenWriter() {
-        this.printerHelper = new PrinterHelper();
+        this(new PrinterHelper());
     }
 
     public RdcTokenWriter(PrinterHelper printerHelper) {
         this.printerHelper = printerHelper;
+        this.probabilities = new RdcProbabilities();
     }
 
     @Override
@@ -58,21 +65,45 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter writeln() {
-        printerHelper.writeln();
-        printerHelper.writeln();
-        printerHelper.writeln();
+        if (random.nextDouble() < probabilities.getDoubleNewLine()) {
+            printerHelper.writeln().writeln();
+            return this;
+        }
+
+        if (random.nextDouble() < probabilities.getNoNewLine()) {
+            return this;
+        }
+
         printerHelper.writeln();
         return this;
     }
 
     @Override
     public RdcTokenWriter incTab() {
+        if (random.nextDouble() < probabilities.getDoubleTab()) {
+            printerHelper.incTab().incTab();
+            return this;
+        }
+
+        if (random.nextDouble() < probabilities.getNoTab()) {
+            return this;
+        }
+
         printerHelper.incTab();
         return this;
     }
 
     @Override
     public RdcTokenWriter decTab() {
+        if (random.nextDouble() < probabilities.getDoubleTab()) {
+            printerHelper.decTab().decTab();
+            return this;
+        }
+
+        if (random.nextDouble() < probabilities.getNoTab()) {
+            return this;
+        }
+
         printerHelper.decTab();
         return this;
     }
@@ -84,6 +115,16 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public TokenWriter writeSpace() {
+        if(random.nextDouble() < probabilities.getDoubleSpace()) {
+            printerHelper.writeSpace();
+            printerHelper.writeSpace();
+            return this;
+        }
+
+        if(random.nextDouble() < probabilities.getNoSpace()) {
+            return this;
+        }
+
         printerHelper.writeSpace();
         return this;
     }
