@@ -70,9 +70,6 @@ public class RdcTokenWriter implements TokenWriter {
             return this;
         }
 
-        if (random.nextDouble() < probabilities.getNoNewLine()) {
-            return this;
-        }
 
         printerHelper.writeln();
         return this;

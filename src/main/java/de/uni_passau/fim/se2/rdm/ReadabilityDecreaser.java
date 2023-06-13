@@ -127,9 +127,9 @@ public class ReadabilityDecreaser {
 
     public void process() {
         readInput();
-        // fieldRenamer.rename();
-        // localVariableRenamer.rename();
-        // methodRenamer.rename();
+        fieldRenamer.rename();
+        localVariableRenamer.rename();
+        methodRenamer.rename();
         writeOutput();
     }
 
