@@ -69,21 +69,18 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter writeln() {
-        if (random.nextDouble() < probabilities.getDoubleNewLine()) {
-            printerHelper.writeln().writeln();
-            return this;
-        }
 
-        if (random.nextDouble() < probabilities.getNoNewLine()) {
-            return this;
-        }
-
+        // TODO: Adjust this
         if (random.nextDouble() < probabilities.getSpaceInsteadOfNewline()) {
             printerHelper.writeSpace();
             return this;
         }
 
-        printerHelper.writeln();
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
+        for (int i = 0; i < numberOfNewLines; i++) {
+            printerHelper.writeln();
+        }
+
         return this;
     }
 

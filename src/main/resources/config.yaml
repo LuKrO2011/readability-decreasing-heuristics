@@ -1,3 +1,8 @@
+newLine:
+  - 0.2  # Probability for no newline
+  - 0.6  # Probability for one newline
+  - 0.2  # Probability for two newlines
+  - 0.0  # Probability for three newlines
 doubleTab: 0.2
 noTab: 0.2
 doubleSpace: 0.2
