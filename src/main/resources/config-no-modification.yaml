@@ -14,7 +14,3 @@ newLineInsteadOfSpace: 0
 spaceInsteadOfNewline: 0
 incTabInsteadOfDecTab: 0
 decTabInsteadOfIncTab: 0
-renameVariable: 0
-renameField: 0
-renameMethod: 0
-inlineMethod: 0

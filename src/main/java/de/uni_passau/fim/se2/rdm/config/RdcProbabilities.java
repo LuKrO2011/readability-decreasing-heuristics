@@ -11,23 +11,15 @@ public class RdcProbabilities {
 
     private final Random random;
 
-    // Probabilities of changing the number of characters
     private List<Double> newline;
     private List<Double> incTab;
     private List<Double> decTab;
     private List<Double> space;
 
-    // Probabilities of swapping characters with others
     private double newLineInsteadOfSpace;
     private double spaceInsteadOfNewline;
     private double incTabInsteadOfDecTab;
     private double decTabInsteadOfIncTab;
-
-    // Probabilities of refactorings
-    private double renameVariable;
-    private double renameField;
-    private double renameMethod;
-    private double inlineMethod;
 
     public RdcProbabilities() {
         this(new Random());
@@ -76,47 +68,5 @@ public class RdcProbabilities {
                 throw new RuntimeException("Unknown character type");
         }
         return probabilities;
-    }
-
-    public boolean shouldSwap(CharacterType characterType) {
-        double probability = getSwapProbabilityFor(characterType);
-        return random.nextDouble() <= probability;
-    }
-
-    private double getSwapProbabilityFor(CharacterType characterType) {
-        double probability;
-        switch (characterType) {
-            case NEWLINE:
-                probability = newLineInsteadOfSpace;
-                break;
-            case SPACE:
-                probability = spaceInsteadOfNewline;
-                break;
-            case INC_TAB:
-                probability = incTabInsteadOfDecTab;
-                break;
-            case DEC_TAB:
-                probability = decTabInsteadOfIncTab;
-                break;
-            default:
-                throw new RuntimeException("Unknown character type");
-        }
-        return probability;
-    }
-
-    public boolean shouldRenameVariable() {
-        return random.nextDouble() <= renameVariable;
-    }
-
-    public boolean shouldRenameField() {
-        return random.nextDouble() <= renameField;
-    }
-
-    public boolean shouldRenameMethod() {
-        return random.nextDouble() <= renameMethod;
-    }
-
-    public boolean shouldInlineMethod() {
-        return random.nextDouble() <= inlineMethod;
     }
 }
