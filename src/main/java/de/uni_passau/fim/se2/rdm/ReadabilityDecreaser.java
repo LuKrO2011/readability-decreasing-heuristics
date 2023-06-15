@@ -15,6 +15,9 @@ import java.io.File;
 public class ReadabilityDecreaser {
 
   private static final String DEFAULT_OUTPUT_DIR = "output";
+  // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
+  public static final String CONFIG_FILE_NAME = "config.yaml";
+
   private final File inputDir; // TODO: Make getter and setter
   private final File outputDir; // TODO: Make getter and setter
 
@@ -61,7 +64,7 @@ public class ReadabilityDecreaser {
 
     // Load RdcProbabilities from yaml file
     YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
-    RdcProbabilities probabilities = (RdcProbabilities) yamlReaderWriter.load("config.yaml");
+    RdcProbabilities probabilities = (RdcProbabilities) yamlReaderWriter.load(CONFIG_FILE_NAME);
 
     // Create own prittyprinter
     DefaultJavaPrettyPrinter prettyPrinter = new DefaultJavaPrettyPrinter(env);
