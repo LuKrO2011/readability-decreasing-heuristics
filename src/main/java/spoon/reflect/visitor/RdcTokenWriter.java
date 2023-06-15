@@ -68,7 +68,8 @@ public class RdcTokenWriter implements TokenWriter {
 
         // Write spaces instead of a newline
         if (probabilities.shouldSwap(CharacterType.NEWLINE)) {
-            return (RdcTokenWriter) writeSpace();
+            printerHelper.writeSpace();
+            return this;
         }
 
         // Write newlines
@@ -85,7 +86,8 @@ public class RdcTokenWriter implements TokenWriter {
 
         // Dec tab instead of inc tab
         if (probabilities.shouldSwap(CharacterType.INC_TAB)) {
-            return decTab();
+            printerHelper.decTab();
+            return this;
         }
 
         // Inc tabs
@@ -102,7 +104,8 @@ public class RdcTokenWriter implements TokenWriter {
 
         // Inc tab instead of dec tab
         if (probabilities.shouldSwap(CharacterType.DEC_TAB)) {
-            return incTab();
+            printerHelper.incTab();
+            return this;
         }
 
         int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.DEC_TAB);
@@ -123,7 +126,8 @@ public class RdcTokenWriter implements TokenWriter {
 
         // Write newlines instead of space
         if (probabilities.shouldSwap(CharacterType.SPACE)) {
-            return (TokenWriter) printerHelper.writeln();
+            printerHelper.writeln();
+            return this;
         }
 
         // Write spaces
