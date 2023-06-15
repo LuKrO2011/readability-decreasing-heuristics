@@ -17,4 +17,4 @@ decTabInsteadOfIncTab: 0
 renameVariable: 0
 renameField: 0
 renameMethod: 0
-inlineMethod: 0
+inlineMethod: 1

@@ -5,6 +5,7 @@ import de.uni_passau.fim.se2.rdm.refactorings.CtInlineMethodRefactoring;
 import spoon.SpoonAPI;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.code.CtInvocation;
+import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.util.List;
@@ -25,22 +26,22 @@ public class MethodInliner {
         CtInlineMethodRefactoring refactoring = new CtInlineMethodRefactoring();
 
         // Get all method invocations
-        List<CtInvocation<?>> methodInvocations = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtInvocation.class));
+        List<CtMethod<?>> methods = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
-        if (methodInvocations.size() <= 0) {
+        if (methods.size() <= 0) {
             // log....
             return;
         }
 
         // Rename all local variables to vl0 ... vlN
-        for (int i = 0; i < methodInvocations.size(); i++) {
+        for (int i = 0; i < methods.size(); i++) {
             if (!probabilities.shouldInlineMethod()) {
                 continue;
             }
 
-            CtInvocation<?> invocation = methodInvocations.get(i);
+            CtMethod<?> method = methods.get(i);
             try {
-                refactoring.setTarget(invocation);
+                refactoring.setTarget(method);
                 refactoring.refactor();
             } catch (RefactoringException e) {
                 // log...

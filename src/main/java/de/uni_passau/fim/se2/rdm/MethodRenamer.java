@@ -35,15 +35,17 @@ public class MethodRenamer {
 
         // Rename all local variables to vl0 ... vlN
         for (int i = 0; i < methods.size(); i++) {
-            if(probabilities.shouldRenameMethod()){
-                CtMethod<Integer> method = methods.get(i);
-                try {
-                    refactoring.setTarget(method);
-                    refactoring.setNewName("m" + i);
-                    refactoring.refactor();
-                } catch (RefactoringException e) {
-                    // log...
-                }
+            if (!probabilities.shouldRenameMethod()) {
+                continue;
+            }
+
+            CtMethod<Integer> method = methods.get(i);
+            try {
+                refactoring.setTarget(method);
+                refactoring.setNewName("m" + i);
+                refactoring.refactor();
+            } catch (RefactoringException e) {
+                // log...
             }
         }
     }

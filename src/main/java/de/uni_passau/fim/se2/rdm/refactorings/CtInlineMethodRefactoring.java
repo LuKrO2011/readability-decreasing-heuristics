@@ -1,9 +1,8 @@
 package de.uni_passau.fim.se2.rdm.refactorings;
 
+import spoon.SpoonAPI;
 import spoon.refactoring.CtRefactoring;
-import spoon.reflect.code.CtExpression;
 import spoon.reflect.code.CtInvocation;
-import spoon.reflect.code.CtReturn;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
@@ -18,46 +17,52 @@ import java.util.List;
 public class CtInlineMethodRefactoring implements CtRefactoring {
 
     // The target is a method invocation
-    private CtInvocation<?> invocation;
+    private CtMethod<?> target;
 
-    // TODO: Add target to constructor?
+    // TODO: Does not consider variable name clashes
 
-    public CtInvocation<?> getTarget() {
-        return invocation;
+    public CtMethod<?> getTarget() {
+        return target;
     }
 
-    public void setTarget(CtInvocation<?> invocation) {
-        this.invocation = invocation;
+    public void setTarget(CtMethod<?> target) {
+        this.target = target;
     }
 
     @Override
     public void refactor() {
 
-        // Get the declaration of the method
-        CtExecutable<?> declaration = invocation.getExecutable().getDeclaration();
+        ExecutableReferenceFilter execRefFilter = new ExecutableReferenceFilter();
+        final List<CtInvocation<?>> invocations = new ArrayList<>();
 
-        // Method not found
-        if (declaration == null) {
-            return;
-        }
+        // Add own executable
+        execRefFilter.addExecutable(target.getReference().getExecutableDeclaration());
 
-        // Get the statements of the method
-        // TODO: NOT WORKING: Declaration wrong!
-        List<CtStatement> statements = declaration.getBody().getStatements();
+        // Add all executables with same signature
+        target.getFactory().getModel().filterChildren(execRefFilter).forEach((CtConsumer<CtExecutableReference<?>>) t -> {
+            CtElement parent = t.getParent();
+            if (parent instanceof CtInvocation<?>) {
+                invocations.add((CtInvocation<?>) parent);
+            }
+        });
 
-        // Clone the statements
+        // Clone statements
+        List<CtStatement> statements = target.getBody().getStatements();
         List<CtStatement> clonedStatements = new ArrayList<>();
         for (CtStatement s : statements) {
             clonedStatements.add(s.clone());
         }
 
         // Make the inlining
-        int size = clonedStatements.size();
-        for (int i = 0; i < size - 1; i++) {
-            ((CtStatement) invocation.getParent()).insertBefore(clonedStatements.get(i));
+        for (int i = 0; i < invocations.size(); i++) {
+            CtInvocation<?> invocation = invocations.get(i);
+            CtStatement parent = (CtStatement) invocation.getParent();
+            if(!(parent instanceof CtExecutable)){
+                for (int j = 0; j < clonedStatements.size() - 1; j++){
+                    invocation.insertBefore(clonedStatements.get(j));
+                }
+                invocation.replace(clonedStatements.get(clonedStatements.size() - 1));
+            }
         }
-
-        CtExpression<?> returnExpression = ((CtReturn<?>) clonedStatements.get(size - 1)).getReturnedExpression();
-        invocation.replace(returnExpression);
     }
 }

@@ -15,8 +15,8 @@ import java.io.File;
 public class ReadabilityDecreaser {
 
   private static final String DEFAULT_OUTPUT_DIR = "output";
-  // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
-  public static final String CONFIG_FILE_NAME = "config.yaml";
+  public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
+  // public static final String CONFIG_FILE_NAME = "config.yaml";
 
   private final File inputDir; // TODO: Make getter and setter
   private final File outputDir; // TODO: Make getter and setter
@@ -133,7 +133,7 @@ public class ReadabilityDecreaser {
 
   public void process() {
     readInput();
-    //methodInliner.inline();
+    methodInliner.inline();
     fieldRenamer.rename();
     localVariableRenamer.rename();
     methodRenamer.rename();
