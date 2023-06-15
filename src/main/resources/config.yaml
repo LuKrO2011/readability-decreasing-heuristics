@@ -1,6 +1,6 @@
-doubleTab: 0
-noTab: 0
-doubleSpace: 0
-noSpace: 0
-newLineInsteadOfSpace: 0
-spaceInsteadOfNewline: 0
+doubleTab: 0.2
+noTab: 0.2
+doubleSpace: 0.2
+noSpace: 0.2
+newLineInsteadOfSpace: 0.2
+spaceInsteadOfNewline: 0.2
