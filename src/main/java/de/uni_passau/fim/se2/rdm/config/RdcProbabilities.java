@@ -12,8 +12,8 @@ public class RdcProbabilities {
     private final Random random;
 
     private List<Double> newline;
-    private List<Double> tabInc;
-    private List<Double> tabDec;
+    private List<Double> incTab;
+    private List<Double> decTab;
     private List<Double> space;
 
     private double newLineInsteadOfSpace;
@@ -55,11 +55,11 @@ public class RdcProbabilities {
             case NEWLINE:
                 probabilities = newline;
                 break;
-            case TAB_INC:
-                probabilities = tabInc;
+            case INC_TAB:
+                probabilities = incTab;
                 break;
-            case TAB_DEC:
-                probabilities = tabDec;
+            case DEC_TAB:
+                probabilities = decTab;
                 break;
             case SPACE:
                 probabilities = space;

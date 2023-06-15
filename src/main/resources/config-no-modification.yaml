@@ -1,10 +1,10 @@
 newline:
   - 0.0  # Probability for no newline
   - 1.0  # Probability for one newline
-tabInc:
+incTab:
   - 0.0  # Probability for no tab
   - 1.0  # Probability for one tab
-tabDec:
+decTab:
   - 0.0  # Probability for no tab
   - 1.0  # Probability for one tab
 space:
