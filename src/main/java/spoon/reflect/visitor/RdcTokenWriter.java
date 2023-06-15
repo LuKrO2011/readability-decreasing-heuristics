@@ -86,7 +86,7 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter incTab() {
-        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB);
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB_INC);
         for (int i = 0; i < numberOfNewLines; i++) {
             printerHelper.incTab();
         }
@@ -96,7 +96,7 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter decTab() {
-        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB);
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB_DEC);
         for (int i = 0; i < numberOfNewLines; i++) {
             printerHelper.decTab();
         }

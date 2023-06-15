@@ -3,7 +3,12 @@ newline:
   - 1.0  # Probability for one newline
   - 0.0  # Probability for two newlines
   - 0.0  # Probability for three newlines
-tab:
+tabInc:
+  - 0.0  # Probability for no tab
+  - 1.0  # Probability for one tab
+  - 0.0  # Probability for two tabs
+  - 0.0  # Probability for three tabs
+tabDec:
   - 0.0  # Probability for no tab
   - 1.0  # Probability for one tab
   - 0.0  # Probability for two tabs
