@@ -61,7 +61,7 @@ public class ReadabilityDecreaser {
 
     // Load RdcProbabilities from yaml file
     YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
-    RdcProbabilities probabilities = (RdcProbabilities) yamlReaderWriter.load("config-no-modification.yaml");
+    RdcProbabilities probabilities = (RdcProbabilities) yamlReaderWriter.load("config.yaml");
 
     // Create own prittyprinter
     DefaultJavaPrettyPrinter prettyPrinter = new DefaultJavaPrettyPrinter(env);
@@ -130,9 +130,9 @@ public class ReadabilityDecreaser {
   public void process() {
     readInput();
     //methodInliner.inline();
-    //fieldRenamer.rename();
-    //localVariableRenamer.rename();
-    //methodRenamer.rename();
+    fieldRenamer.rename();
+    localVariableRenamer.rename();
+    methodRenamer.rename();
     writeOutput();
   }
 
