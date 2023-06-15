@@ -22,3 +22,7 @@ newLineInsteadOfSpace: 0.2
 spaceInsteadOfNewline: 0.2
 incTabInsteadOfDecTab: 0.1
 decTabInsteadOfIncTab: 0.1
+renameVariable: 0.2
+renameField: 0.2
+renameMethod: 0.2
+inlineMethod: 0
