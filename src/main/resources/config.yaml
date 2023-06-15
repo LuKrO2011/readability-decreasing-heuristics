@@ -1,4 +1,4 @@
-newLine:
+newline:
   - 0.2  # Probability for no newline
   - 0.6  # Probability for one newline
   - 0.2  # Probability for two newlines
