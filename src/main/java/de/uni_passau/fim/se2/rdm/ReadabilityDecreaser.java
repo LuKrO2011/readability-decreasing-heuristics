@@ -20,13 +20,15 @@ public class ReadabilityDecreaser {
 
   private final LocalVariableRenamer localVariableRenamer;
   private final MethodRenamer methodRenamer;
-  private final AllRenamer allRenamer;
+  // private final AllRenamer allRenamer;
 
   // private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
   private final SpoonAPI spoon;
   private final FieldRenamer fieldRenamer;
   private final MethodInliner methodInliner;
+  private RdcProbabilities probabilities;
+
 
   public ReadabilityDecreaser(String inputDirPath) {
     this(inputDirPath, DEFAULT_OUTPUT_DIR);
@@ -40,11 +42,15 @@ public class ReadabilityDecreaser {
 
     this.spoon = new Launcher();
 
-    this.localVariableRenamer = new LocalVariableRenamer(spoon);
-    this.methodRenamer = new MethodRenamer(spoon);
-    this.allRenamer = new AllRenamer(spoon);
-    this.fieldRenamer = new FieldRenamer(spoon);
-    this.methodInliner = new MethodInliner(spoon);
+    // Load RdcProbabilities from yaml file
+    YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
+    probabilities = (RdcProbabilities) yamlReaderWriter.load("config-no-modification.yaml");
+
+    this.localVariableRenamer = new LocalVariableRenamer(spoon, probabilities);
+    this.methodRenamer = new MethodRenamer(spoon, probabilities);
+    // this.allRenamer = new AllRenamer(spoon, probabilities);
+    this.fieldRenamer = new FieldRenamer(spoon, probabilities);
+    this.methodInliner = new MethodInliner(spoon, probabilities);
 
     setupSpoon();
   }
@@ -58,10 +64,6 @@ public class ReadabilityDecreaser {
 
     // Add a change listener that is needed for RdcJavaPrettyPrinter
     // new ChangeCollector().attachTo(env)
-
-    // Load RdcProbabilities from yaml file
-    YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
-    RdcProbabilities probabilities = (RdcProbabilities) yamlReaderWriter.load("config-no-modification.yaml");
 
     // Create own prittyprinter
     DefaultJavaPrettyPrinter prettyPrinter = new DefaultJavaPrettyPrinter(env);
@@ -129,19 +131,21 @@ public class ReadabilityDecreaser {
 
   public void process() {
     readInput();
-    //methodInliner.inline();
-    //fieldRenamer.rename();
-    //localVariableRenamer.rename();
-    //methodRenamer.rename();
+    methodInliner.inline();
+    fieldRenamer.rename();
+    localVariableRenamer.rename();
+    methodRenamer.rename();
     writeOutput();
   }
 
-    /*public void process(String... fileNames) {
-        readInput(fileNames);
-        variableRenamer.rename();
-        methodRenamer.rename();
-        writeOutput();
-    }*/
+  public void process(String... fileNames) {
+    readInput(fileNames);
+    methodInliner.inline();
+    fieldRenamer.rename();
+    localVariableRenamer.rename();
+    methodRenamer.rename();
+    writeOutput();
+  }
 
   public void display() {
     // Get a graphical overview, constructing is enough

@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdm;
 
+import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdm.refactorings.CtRenameMethodRefactoring;
 import spoon.SpoonAPI;
 import spoon.refactoring.RefactoringException;
@@ -12,11 +13,13 @@ import java.util.*;
 public class MethodRenamer {
 
     private final SpoonAPI spoon;
+    private final RdcProbabilities probabilities;
 
     // private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
-    public MethodRenamer(SpoonAPI spoon) {
+    public MethodRenamer(SpoonAPI spoon, RdcProbabilities probabilities) {
         this.spoon = spoon;
+        this.probabilities = probabilities;
     }
 
     public void rename() {
@@ -32,13 +35,15 @@ public class MethodRenamer {
 
         // Rename all local variables to vl0 ... vlN
         for (int i = 0; i < methods.size(); i++) {
-            CtMethod<Integer> method = methods.get(i);
-            try {
-                refactoring.setTarget(method);
-                refactoring.setNewName("m" + i);
-                refactoring.refactor();
-            } catch (RefactoringException e) {
-                // log...
+            if(probabilities.shouldRenameMethod()){
+                CtMethod<Integer> method = methods.get(i);
+                try {
+                    refactoring.setTarget(method);
+                    refactoring.setNewName("m" + i);
+                    refactoring.refactor();
+                } catch (RefactoringException e) {
+                    // log...
+                }
             }
         }
     }

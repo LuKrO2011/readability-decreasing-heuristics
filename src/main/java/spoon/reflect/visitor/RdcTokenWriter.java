@@ -3,11 +3,7 @@ package spoon.reflect.visitor;
 import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
 import spoon.reflect.code.CtComment;
 
-import java.util.Random;
-
 public class RdcTokenWriter implements TokenWriter {
-
-    private final Random random = new Random();
 
     private final PrinterHelper printerHelper;
     private final RdcProbabilities probabilities;
@@ -71,7 +67,7 @@ public class RdcTokenWriter implements TokenWriter {
     public RdcTokenWriter writeln() {
 
         // Write spaces instead of a newline
-        if (random.nextDouble() < probabilities.getSpaceInsteadOfNewline()) {
+        if (probabilities.shouldSwap(CharacterType.NEWLINE)) {
             return (RdcTokenWriter) writeSpace();
         }
 
@@ -88,8 +84,8 @@ public class RdcTokenWriter implements TokenWriter {
     public RdcTokenWriter incTab() {
 
         // Dec tab instead of inc tab
-        if (random.nextDouble() < probabilities.getDecTabInsteadOfIncTab()) {
-            return (RdcTokenWriter) decTab();
+        if (probabilities.shouldSwap(CharacterType.INC_TAB)) {
+            return decTab();
         }
 
         // Inc tabs
@@ -105,8 +101,8 @@ public class RdcTokenWriter implements TokenWriter {
     public RdcTokenWriter decTab() {
 
         // Inc tab instead of dec tab
-        if (random.nextDouble() < probabilities.getIncTabInsteadOfDecTab()) {
-            return (RdcTokenWriter) incTab();
+        if (probabilities.shouldSwap(CharacterType.DEC_TAB)) {
+            return incTab();
         }
 
         int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.DEC_TAB);
@@ -126,9 +122,8 @@ public class RdcTokenWriter implements TokenWriter {
     public TokenWriter writeSpace() {
 
         // Write newlines instead of space
-        if (random.nextDouble() < probabilities.getNewLineInsteadOfSpace()) {
-            printerHelper.writeln();
-            return this;
+        if (probabilities.shouldSwap(CharacterType.SPACE)) {
+            return (TokenWriter) printerHelper.writeln();
         }
 
         // Write spaces
