@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdm.printer;
 
+import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
 import spoon.compiler.Environment;
 import spoon.reflect.declaration.CtCompilationUnit;
 import spoon.reflect.declaration.CtElement;

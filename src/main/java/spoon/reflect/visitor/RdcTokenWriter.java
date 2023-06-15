@@ -1,6 +1,6 @@
 package spoon.reflect.visitor;
 
-import de.uni_passau.fim.se2.rdm.printer.RdcProbabilities;
+import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
 import spoon.reflect.code.CtComment;
 
 import java.util.Random;
@@ -16,9 +16,13 @@ public class RdcTokenWriter implements TokenWriter {
         this(new PrinterHelper());
     }
 
-    public RdcTokenWriter(PrinterHelper printerHelper) {
+    public RdcTokenWriter(PrinterHelper printerHelper, RdcProbabilities probabilities) {
         this.printerHelper = printerHelper;
-        this.probabilities = new RdcProbabilities();
+        this.probabilities = probabilities;
+    }
+
+    public RdcTokenWriter(PrinterHelper printerHelper) {
+        this(printerHelper, new RdcProbabilities());
     }
 
     @Override
