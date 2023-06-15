@@ -1,6 +1,5 @@
 package de.uni_passau.fim.se2.rdm.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import spoon.reflect.visitor.CharacterType;
 
@@ -15,11 +14,9 @@ public class RdcProbabilities {
     private List<Double> newline;
 
     // TODO: Distinguish inctab and dectab
-    private double doubleTab = 0;
-    private double noTab = 0;
+    private List<Double> tab;
 
-    private double doubleSpace = 0;
-    private double noSpace = 0;
+    private List<Double> space;
 
     private double newLineInsteadOfSpace = 0;
     private double spaceInsteadOfNewline = 0;
@@ -33,16 +30,10 @@ public class RdcProbabilities {
     }
 
     public int getRandomNumberOf(CharacterType characterType) {
+        List<Double> probabilities = getProbabilitiesFor(characterType);
+
         Random random = new Random();
         double randomValue = random.nextDouble();
-
-        List<Double> probabilities;
-        switch (characterType){
-            case NEWLINE:
-                probabilities = newline;
-            default:
-                probabilities = newline;
-        }
 
         double accumulatedProbability = 0.0;
         for (int i = 0; i < probabilities.size(); i++) {
@@ -55,5 +46,24 @@ public class RdcProbabilities {
         }
 
         return 1; // Default to 1 character
+    }
+
+    // TODO: How can this be done more elegant using a enum constructor?
+    private List<Double> getProbabilitiesFor(CharacterType characterType) {
+        List<Double> probabilities;
+        switch (characterType) {
+            case NEWLINE:
+                probabilities = newline;
+                break;
+            case TAB:
+                probabilities = tab;
+                break;
+            case SPACE:
+                probabilities = space;
+                break;
+            default:
+                throw new RuntimeException("Unknown character type");
+        }
+        return probabilities;
     }
 }

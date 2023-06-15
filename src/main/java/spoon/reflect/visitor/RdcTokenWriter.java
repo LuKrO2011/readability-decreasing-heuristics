@@ -86,31 +86,21 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter incTab() {
-        if (random.nextDouble() < probabilities.getDoubleTab()) {
-            printerHelper.incTab().incTab();
-            return this;
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB);
+        for (int i = 0; i < numberOfNewLines; i++) {
+            printerHelper.incTab();
         }
 
-        if (random.nextDouble() < probabilities.getNoTab()) {
-            return this;
-        }
-
-        printerHelper.incTab();
         return this;
     }
 
     @Override
     public RdcTokenWriter decTab() {
-        if (random.nextDouble() < probabilities.getDoubleTab()) {
-            printerHelper.decTab().decTab();
-            return this;
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB);
+        for (int i = 0; i < numberOfNewLines; i++) {
+            printerHelper.decTab();
         }
 
-        if (random.nextDouble() < probabilities.getNoTab()) {
-            return this;
-        }
-
-        printerHelper.decTab();
         return this;
     }
 
@@ -121,22 +111,16 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public TokenWriter writeSpace() {
-        if (random.nextDouble() < probabilities.getDoubleSpace()) {
-            printerHelper.writeSpace();
-            printerHelper.writeSpace();
-            return this;
-        }
-
-        if (random.nextDouble() < probabilities.getNoSpace()) {
-            return this;
-        }
-
         if (random.nextDouble() < probabilities.getNewLineInsteadOfSpace()) {
             printerHelper.writeln();
             return this;
         }
 
-        printerHelper.writeSpace();
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.SPACE);
+        for (int i = 0; i < numberOfNewLines; i++) {
+            printerHelper.writeSpace();
+        }
+
         return this;
     }
 
