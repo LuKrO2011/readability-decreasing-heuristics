@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdh;
+package de.uni_passau.fim.se2.rdh.refactorings;
 
 import spoon.SpoonAPI;
 import spoon.reflect.declaration.CtType;

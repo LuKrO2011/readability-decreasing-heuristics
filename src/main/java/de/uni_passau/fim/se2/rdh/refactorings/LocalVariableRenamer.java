@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdh;
+package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import spoon.SpoonAPI;

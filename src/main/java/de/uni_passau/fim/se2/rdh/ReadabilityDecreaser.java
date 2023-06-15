@@ -2,6 +2,9 @@ package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
+import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
