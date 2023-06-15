@@ -26,3 +26,4 @@ renameVariable: 0.2
 renameField: 0.2
 renameMethod: 0.2
 inlineMethod: 0.2
+removeComment: 0.2

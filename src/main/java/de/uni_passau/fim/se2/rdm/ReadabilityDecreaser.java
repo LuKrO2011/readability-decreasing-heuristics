@@ -15,8 +15,8 @@ import java.io.File;
 public class ReadabilityDecreaser {
 
   private static final String DEFAULT_OUTPUT_DIR = "output";
-  // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
-  public static final String CONFIG_FILE_NAME = "config.yaml";
+  public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
+  // public static final String CONFIG_FILE_NAME = "config.yaml";
 
   private final File inputDir; // TODO: Make getter and setter
   private final File outputDir; // TODO: Make getter and setter
@@ -62,7 +62,9 @@ public class ReadabilityDecreaser {
 
     // Imports and comment settings
     env.setAutoImports(true);
-    env.setCommentEnabled(false);
+
+    // Writing comments is done probabilistic in RdcTokenWriter
+    // env.setCommentEnabled(true);
 
     // Add a change listener that is needed for RdcJavaPrettyPrinter
     // new ChangeCollector().attachTo(env)

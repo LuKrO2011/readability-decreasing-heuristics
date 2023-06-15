@@ -62,7 +62,10 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter writeComment(CtComment comment) {
-        CommentHelper.printComment(comment);
+        if (!probabilities.shouldRemoveComment()) {
+            RdcCommentHelper.printComment(printerHelper, comment);
+        }
+
         return this;
     }
 

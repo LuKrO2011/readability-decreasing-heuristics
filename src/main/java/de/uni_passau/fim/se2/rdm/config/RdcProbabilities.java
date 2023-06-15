@@ -28,6 +28,9 @@ public class RdcProbabilities {
     private double renameField;
     private double renameMethod;
     private double inlineMethod;
+    private double removeComment;
+    // TODO: writeFullyQualifiedName
+    // TODO: writeStarImport
 
     public RdcProbabilities() {
         this(new Random());
@@ -118,5 +121,9 @@ public class RdcProbabilities {
 
     public boolean shouldInlineMethod() {
         return random.nextDouble() <= inlineMethod;
+    }
+
+    public boolean shouldRemoveComment() {
+        return random.nextDouble() <= removeComment;
     }
 }
