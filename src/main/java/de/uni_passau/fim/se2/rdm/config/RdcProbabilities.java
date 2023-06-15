@@ -1,7 +1,7 @@
 package de.uni_passau.fim.se2.rdm.config;
 
 import lombok.Data;
-import spoon.reflect.visitor.CharacterType;
+import de.uni_passau.fim.se2.rdm.printer.CharacterType;
 
 import java.util.List;
 import java.util.Random;

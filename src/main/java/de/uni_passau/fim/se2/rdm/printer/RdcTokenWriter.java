@@ -1,7 +1,10 @@
-package spoon.reflect.visitor;
+package de.uni_passau.fim.se2.rdm.printer;
 
 import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
 import spoon.reflect.code.CtComment;
+import spoon.reflect.visitor.CommentHelper;
+import spoon.reflect.visitor.PrinterHelper;
+import spoon.reflect.visitor.TokenWriter;
 
 public class RdcTokenWriter implements TokenWriter {
 
@@ -59,7 +62,7 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter writeComment(CtComment comment) {
-        CommentHelper.printComment(printerHelper, comment);
+        CommentHelper.printComment(comment);
         return this;
     }
 

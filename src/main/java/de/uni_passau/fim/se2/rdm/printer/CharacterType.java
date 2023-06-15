@@ -1,4 +1,4 @@
-package spoon.reflect.visitor;
+package de.uni_passau.fim.se2.rdm.printer;
 
 public enum CharacterType {
     NEWLINE,

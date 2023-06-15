@@ -7,7 +7,7 @@ import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
-import spoon.reflect.visitor.RdcTokenWriter;
+import de.uni_passau.fim.se2.rdm.printer.RdcTokenWriter;
 import spoon.support.gui.SpoonModelTree;
 
 import java.io.File;
