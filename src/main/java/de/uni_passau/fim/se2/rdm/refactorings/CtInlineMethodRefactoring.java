@@ -1,8 +1,9 @@
 package de.uni_passau.fim.se2.rdm.refactorings;
 
-import spoon.SpoonAPI;
 import spoon.refactoring.CtRefactoring;
+import spoon.reflect.code.CtExpression;
 import spoon.reflect.code.CtInvocation;
+import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtExecutable;
@@ -10,6 +11,8 @@ import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.visitor.chain.CtConsumer;
 import spoon.reflect.visitor.filter.ExecutableReferenceFilter;
+import spoon.support.reflect.code.CtBlockImpl;
+import spoon.support.reflect.code.CtReturnImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,13 +58,35 @@ public class CtInlineMethodRefactoring implements CtRefactoring {
 
         // Make the inlining
         for (int i = 0; i < invocations.size(); i++) {
-            CtInvocation<?> invocation = invocations.get(i);
+            CtStatement invocation = invocations.get(i);
             CtStatement parent = (CtStatement) invocation.getParent();
-            if(!(parent instanceof CtExecutable)){
-                for (int j = 0; j < clonedStatements.size() - 1; j++){
-                    invocation.insertBefore(clonedStatements.get(j));
+
+            // Go upwards in tree until we find a block to which we can append statements
+            while (!(parent instanceof CtBlockImpl)) {
+                invocation = parent;
+                parent = (CtStatement) parent.getParent();
+            }
+
+            // Append statements
+            if (!(parent instanceof CtExecutable)) {
+                for (CtStatement statement : clonedStatements) {
+
+                    // Replace right side of assignment with first found return expression
+                    if (statement instanceof CtReturnImpl<?>) {
+                        CtReturnImpl<?> returnStatement = (CtReturnImpl<?>) statement;
+                        CtExpression<?> returnedExpression = returnStatement.getReturnedExpression();
+                        if (returnedExpression != null) {
+                            if (invocation instanceof CtLocalVariable) {
+                                CtLocalVariable localVariable = (CtLocalVariable) invocation;
+                                localVariable.setAssignment(returnedExpression);
+                                break;
+                            }
+                        }
+                    }
+
+                    // Otherwise, insert all statements before invocation
+                    invocation.insertBefore(statement);
                 }
-                invocation.replace(clonedStatements.get(clonedStatements.size() - 1));
             }
         }
     }
