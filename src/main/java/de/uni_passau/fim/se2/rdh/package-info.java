@@ -2,4 +2,4 @@
 //
 // SPDX-License-Identifier: EUPL-1.2
 
-package de.uni_passau.fim.se2.rdm;
+package de.uni_passau.fim.se2.rdh;

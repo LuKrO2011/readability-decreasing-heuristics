@@ -1,7 +1,7 @@
-package de.uni_passau.fim.se2.rdm.config;
+package de.uni_passau.fim.se2.rdh.config;
 
 import lombok.Data;
-import de.uni_passau.fim.se2.rdm.printer.CharacterType;
+import de.uni_passau.fim.se2.rdh.printer.CharacterType;
 
 import java.util.List;
 import java.util.Random;

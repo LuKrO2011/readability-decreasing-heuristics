@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdm.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings;
 
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.reflect.declaration.CtField;

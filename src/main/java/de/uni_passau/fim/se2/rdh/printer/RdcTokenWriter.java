@@ -1,8 +1,7 @@
-package de.uni_passau.fim.se2.rdm.printer;
+package de.uni_passau.fim.se2.rdh.printer;
 
-import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import spoon.reflect.code.CtComment;
-import spoon.reflect.visitor.CommentHelper;
 import spoon.reflect.visitor.PrinterHelper;
 import spoon.reflect.visitor.TokenWriter;
 

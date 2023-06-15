@@ -1,14 +1,11 @@
-package de.uni_passau.fim.se2.rdm.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings;
 
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.reflect.code.CtInvocation;
 import spoon.reflect.declaration.CtElement;
-import spoon.reflect.declaration.CtExecutable;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.visitor.chain.CtConsumer;
-import spoon.reflect.visitor.chain.CtQuery;
-import spoon.reflect.visitor.filter.AllMethodsSameSignatureFunction;
 import spoon.reflect.visitor.filter.ExecutableReferenceFilter;
 
 import java.util.ArrayList;

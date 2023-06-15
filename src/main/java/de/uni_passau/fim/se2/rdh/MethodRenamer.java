@@ -1,7 +1,7 @@
-package de.uni_passau.fim.se2.rdm;
+package de.uni_passau.fim.se2.rdh;
 
-import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdm.refactorings.CtRenameMethodRefactoring;
+import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.refactorings.CtRenameMethodRefactoring;
 import spoon.SpoonAPI;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.declaration.CtMethod;

@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdm.config;
+package de.uni_passau.fim.se2.rdh.config;
 
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;

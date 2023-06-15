@@ -5,7 +5,7 @@
  *
  * Spoon is available either under the terms of the MIT License (see LICENSE-MIT.txt) of the Cecill-C License (see LICENSE-CECILL-C.txt). You as the user are entitled to choose the terms under which to adopt Spoon.
  */
-package de.uni_passau.fim.se2.rdm.printer;
+package de.uni_passau.fim.se2.rdh.printer;
 
 import org.apache.commons.lang3.tuple.Pair;
 import spoon.OutputType;

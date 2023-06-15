@@ -1,13 +1,13 @@
-package de.uni_passau.fim.se2.rdm;
+package de.uni_passau.fim.se2.rdh;
 
-import de.uni_passau.fim.se2.rdm.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdm.config.YamlLoaderSaver;
+import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
-import de.uni_passau.fim.se2.rdm.printer.RdcTokenWriter;
+import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.support.gui.SpoonModelTree;
 
 import java.io.File;
@@ -15,8 +15,8 @@ import java.io.File;
 public class ReadabilityDecreaser {
 
   private static final String DEFAULT_OUTPUT_DIR = "output";
-  public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
-  // public static final String CONFIG_FILE_NAME = "config.yaml";
+  // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
+  public static final String CONFIG_FILE_NAME = "config.yaml";
 
   private final File inputDir; // TODO: Make getter and setter
   private final File outputDir; // TODO: Make getter and setter

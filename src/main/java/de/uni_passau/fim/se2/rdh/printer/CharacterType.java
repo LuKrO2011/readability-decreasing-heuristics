@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdm.printer;
+package de.uni_passau.fim.se2.rdh.printer;
 
 public enum CharacterType {
     NEWLINE,
