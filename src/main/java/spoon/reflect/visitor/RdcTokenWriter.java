@@ -70,12 +70,12 @@ public class RdcTokenWriter implements TokenWriter {
     @Override
     public RdcTokenWriter writeln() {
 
-        // TODO: Adjust this
+        // Write spaces instead of a newline
         if (random.nextDouble() < probabilities.getSpaceInsteadOfNewline()) {
-            printerHelper.writeSpace();
-            return this;
+            return (RdcTokenWriter) writeSpace();
         }
 
+        // Write newlines
         int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
         for (int i = 0; i < numberOfNewLines; i++) {
             printerHelper.writeln();
@@ -86,6 +86,13 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter incTab() {
+
+        // Dec tab instead of inc tab
+        if (random.nextDouble() < probabilities.getDecTabInsteadOfIncTab()) {
+            return (RdcTokenWriter) decTab();
+        }
+
+        // Inc tabs
         int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB_INC);
         for (int i = 0; i < numberOfNewLines; i++) {
             printerHelper.incTab();
@@ -96,6 +103,12 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public RdcTokenWriter decTab() {
+
+        // Inc tab instead of dec tab
+        if (random.nextDouble() < probabilities.getIncTabInsteadOfDecTab()) {
+            return (RdcTokenWriter) incTab();
+        }
+
         int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.TAB_DEC);
         for (int i = 0; i < numberOfNewLines; i++) {
             printerHelper.decTab();
@@ -111,11 +124,14 @@ public class RdcTokenWriter implements TokenWriter {
 
     @Override
     public TokenWriter writeSpace() {
+
+        // Write newlines instead of space
         if (random.nextDouble() < probabilities.getNewLineInsteadOfSpace()) {
             printerHelper.writeln();
             return this;
         }
 
+        // Write spaces
         int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.SPACE);
         for (int i = 0; i < numberOfNewLines; i++) {
             printerHelper.writeSpace();

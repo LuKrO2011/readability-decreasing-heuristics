@@ -20,3 +20,5 @@ space:
   - 0.0  # Probability for three spaces
 newLineInsteadOfSpace: 0.2
 spaceInsteadOfNewline: 0.2
+incTabInsteadOfDecTab: 0.1
+decTabInsteadOfIncTab: 0.1

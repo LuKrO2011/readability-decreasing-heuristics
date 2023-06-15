@@ -16,8 +16,10 @@ public class RdcProbabilities {
     private List<Double> tabDec;
     private List<Double> space;
 
-    private double newLineInsteadOfSpace = 0;
-    private double spaceInsteadOfNewline = 0;
+    private double newLineInsteadOfSpace;
+    private double spaceInsteadOfNewline;
+    private double incTabInsteadOfDecTab;
+    private double decTabInsteadOfIncTab;
 
     public RdcProbabilities() {
         this(new Random());
