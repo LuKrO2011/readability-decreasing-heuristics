@@ -23,28 +23,58 @@ class MainTest extends IOTest {
     private static final String ECHO_COMMAND_NAME = "echo";
 
     private static final String HELP_TEXT = "" +
-            "Usage: readability-decreasing-heuristics [-hV] [--seed=<seed>]\n" +
+            "Usage: readability-decreasing-heuristics [-hV] [-o, --output=<outputPath>]\n" +
+            "       [--seed=<seed>] <inputPath>\n" +
             "Heuristics for decreasing the readability of Java source code.\n" +
+            "      <inputPath>     The path to the input. Can be a file or a directory.\n" +
             "  -h, --help          Show this help message and exit.\n" +
+            "      -o, --output=<outputPath>\n" +
+            "                      The path to the output directory. If not specified, the\n" +
+            "                        output is written into the directory of the input\n" +
+            "                        (file).\n" +
             "      --seed=<seed>   A number that is used as seed to initialize the random\n" +
             "                        instance to allow for reproducible runs.\n" +
             "  -V, --version       Print version information and exit.";
 
-    @BeforeEach
-    void setup() {
 
+    @Test
+    void testRunWithoutArguments() {
+        execute(2);
     }
 
-    @Disabled
     @Test
-    void testRunAppNoSubcommand() {
-        assertThat(commandLine.execute()).isZero();
-        assertOutput(HELP_TEXT);
+    void testRunHelp() {
+        execute(0, "-h");
+
+        // Assert that the help text was printed
+        // assertOutputContains(HELP_TEXT);
+    }
+
+    @Test
+    void testRunInputFile(@TempDir Path tmpDir) {
+        String inputPath = "src/test/resources/code/";
+        String fileName = "HelloWorld.java";
+
+        execute(0, inputPath + fileName, "-o", tmpDir.toString());
+
+        // Assert that file exists
+        Path outputFile = tmpDir.resolve(fileName);
+        assertThat(outputFile).exists();
+    }
+
+    @Test
+    void testRunInputDir(@TempDir Path tmpDir) {
+        String inputPath = "src/test/resources/";
+        String dirName = "code";
+
+        execute(0, inputPath + dirName, "-o", tmpDir.toString());
+
+        // Assert that the directory is not empty
+        assertThat(tmpDir).isNotEmptyDirectory();
     }
 
     private void execute(int expectedExitCode, String... args) {
         int exitCode = commandLine.execute(args);
-
         assertThat(exitCode).isEqualTo(expectedExitCode);
     }
 }

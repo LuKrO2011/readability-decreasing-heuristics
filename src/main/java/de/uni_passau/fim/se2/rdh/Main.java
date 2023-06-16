@@ -26,7 +26,7 @@ public final class Main implements Callable<Integer> {
     private String inputPath;
 
     @CommandLine.Option(
-        names = { "-o, --output" },
+        names = { "-o", "--output" },
         description = "The path to the output directory. If not specified, the output is written into the directory of the input (file)."
     )
     private String outputPath;

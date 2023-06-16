@@ -6,7 +6,7 @@ class ReadabilityDecreaserTest {
 
     @Test
     void testMain() {
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser("src/test/resources");
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser("src/test/resources/code");
         readabilityDecreaser.process("HelloWorld.java");
     }
 

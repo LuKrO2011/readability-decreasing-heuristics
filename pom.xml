@@ -105,14 +105,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>config.yaml</include>
-                    <include>config-no-modification.yaml</include>
-                </includes>
-                <!-- relative to target/classes
-                     i.e. ${project.build.outputDirectory} -->
-                <!-- <targetPath>..</targetPath> -->
+                <directory>src/main/resources/code</directory>
             </resource>
         </resources>
 	</build>
