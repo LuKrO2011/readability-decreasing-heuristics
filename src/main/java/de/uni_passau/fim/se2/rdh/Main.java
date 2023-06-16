@@ -20,6 +20,17 @@ import java.util.concurrent.Callable;
 )
 public final class Main implements Callable<Integer> {
 
+    @CommandLine.Parameters(
+            index = "0",
+            description = "The path to the input. Can be a file or a directory.")
+    private String inputPath;
+
+    @CommandLine.Option(
+        names = { "-o, --output" },
+        description = "The path to the output directory. If not specified, the output is written into the directory of the input (file)."
+    )
+    private String outputPath;
+
     @CommandLine.Spec
     CommandLine.Model.CommandSpec spec;
 
@@ -39,7 +50,9 @@ public final class Main implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        spec.commandLine().usage(System.out);
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(inputPath, outputPath);
+        readabilityDecreaser.process();
+        // spec.commandLine().usage(System.out);
         return 0;
     }
 

@@ -14,7 +14,7 @@ public class YamlLoaderSaver {
     private static final String CONFIG_FILE_PATH = "src/main/resources";
 
     public Object load(String configFileName) {
-        try (InputStream inputStream = new FileInputStream(CONFIG_FILE_PATH + "/" + configFileName)) {
+        try (InputStream inputStream = YamlLoaderSaver.class.getClassLoader().getResourceAsStream(configFileName)) {
             Yaml yaml = new Yaml();
             return yaml.loadAs(inputStream, RdcProbabilities.class);
         } catch (IOException e) {

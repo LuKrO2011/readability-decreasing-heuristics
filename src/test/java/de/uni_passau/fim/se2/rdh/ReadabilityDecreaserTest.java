@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 class ReadabilityDecreaserTest {
 
     @Test
-    void testHelloWorld() {
+    void testMain() {
         ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser("src/test/resources");
         readabilityDecreaser.process("HelloWorld.java");
     }

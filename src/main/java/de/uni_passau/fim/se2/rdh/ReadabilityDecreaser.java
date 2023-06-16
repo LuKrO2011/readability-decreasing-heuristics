@@ -43,6 +43,10 @@ public class ReadabilityDecreaser {
     this.inputDir = new File(inputDirPath);
     checkFile(inputDir);
 
+    if (outputDirPath == null) {
+      outputDirPath = DEFAULT_OUTPUT_DIR;
+    }
+
     this.outputDir = createFolder(outputDirPath);
 
     this.spoon = new Launcher();
