@@ -69,7 +69,7 @@ public abstract class IOTest {
      * Adds the final newline to the output before checking.
      */
     protected void assertOutput(final String output) {
-        assertThat(newOutput.toString(StandardCharsets.UTF_8)).isEqualTo(normalise(output) + NEWLINE);
+        assertThat(newOutput.toString(StandardCharsets.UTF_8)).isEqualTo(normalise(output));
     }
 
     protected void assertOutputContains(final CharSequence... values) {

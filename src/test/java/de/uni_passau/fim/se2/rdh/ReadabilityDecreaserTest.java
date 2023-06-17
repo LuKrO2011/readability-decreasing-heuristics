@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
+import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.AstComparator;
 import gumtree.spoon.diff.Diff;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,14 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class ReadabilityDecreaserTest {
-
-    private String resourcesPath;
-
-    @BeforeEach
-    void setupResourcesPath() {
-        resourcesPath = Objects.requireNonNull(getClass().getClassLoader().getResource("code")).getPath();
-    }
+class ReadabilityDecreaserTest extends ResourcesTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"HelloWorld.java", "HeapUtils.java"})

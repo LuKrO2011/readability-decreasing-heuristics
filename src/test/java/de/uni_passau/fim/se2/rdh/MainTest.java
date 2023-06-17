@@ -48,15 +48,8 @@ class MainTest extends IOTest {
     @Test
     void testRunHelp() {
         execute(0, "-h");
-
-        // Assert that the help text was printed
-        assertThat(newOutput.toString(StandardCharsets.UTF_8)).isEqualTo(normalise(HELP_TEXT));
+        assertOutput(HELP_TEXT);
     }
-
-    private static String normalise(final String s) {
-        return s.replace("\n", NEWLINE);
-    }
-
 
     @Test
     void testRunInputFile(@TempDir Path tmpDir) {
