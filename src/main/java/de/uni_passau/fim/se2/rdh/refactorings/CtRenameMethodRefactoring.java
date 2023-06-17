@@ -14,14 +14,23 @@ import java.util.regex.Pattern;
 
 // TODO: Add checks for valid method names
 
+/**
+ * This class implements the refactoring for renaming a method.
+ */
 public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMethod<?>> {
 
-    public static final Pattern validVariableNameRE = javaIdentifierRE;
+    private static final Pattern validVariableNameRE = javaIdentifierRE;
 
     public CtRenameMethodRefactoring() {
         super(validVariableNameRE);
     }
 
+    /**
+     * This method refactors the method name and all invocations of the method.
+     * It does not check for valid method names.
+     *
+     * @see AbstractRenameRefactoring#refactorNoCheck()
+     */
     @Override
     protected void refactorNoCheck() {
         ExecutableReferenceFilter execRefFilter = new ExecutableReferenceFilter();
@@ -42,7 +51,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
         target.setSimpleName(newName);
 
         // Change name of all invocations
-        for (CtInvocation<?> invocation: invocations){
+        for (CtInvocation<?> invocation : invocations) {
             invocation.getExecutable().setSimpleName(newName);
         }
 

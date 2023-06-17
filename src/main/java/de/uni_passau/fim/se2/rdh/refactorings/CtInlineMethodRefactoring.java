@@ -16,22 +16,22 @@ import spoon.support.reflect.code.CtReturnImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+// TODO: Handle static methods
+// TODO: Handle methods with multiple return statements
+// TODO: Handle variable naming conflicts
 
+/**
+ * This class implements the refactoring for inlining a method.
+ */
 public class CtInlineMethodRefactoring implements CtRefactoring {
 
     // The target is a method invocation
     private CtMethod<?> target;
 
-    // TODO: Does not consider variable name clashes
 
-    public CtMethod<?> getTarget() {
-        return target;
-    }
-
-    public void setTarget(CtMethod<?> target) {
-        this.target = target;
-    }
-
+    /**
+     * This method performs the inlining of the method.
+     */
     @Override
     public void refactor() {
 
@@ -89,5 +89,23 @@ public class CtInlineMethodRefactoring implements CtRefactoring {
                 }
             }
         }
+    }
+
+    /**
+     * This method returns the target of the refactoring.
+     *
+     * @return The target of the refactoring.
+     */
+    public CtMethod<?> getTarget() {
+        return target;
+    }
+
+    /**
+     * This method sets the target of the refactoring.
+     *
+     * @param target The target of the refactoring.
+     */
+    public void setTarget(CtMethod<?> target) {
+        this.target = target;
     }
 }
