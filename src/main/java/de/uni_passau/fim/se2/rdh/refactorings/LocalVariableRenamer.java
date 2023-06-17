@@ -18,7 +18,7 @@ import java.util.List;
  * on a method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public class LocalVariableRenamer extends AstModifier {
+public class LocalVariableRenamer extends Refactoring {
 
     private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
@@ -30,14 +30,14 @@ public class LocalVariableRenamer extends AstModifier {
      * {@inheritDoc}
      */
     @Override
-    public void applyModification() {
+    public void apply() {
         rename();
     }
 
     /**
      * Renames local variables to v0 ... vN.
      */
-    public void rename() {
+    private void rename() {
         CtRenameLocalVariableRefactoring refactoring = new CtRenameLocalVariableRefactoring();
 
         // Get all local variables

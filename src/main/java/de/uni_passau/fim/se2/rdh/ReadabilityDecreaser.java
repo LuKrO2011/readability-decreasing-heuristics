@@ -2,10 +2,7 @@ package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
-import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
-import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.*;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +13,8 @@ import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.support.gui.SpoonModelTree;
+
+import java.util.List;
 
 /**
  * Decreases the readability of Java code.
@@ -30,15 +29,11 @@ public class ReadabilityDecreaser {
     public static final String CONFIG_FILE_NAME = "config.yaml";
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
-    private final LocalVariableRenamer localVariableRenamer;
-    private final MethodRenamer methodRenamer;
-
     private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
     private final SpoonAPI spoon;
-    private final FieldRenamer fieldRenamer;
-    private final MethodInliner methodInliner;
     private final RdcProbabilities probabilities;
+    private List<Refactoring> refactorings;
 
 
     /**
@@ -70,10 +65,11 @@ public class ReadabilityDecreaser {
         probabilities = (RdcProbabilities) yamlReaderWriter.load(configFilePath);
 
         // Create the refactorings
-        this.localVariableRenamer = new LocalVariableRenamer(spoon, probabilities);
-        this.methodRenamer = new MethodRenamer(spoon, probabilities);
-        this.fieldRenamer = new FieldRenamer(spoon, probabilities);
-        this.methodInliner = new MethodInliner(spoon, probabilities);
+        refactorings = List.of(
+                new LocalVariableRenamer(spoon, probabilities),
+                new FieldRenamer(spoon, probabilities),
+                new MethodRenamer(spoon, probabilities),
+                new MethodInliner(spoon, probabilities));
 
         // Setup spoon
         setupSpoon();
@@ -149,10 +145,7 @@ public class ReadabilityDecreaser {
      */
     public void process() {
         readInput();
-        methodInliner.inline();
-        fieldRenamer.rename();
-        localVariableRenamer.rename();
-        methodRenamer.rename();
+        refactorings.forEach(Refactoring::apply);
         writeOutput();
     }
 
@@ -163,10 +156,7 @@ public class ReadabilityDecreaser {
      */
     public void process(String... fileNames) {
         readInput(fileNames);
-        methodInliner.inline();
-        fieldRenamer.rename();
-        localVariableRenamer.rename();
-        methodRenamer.rename();
+        refactorings.forEach(Refactoring::apply);
         writeOutput();
     }
 

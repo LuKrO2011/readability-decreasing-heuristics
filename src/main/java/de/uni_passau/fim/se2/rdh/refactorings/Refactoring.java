@@ -4,17 +4,17 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import spoon.SpoonAPI;
 
 /**
- * Represents a modification that can be applied to the ast.
+ * Represents a refactoring that can be applied to the ast.
  * <p>
  * The probability for a refactoring to be performed on a method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public abstract class AstModifier {
+public abstract class Refactoring {
 
     protected final SpoonAPI spoon;
     protected final RdcProbabilities probabilities;
 
-    public AstModifier(SpoonAPI spoon, RdcProbabilities probabilities) {
+    public Refactoring(SpoonAPI spoon, RdcProbabilities probabilities) {
         this.spoon = spoon;
         this.probabilities = probabilities;
     }
@@ -22,5 +22,5 @@ public abstract class AstModifier {
     /**
      * Applies a modification to the AST.
      */
-    public abstract void applyModification();
+    public abstract void apply();
 }

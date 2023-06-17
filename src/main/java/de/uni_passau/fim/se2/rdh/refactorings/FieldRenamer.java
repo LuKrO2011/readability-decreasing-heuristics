@@ -1,7 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.refactorings.CtRenameFieldRefactoring;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -12,13 +11,13 @@ import spoon.reflect.visitor.filter.TypeFilter;
 import java.util.List;
 
 /**
- * Inlines methods.
+ * Renames global variables.
  * <p>
- * This class is used to inline methods. The probability for this refactoring to be performed on a method is defined in
- * the {@link RdcProbabilities} class.
+ * This class is used to rename global variables to f0 ... fN. The probability for this refactoring to be performed
+ * on a method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public class FieldRenamer extends AstModifier {
+public class FieldRenamer extends Refactoring {
 
     private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
@@ -30,11 +29,14 @@ public class FieldRenamer extends AstModifier {
      * {@inheritDoc}
      */
     @Override
-    public void applyModification() {
+    public void apply() {
         rename();
     }
 
-    public void rename() {
+    /**
+     * Renames global variables.
+     */
+    private void rename() {
         CtRenameFieldRefactoring refactoring = new CtRenameFieldRefactoring();
 
         // Get all global variables

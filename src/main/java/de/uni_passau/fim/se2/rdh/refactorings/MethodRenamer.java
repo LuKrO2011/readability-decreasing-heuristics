@@ -1,13 +1,11 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.refactorings.CtRenameMethodRefactoring;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.declaration.CtType;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.util.*;
@@ -19,7 +17,7 @@ import java.util.*;
  * is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public class MethodRenamer extends AstModifier {
+public class MethodRenamer extends Refactoring {
     private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
     public MethodRenamer(SpoonAPI spoon, RdcProbabilities probabilities) {
@@ -30,14 +28,14 @@ public class MethodRenamer extends AstModifier {
      * {@inheritDoc}
      */
     @Override
-    public void applyModification() {
+    public void apply() {
         rename();
     }
 
     /**
      * Renames methods to m0 ... mN.
      */
-    public void rename() {
+    private void rename() {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
         // Get all local variables

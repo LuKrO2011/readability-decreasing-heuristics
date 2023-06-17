@@ -17,7 +17,7 @@ import java.util.List;
  * the {@link RdcProbabilities} class.
  * </p>
  */
-public class MethodInliner extends AstModifier {
+public class MethodInliner extends Refactoring {
 
     private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
@@ -29,14 +29,14 @@ public class MethodInliner extends AstModifier {
      * {@inheritDoc}
      */
     @Override
-    public void applyModification() {
+    public void apply() {
         inline();
     }
 
     /**
      * Inlines methods.
      */
-    public void inline() {
+    private void inline() {
         CtInlineMethodRefactoring refactoring = new CtInlineMethodRefactoring();
 
         // Get all method invocations
