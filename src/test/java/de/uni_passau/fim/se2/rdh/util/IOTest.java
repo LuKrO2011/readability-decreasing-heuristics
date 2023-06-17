@@ -1,9 +1,10 @@
+// SPDX-FileCopyrightText: 2023 Preprocessing Toolbox Contributors
+//
+// SPDX-License-Identifier: EUPL-1.2
+
 package de.uni_passau.fim.se2.rdh.util;
 
-import de.uni_passau.fim.se2.rdh.Main;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import picocli.CommandLine;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +12,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.uni_passau.fim.se2.rdh.Main;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import picocli.CommandLine;
 
 public abstract class IOTest {
 
@@ -26,6 +30,11 @@ public abstract class IOTest {
     protected static final String NEWLINE = System.lineSeparator();
 
     @BeforeEach
+    void setUp() {
+        setupStdinStdout();
+        setupCommandLine();
+    }
+
     void setupStdinStdout() {
         Randomness.setSeed(0);
         originalOutput = System.out;
@@ -39,7 +48,6 @@ public abstract class IOTest {
         originalInput = System.in;
     }
 
-    @BeforeEach
     void setupCommandLine() {
         commandLine = new CommandLine(new Main());
     }
@@ -61,7 +69,7 @@ public abstract class IOTest {
      * Adds the final newline to the output before checking.
      */
     protected void assertOutput(final String output) {
-        assertThat(newOutput.toString(StandardCharsets.UTF_8)).isEqualTo(normalise(output));
+        assertThat(newOutput.toString(StandardCharsets.UTF_8)).isEqualTo(normalise(output) + NEWLINE);
     }
 
     protected void assertOutputContains(final CharSequence... values) {

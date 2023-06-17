@@ -23,38 +23,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MainTest { // extends IOTest {
-
-    private static final String ECHO_COMMAND_NAME = "echo";
-
-    protected CommandLine commandLine;
-
-    private PrintStream originalOutput;
-    private PrintStream originalError;
-    private InputStream originalInput;
-    protected ByteArrayOutputStream newOutput;
-    protected ByteArrayOutputStream newError;
-
-    protected static final String NEWLINE = System.lineSeparator();
-
-    @BeforeEach
-    void setupStdinStdout() {
-        Randomness.setSeed(0);
-        originalOutput = System.out;
-        newOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(newOutput, true, StandardCharsets.UTF_8));
-
-        originalError = System.err;
-        newError = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(newError, true, StandardCharsets.UTF_8));
-
-        originalInput = System.in;
-    }
-
-    @BeforeEach
-    void setupCommandLine() {
-        commandLine = new CommandLine(new Main());
-    }
+class MainTest extends IOTest {
 
     private static final String HELP_TEXT = "" +
             "Usage: readability-decreasing-heuristics [-hV] [-o=<outputPath>]\n" +
@@ -113,8 +82,6 @@ class MainTest { // extends IOTest {
     }
 
     private void execute(int expectedExitCode, String... args) {
-        commandLine = new CommandLine(new Main());
-        
         int exitCode = commandLine.execute(args);
         assertThat(exitCode).isEqualTo(expectedExitCode);
     }
