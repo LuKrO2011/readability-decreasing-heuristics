@@ -18,7 +18,7 @@ import spoon.reflect.visitor.PrinterHelper;
 import spoon.support.Internal;
 
 /**
- * Duplicate of CommentHelper with public printComment(PrinterHelper printer, CtComment comment) method
+ * Duplicate of CommentHelper with public printComment(PrinterHelper printer, CtComment comment) method.
  */
 @Internal
 public class RdcCommentHelper {

@@ -5,60 +5,90 @@ import spoon.reflect.code.CtComment;
 import spoon.reflect.visitor.PrinterHelper;
 import spoon.reflect.visitor.TokenWriter;
 
+/**
+ * This class writes certain tokens to the output.
+ * <p>
+ * With a certain probability (defined in {@link RdcProbabilities}) it will modify the output by adding or removing
+ * tabs, spaces, newlines, etc.
+ * </p><p>
+ * This class is a modified version of {@link spoon.reflect.visitor.DefaultTokenWriter}. It is used by the
+ * {@link spoon.reflect.visitor.DefaultJavaPrettyPrinter}.
+ * </p>
+ */
 public class RdcTokenWriter implements TokenWriter {
 
     private final PrinterHelper printerHelper;
     private final RdcProbabilities probabilities;
 
-    public RdcTokenWriter() {
-        this(new PrinterHelper());
-    }
-
+    /**
+     * Creates a new {@link RdcTokenWriter} with the given {@link PrinterHelper} and {@link RdcProbabilities}.
+     *
+     * @param printerHelper The {@link PrinterHelper} to use.
+     * @param probabilities The {@link RdcProbabilities} to use.
+     */
     public RdcTokenWriter(PrinterHelper printerHelper, RdcProbabilities probabilities) {
         this.printerHelper = printerHelper;
         this.probabilities = probabilities;
     }
 
-    public RdcTokenWriter(PrinterHelper printerHelper) {
-        this(printerHelper, new RdcProbabilities());
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeOperator(String token) {
         printerHelper.write(token);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeSeparator(String token) {
         printerHelper.write(token);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeLiteral(String token) {
         printerHelper.write(token);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeKeyword(String token) {
         printerHelper.write(token);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeIdentifier(String token) {
         printerHelper.write(token);
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeCodeSnippet(String token) {
         printerHelper.write(token);
         return this;
     }
 
+    /**
+     * With a certain probability, this method will remove the given comment.
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeComment(CtComment comment) {
         if (!probabilities.shouldRemoveComment()) {
@@ -68,6 +98,10 @@ public class RdcTokenWriter implements TokenWriter {
         return this;
     }
 
+    /**
+     * With a certain probability, this method will write none or multiple newlines instead of one.
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter writeln() {
 
@@ -86,6 +120,10 @@ public class RdcTokenWriter implements TokenWriter {
         return this;
     }
 
+    /**
+     * With a certain probability, this method will increase none or multiple tabs instead of one.
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter incTab() {
 
@@ -104,6 +142,10 @@ public class RdcTokenWriter implements TokenWriter {
         return this;
     }
 
+    /**
+     * With a certain probability, this method will decrease none or multiple tabs instead of one.
+     * {@inheritDoc}
+     */
     @Override
     public RdcTokenWriter decTab() {
 
@@ -121,11 +163,18 @@ public class RdcTokenWriter implements TokenWriter {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reset() {
         printerHelper.reset();
     }
 
+    /**
+     * With a certain probability, this method will write none or multiple spaces instead of one.
+     * {@inheritDoc}
+     */
     @Override
     public TokenWriter writeSpace() {
 
@@ -144,13 +193,11 @@ public class RdcTokenWriter implements TokenWriter {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PrinterHelper getPrinterHelper() {
         return printerHelper;
-    }
-
-    @Override
-    public String toString() {
-        return printerHelper.toString();
     }
 }
