@@ -21,12 +21,19 @@ public class ReadabilityDecreaser {
   // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
   public static final String CONFIG_FILE_NAME = "config.yaml";
 
-  private final File inputDir; // TODO: Make getter and setter
-  private final File outputDir; // TODO: Make getter and setter
+  public File getInputDir() {
+    return inputDir;
+  }
+
+  public File getOutputDir() {
+    return outputDir;
+  }
+
+  private final File inputDir;
+  private final File outputDir;
 
   private final LocalVariableRenamer localVariableRenamer;
   private final MethodRenamer methodRenamer;
-  // private final AllRenamer allRenamer;
 
   // private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
