@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * Wrapper for {@link Random} to allow for reproducible runs using the same seed.
+ * @author Benedikt Fein - preprocessing toolbox. Limited tests.
  */
 public final class Randomness {
 

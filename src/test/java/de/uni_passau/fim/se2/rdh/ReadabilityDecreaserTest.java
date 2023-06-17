@@ -46,6 +46,12 @@ class ReadabilityDecreaserTest extends ResourcesTest {
         DirectoryFlattener.flatten(new File(outputPath));
     }
 
+    @Test
+    void testDisplay(@TempDir Path outputDir) {
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
+        readabilityDecreaser.display();
+    }
+
     /**
      * Assert that the two files have the same functionality and different content.
      *

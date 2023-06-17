@@ -5,6 +5,7 @@ import java.util.Objects;
 
 /**
  * Represents a path that is used for processing. It can be a console, a directory or a file.
+ * @author Benedikt Fein - preprocessing toolbox. No tests exist.
  */
 public final class ProcessingPath {
 

@@ -25,6 +25,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MainTest extends IOTest {
 
+    private static final String INPUT_PATH = "src/test/resources/code/";
+    private static final String INPUT_FILENAME = "HelloWorld.java";
+    private static final String INPUT = INPUT_PATH + INPUT_FILENAME;
+
     private static final String HELP_TEXT = "" +
             "Usage: readability-decreasing-heuristics [-hV] [-o=<outputPath>]\n" +
             "       [--seed=<seed>] <inputPath>\n" +
@@ -43,6 +47,7 @@ class MainTest extends IOTest {
     @Test
     void testRunWithoutArguments() {
         execute(2);
+        assertErrorContains("Missing required parameter");
     }
 
     @Test
@@ -53,25 +58,32 @@ class MainTest extends IOTest {
 
     @Test
     void testRunInputFile(@TempDir Path tmpDir) {
-        String inputPath = "src/test/resources/code/";
-        String fileName = "HelloWorld.java";
-
-        execute(0, inputPath + fileName, "-o", tmpDir.toString());
+        String seed = "1234";
+        execute(0, INPUT, "--seed", seed, "-o", tmpDir.toString());
 
         // Assert that file exists
-        Path outputFile = tmpDir.resolve(fileName);
+        Path outputFile = tmpDir.resolve(INPUT_FILENAME);
         assertThat(outputFile).exists();
     }
 
     @Test
     void testRunInputDir(@TempDir Path tmpDir) {
-        String inputPath = "src/test/resources/";
-        String dirName = "code";
-
-        execute(0, inputPath + dirName, "-o", tmpDir.toString());
+        execute(0, INPUT_PATH, "-o", tmpDir.toString());
 
         // Assert that the directory is not empty
         assertThat(tmpDir).isNotEmptyDirectory();
+    }
+
+    @Test
+    void testRunWrongInputFileType() {
+        execute(2, INPUT_PATH + "HelloWorld.class");
+        assertErrorContains("The input path must be a Java file (.java) or a directory.");
+    }
+
+    @Test
+    void testGetVersion() {
+        execute(0, "-V");
+        assertOutput("0.0.0\n");
     }
 
     private void execute(int expectedExitCode, String... args) {

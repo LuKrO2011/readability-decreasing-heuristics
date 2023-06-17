@@ -60,7 +60,7 @@ public class DirectoryFlattener {
                     File destFile = new File(directory.getParent(), file.getName());
                     Files.move(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("Could not move file " + file.getAbsolutePath(), e);
                 }
             }
         }

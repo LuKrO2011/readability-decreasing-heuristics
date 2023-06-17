@@ -42,7 +42,7 @@ public class MethodInliner extends Refactoring {
         // Get all method invocations
         List<CtMethod<?>> methods = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
-        if (methods.size() <= 0) {
+        if (methods.size() == 0) {
             log.warn("No methods found");
             return;
         }

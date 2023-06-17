@@ -18,6 +18,11 @@ public class FileManager {
      * @param files the files to check
      */
     public static void checkFiles(File... files) {
+        if (files == null) {
+            log.error("Files are null");
+            return;
+        }
+
         for (File directory : files) {
             checkFile(directory);
         }
@@ -26,11 +31,11 @@ public class FileManager {
     /**
      * Checks if the given file exists.
      *
-     * @param directory the file to check
+     * @param file the file to check
      */
-    public static void checkFile(File directory) {
-        if (directory == null || !directory.exists()) {
-            log.error("Directory does not exist: " + directory);
+    public static void checkFile(File file) {
+        if (file == null || !file.exists()) {
+            log.error("Directory does not exist: " + file);
         }
     }
 
