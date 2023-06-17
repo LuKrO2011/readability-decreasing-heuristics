@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Objects;
 
+/**
+ * Base class for tests that need to access resources.
+ */
 public class ResourcesTest {
 
     protected String resourcesPath;

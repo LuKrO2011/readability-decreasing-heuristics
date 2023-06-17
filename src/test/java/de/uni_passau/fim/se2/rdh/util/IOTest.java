@@ -63,11 +63,6 @@ public abstract class IOTest {
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
     }
 
-    /**
-     * Asserts console output.
-     * <p>
-     * Adds the final newline to the output before checking.
-     */
     protected void assertOutput(final String output) {
         assertThat(newOutput.toString(StandardCharsets.UTF_8)).isEqualTo(normalise(output));
     }
