@@ -16,8 +16,6 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_OUTPUT_DIR;
-import static de.uni_passau.fim.se2.rdh.util.FileManager.checkFile;
-import static de.uni_passau.fim.se2.rdh.util.FileManager.createFolder;
 
 /**
  * The main class of the tool.
@@ -81,7 +79,6 @@ public final class Main implements Callable<Integer> {
         return 0;
     }
 
-    // TODO: Test
     private ProcessingPath getInputPath() {
         if (inputPath == null) {
             return ProcessingPath.console();
@@ -100,7 +97,6 @@ public final class Main implements Callable<Integer> {
         }
     }
 
-    // TODO: Test
     private ProcessingPath getOutputPath() {
         if (outputPath == null) {
             return ProcessingPath.directory(Path.of(DEFAULT_OUTPUT_DIR));
