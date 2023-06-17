@@ -6,6 +6,7 @@ import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
 import spoon.Launcher;
+import spoon.OutputType;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
@@ -82,6 +83,8 @@ public class ReadabilityDecreaser {
 
     // Add a change listener that is needed for RdcJavaPrettyPrinter
     // new ChangeCollector().attachTo(env)
+
+    // env.setOutputType(OutputType.CLASSES);
 
     // Create own prittyprinter
     DefaultJavaPrettyPrinter prettyPrinter = new DefaultJavaPrettyPrinter(env);
