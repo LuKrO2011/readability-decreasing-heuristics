@@ -1,5 +1,8 @@
 package de.uni_passau.fim.se2.rdh.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +12,8 @@ import java.nio.file.StandardCopyOption;
  * Flattens a directory by moving all files in subdirectories to the parent directory and deleting the subdirectories.
  */
 public class DirectoryFlattener {
+
+    private static final Logger log = LoggerFactory.getLogger(DirectoryFlattener.class);
 
     /**
      * Flattens the given directory.
@@ -29,7 +34,7 @@ public class DirectoryFlattener {
                 // Delete empty directory
                 boolean success = file.delete();
                 if (!success) {
-                    throw new RuntimeException("Could not delete directory " + file.getAbsolutePath());
+                    log.error("Could not delete directory " + file.getAbsolutePath());
                 }
             }
         }
@@ -37,6 +42,7 @@ public class DirectoryFlattener {
 
     /**
      * Moves all files in the given directory to the parent directory.
+     *
      * @param directory the directory to move the files from
      */
     private static void moveFiles(File directory) {

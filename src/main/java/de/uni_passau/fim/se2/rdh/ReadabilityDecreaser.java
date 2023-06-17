@@ -6,8 +6,9 @@ import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
-import de.uni_passau.fim.se2.rdh.util.FileManager;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
@@ -15,10 +16,6 @@ import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.support.gui.SpoonModelTree;
-
-import java.io.File;
-
-import static de.uni_passau.fim.se2.rdh.util.FileManager.checkFile;
 
 /**
  * Decreases the readability of Java code.
@@ -29,7 +26,6 @@ import static de.uni_passau.fim.se2.rdh.util.FileManager.checkFile;
  */
 public class ReadabilityDecreaser {
 
-    public static final String DEFAULT_OUTPUT_DIR = "output";
     // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
     public static final String CONFIG_FILE_NAME = "config.yaml";
     private final ProcessingPath inputDir;
@@ -37,7 +33,7 @@ public class ReadabilityDecreaser {
     private final LocalVariableRenamer localVariableRenamer;
     private final MethodRenamer methodRenamer;
 
-    // private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
+    private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
     private final SpoonAPI spoon;
     private final FieldRenamer fieldRenamer;
@@ -81,6 +77,9 @@ public class ReadabilityDecreaser {
 
         // Setup spoon
         setupSpoon();
+
+        // Setup done
+        log.info("ReadabilityDecreaser created with config file: " + configFilePath);
     }
 
     /**

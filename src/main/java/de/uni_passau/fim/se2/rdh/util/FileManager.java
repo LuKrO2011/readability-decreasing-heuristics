@@ -2,10 +2,15 @@ package de.uni_passau.fim.se2.rdh.util;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Utility class for file operations.
  */
 public class FileManager {
+
+    private static final Logger log = LoggerFactory.getLogger(FileManager.class);
 
     /**
      * Checks if the given files exist.
@@ -25,7 +30,7 @@ public class FileManager {
      */
     public static void checkFile(File directory) {
         if (directory == null || !directory.exists()) {
-            throw new IllegalArgumentException("Directory does not exist: " + directory);
+            log.error("Directory does not exist: " + directory);
         }
     }
 
@@ -41,7 +46,7 @@ public class FileManager {
             boolean success = folder.mkdirs();
 
             if (!success) {
-                // log.error("Could not create folder: {}", path);
+                log.error("Could not create folder: {}", path);
             }
         }
         return folder;

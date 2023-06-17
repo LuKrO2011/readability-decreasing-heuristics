@@ -15,8 +15,6 @@ import java.nio.file.Path;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
-import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_OUTPUT_DIR;
-
 /**
  * The main class of the tool.
  * <p>
@@ -33,6 +31,7 @@ import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_OUTPUT_DIR;
 )
 public final class Main implements Callable<Integer> {
 
+    private static final String DEFAULT_OUTPUT_DIR = "output";
     @CommandLine.Parameters(
             index = "0",
             description = "The path to the input. Can be a file or a directory.")
