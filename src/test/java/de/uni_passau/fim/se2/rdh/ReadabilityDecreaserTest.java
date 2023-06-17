@@ -52,53 +52,7 @@ class ReadabilityDecreaserTest extends ResourcesTest {
         readabilityDecreaser.display();
     }
 
-    /**
-     * Assert that the two files have the same functionality and different content.
-     *
-     * @param original     The original file.
-     * @param modification The modified file.
-     */
-    private void assertFileModified(File original, File modification) {
-        assertTrue(original.exists());
-        assertTrue(modification.exists());
 
-        // Assert that the files have the same functionality
-        assertSameFunctionality(original, modification);
-
-        // Assert that the files have different content
-        assertDifferentContent(original, modification);
-    }
-
-    /**
-     * Assert that the two files have the same functionality.
-     *
-     * @param file1 The first file.
-     * @param file2 The second file.
-     */
-    private void assertSameFunctionality(File file1, File file2) {
-        Diff diff = new AstComparator().compare(file1.getPath(), file2.getPath());
-        assertThat(diff.getAllOperations()).isEmpty();
-    }
-
-    /**
-     * Assert that the two files have different content.
-     *
-     * @param file1 The first file.
-     * @param file2 The second file.
-     */
-    private void assertDifferentContent(File file1, File file2) {
-        String file1Content = null;
-        String file2Content = null;
-        try {
-            file1Content = Files.readString(Path.of(file1.getPath()));
-            file2Content = Files.readString(Path.of(file2.getPath()));
-        } catch (IOException e) {
-            fail("Could not read file content.");
-        }
-
-        // Assert that the content is not the same
-        assertNotEquals(file1Content, file2Content);
-    }
 
 
 }

@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.util;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,18 +8,26 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
 // TODO: The disabled tests only work when executed one by one. When executed all at once, the tests fail.
+// TODO: Conflict with other tests using a mock logger.
 @ExtendWith(MockitoExtension.class)
 class FileManagerTest {
 
     @Mock
     private static Logger mockLogger;
+
+    @BeforeAll
+    static void setUp() {
+        mockStatic(LoggerFactory.class, invocation -> mockLogger);
+    }
 
     @Test
     void testCheckFiles(@TempDir File tempDir) {
