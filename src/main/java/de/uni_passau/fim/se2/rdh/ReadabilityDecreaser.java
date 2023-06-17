@@ -5,6 +5,7 @@ import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
+import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.FileManager;
 import spoon.Launcher;
 import spoon.SpoonAPI;
@@ -23,10 +24,11 @@ import static de.uni_passau.fim.se2.rdh.util.FileManager.checkFile;
  * <p>
  * This class is the main entry point for the Readability Decreaser. It is responsible for setting up the
  * spoon environment and calling the refactorings.
+ * </p>
  */
 public class ReadabilityDecreaser {
 
-    private static final String DEFAULT_OUTPUT_DIR = "output";
+    public static final String DEFAULT_OUTPUT_DIR = "output";
     // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
     public static final String CONFIG_FILE_NAME = "config.yaml";
 
@@ -125,6 +127,7 @@ public class ReadabilityDecreaser {
 
     /**
      * Add the given files to the input of spoon.
+     *
      * @param fileNames the names of the files
      */
     public void readInput(String... fileNames) {
@@ -173,6 +176,7 @@ public class ReadabilityDecreaser {
 
     /**
      * Process the given input files using the registered refactorings.
+     *
      * @param fileNames the names of the files
      */
     public void process(String... fileNames) {
@@ -194,6 +198,7 @@ public class ReadabilityDecreaser {
 
     /**
      * Get the input directory.
+     *
      * @return the input directory
      */
     public File getInputDir() {
@@ -202,6 +207,7 @@ public class ReadabilityDecreaser {
 
     /**
      * Get the output directory.
+     *
      * @return the output directory
      */
     public File getOutputDir() {

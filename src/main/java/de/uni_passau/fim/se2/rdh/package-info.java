@@ -1,5 +1,4 @@
-// SPDX-FileCopyrightText: 2023 Preprocessing Toolbox Contributors
-//
-// SPDX-License-Identifier: EUPL-1.2
-
+/**
+ * This package contains the main classes of the readability decreasing heuristic (RDH) preprocessor.
+ */
 package de.uni_passau.fim.se2.rdh;
