@@ -41,6 +41,10 @@ public final class ProcessingPath {
         return OutputPathType.CONSOLE.equals(pathType);
     }
 
+    public String getAbsolutePath() {
+        return path.toAbsolutePath().toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

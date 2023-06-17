@@ -1,10 +1,10 @@
 package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
+import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.AstComparator;
 import gumtree.spoon.diff.Diff;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -25,12 +25,12 @@ class ReadabilityDecreaserTest extends ResourcesTest {
     @ParameterizedTest
     @ValueSource(strings = {"HelloWorld.java", "HeapUtils.java"})
     void testProcess(String fileName, @TempDir Path outputDir) {
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesPath, outputDir.toString());
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
         readabilityDecreaser.process(fileName);
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));
 
-        assertFileModified(new File(resourcesPath, fileName), new File(outputDir.toString(), fileName));
+        assertFileModified(new File(resources, fileName), new File(outputDir.toString(), fileName));
     }
 
     // This test can be used to generate the output without deleting it after the test.
@@ -40,7 +40,7 @@ class ReadabilityDecreaserTest extends ResourcesTest {
         String fileName = "HeapUtils.java";
         String outputPath = "output";
 
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesPath, outputPath);
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(Path.of(outputPath)));
         readabilityDecreaser.process(fileName);
 
         DirectoryFlattener.flatten(new File(outputPath));

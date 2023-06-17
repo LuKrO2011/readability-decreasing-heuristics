@@ -75,7 +75,7 @@ public final class Main implements Callable<Integer> {
      */
     @Override
     public Integer call() {
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(inputPath, outputPath);
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(getInputPath(), getOutputPath());
         readabilityDecreaser.process();
         // spec.commandLine().usage(System.out);
         return 0;

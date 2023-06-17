@@ -7,6 +7,7 @@ import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.FileManager;
+import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
@@ -31,9 +32,8 @@ public class ReadabilityDecreaser {
     public static final String DEFAULT_OUTPUT_DIR = "output";
     // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
     public static final String CONFIG_FILE_NAME = "config.yaml";
-
-    private final File inputDir;
-    private final File outputDir;
+    private final ProcessingPath inputDir;
+    private final ProcessingPath outputDir;
     private final LocalVariableRenamer localVariableRenamer;
     private final MethodRenamer methodRenamer;
 
@@ -44,14 +44,6 @@ public class ReadabilityDecreaser {
     private final MethodInliner methodInliner;
     private final RdcProbabilities probabilities;
 
-    /**
-     * Creates a new ReadabilityDecreaser with default output directory and config.
-     *
-     * @param inputDirPath the path to the input directory
-     */
-    public ReadabilityDecreaser(String inputDirPath) {
-        this(inputDirPath, DEFAULT_OUTPUT_DIR);
-    }
 
     /**
      * Creates a new ReadabilityDecreaser with default config.
@@ -59,7 +51,7 @@ public class ReadabilityDecreaser {
      * @param inputDirPath  the path to the input directory
      * @param outputDirPath the path to the output directory
      */
-    public ReadabilityDecreaser(String inputDirPath, String outputDirPath) {
+    public ReadabilityDecreaser(ProcessingPath inputDirPath, ProcessingPath outputDirPath) {
         this(inputDirPath, outputDirPath, CONFIG_FILE_NAME);
     }
 
@@ -70,14 +62,9 @@ public class ReadabilityDecreaser {
      * @param outputDirPath  the path to the output directory
      * @param configFilePath the path to the config file
      */
-    public ReadabilityDecreaser(String inputDirPath, String outputDirPath, String configFilePath) {
-        // Check input and output directory
-        this.inputDir = new File(inputDirPath);
-        checkFile(inputDir);
-        if (outputDirPath == null) {
-            outputDirPath = DEFAULT_OUTPUT_DIR;
-        }
-        this.outputDir = FileManager.createFolder(outputDirPath);
+    public ReadabilityDecreaser(ProcessingPath inputDirPath, ProcessingPath outputDirPath, String configFilePath) {
+        this.inputDir = inputDirPath;
+        this.outputDir = outputDirPath;
 
         // Create spoon launcher
         this.spoon = new Launcher();
@@ -155,10 +142,6 @@ public class ReadabilityDecreaser {
      * Create the output files (java code) using the modified spoon pretty printer.
      */
     public void writeOutput() {
-        // check if the output directory exists
-        FileManager.checkFile(outputDir);
-
-        // default printing
         spoon.prettyprint();
     }
 
@@ -196,21 +179,5 @@ public class ReadabilityDecreaser {
         new SpoonModelTree(spoon.getFactory());
     }
 
-    /**
-     * Get the input directory.
-     *
-     * @return the input directory
-     */
-    public File getInputDir() {
-        return inputDir;
-    }
 
-    /**
-     * Get the output directory.
-     *
-     * @return the output directory
-     */
-    public File getOutputDir() {
-        return outputDir;
-    }
 }
