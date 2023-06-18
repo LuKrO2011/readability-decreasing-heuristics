@@ -26,10 +26,10 @@ public class RdcProbabilities {
     private final Random random;
 
     // Probabilities of changing the number of characters
-    private List<Double> newline;
-    private List<Double> incTab;
-    private List<Double> decTab;
-    private List<Double> space;
+    private List<Double> newline = List.of(0.0, 1.0);
+    private List<Double> incTab = List.of(0.0, 1.0);
+    private List<Double> decTab = List.of(0.0, 1.0);
+    private List<Double> space = List.of(0.0, 1.0);
 
     // Probabilities of swapping characters with others
     private double newLineInsteadOfSpace;
