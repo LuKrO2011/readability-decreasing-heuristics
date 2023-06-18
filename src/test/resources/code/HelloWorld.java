@@ -1,5 +1,13 @@
+import org.slf4j.Logger;
+
+/**
+ * This sample class contains exactly one method, field and variable.
+ */
 public class HelloWorld {
-    public static void main(String[] args) {
-        int i = 0;
+    
+    private static final int field;
+
+    public void method() {
+        int variable = 0;
     }
 }
