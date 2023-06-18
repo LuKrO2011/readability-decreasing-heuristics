@@ -69,7 +69,7 @@ public class ResourcesTest {
      * @param modification The modified file.
      * @return The diff operations between the two files.
      */
-    private static List<Operation> getDiffOperations(File original, File modification) {
+    protected static List<Operation> getDiffOperations(File original, File modification) {
         Diff diff = null;
         try {
             diff = new AstComparator().compare(original, modification);
@@ -85,42 +85,80 @@ public class ResourcesTest {
      *
      * @param diffOperations The diff operations between the two files.
      */
-    private static void assertSameFunctionality(List<Operation> diffOperations) {
+    protected static void assertSameFunctionality(List<Operation> diffOperations) {
         assertThat(diffOperations).allMatch(ResourcesTest::isRename);
     }
 
-    private static boolean isRenameOfType(Operation<?> operation, Class<? extends CtElement> ctClass) {
+    /**
+     * Check if the operation is a rename operation. It is a rename operation if it is an update operation and the
+     * source node is of the specified type.
+     *
+     * @param operation The operation to check.
+     * @param ctClass   The type of the source node.
+     * @return True if the operation is a rename operation, false otherwise.
+     */
+    protected static boolean isRenameOfType(Operation<?> operation, Class<? extends CtElement> ctClass) {
         return operation instanceof UpdateOperation && ctClass.isInstance(operation.getSrcNode());
     }
 
-    private static boolean isRenameMethod(Operation<?> operation) {
+    /**
+     * Check if the operation is a rename method operation. It is a rename method operation if it is an update
+     * operation and the source node is of type CtMethod or CtInvocation.
+     *
+     * @param operation The operation to check.
+     * @return True if the operation is a rename method operation, false otherwise.
+     */
+    protected static boolean isRenameMethod(Operation<?> operation) {
         return isRenameOfType(operation, CtMethod.class) || isRenameOfType(operation, CtInvocation.class);
     }
 
-    private static boolean isRenameVariable(Operation<?> operation) {
+    /**
+     * Check if the operation is a rename variable operation. It is a rename variable operation if it is an update
+     * operation and the source node is of type CtVariable, CtVariableRead or CtVariableWrite.
+     *
+     * @param operation The operation to check.
+     * @return True if the operation is a rename variable operation, false otherwise.
+     */
+    protected static boolean isRenameVariable(Operation<?> operation) {
         return isRenameOfType(operation, CtVariable.class) || isRenameOfType(operation, CtVariableRead.class) || isRenameOfType(operation, CtVariableWrite.class);
     }
 
-    private static boolean isRenameField(Operation<?> operation) {
+    /**
+     * Check if the operation is a rename field operation. It is a rename field operation if it is an update
+     * operation and the source node is of type CtField, CtFieldRead or CtFieldWrite.
+     *
+     * @param operation The operation to check.
+     * @return True if the operation is a rename field operation, false otherwise.
+     */
+    protected static boolean isRenameField(Operation<?> operation) {
         return isRenameOfType(operation, CtField.class) || isRenameOfType(operation, CtFieldRead.class) || isRenameOfType(operation, CtFieldWrite.class);
     }
 
-    private static boolean isInlineMethod(Operation<?> operation) {
-        // TODO
-        return true;
-    }
-
-    private static boolean isRename(Operation<?> operation) {
+    /**
+     * Check if the operation is a rename operation. It is a rename operation if it is a rename method, variable or
+     * field operation.
+     *
+     * @param operation The operation to check.
+     * @return True if the operation is a rename operation, false otherwise.
+     */
+    protected static boolean isRename(Operation<?> operation) {
         return isRenameMethod(operation) || isRenameVariable(operation) || isRenameField(operation);
     }
 
+    /**
+     * Check if the operation is an inline method operation.
+     * TODO: Implement
+     */
+    protected static boolean isInlineMethod(Operation<?> operation) {
+        throw new IllegalStateException("Not implemented yet.");
+    }
 
     /**
      * Assert that the two files have different content. Files have different content if at least one diff is present.
      *
      * @param diffOperations The diff operations between the two files.
      */
-    private static void assertDifferentContent(List<Operation> diffOperations) {
+    protected static void assertDifferentContent(List<Operation> diffOperations) {
         assertThat(diffOperations.size()).isGreaterThan(0);
     }
 }
