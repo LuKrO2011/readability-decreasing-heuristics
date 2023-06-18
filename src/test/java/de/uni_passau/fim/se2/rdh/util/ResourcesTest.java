@@ -2,15 +2,18 @@ package de.uni_passau.fim.se2.rdh.util;
 
 import gumtree.spoon.AstComparator;
 import gumtree.spoon.diff.Diff;
+import gumtree.spoon.diff.operations.Operation;
+import gumtree.spoon.diff.operations.UpdateOperation;
 import org.junit.jupiter.api.BeforeEach;
+import spoon.reflect.code.*;
+import spoon.reflect.declaration.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,42 +53,74 @@ public class ResourcesTest {
         assertTrue(original.exists());
         assertTrue(modification.exists());
 
+        List<Operation> diffOperations = getDiffOperations(original, modification);
+
         // Assert that the files have the same functionality
-        assertSameFunctionality(original, modification);
+        assertSameFunctionality(diffOperations);
 
         // Assert that the files have different content
-        assertDifferentContent(original, modification);
+        assertDifferentContent(diffOperations);
     }
 
     /**
-     * Assert that the two files have the same functionality.
+     * Get the diff operations between the two files.
      *
-     * @param file1 The first file.
-     * @param file2 The second file.
+     * @param original     The original file.
+     * @param modification The modified file.
+     * @return The diff operations between the two files.
      */
-    private static void assertSameFunctionality(File file1, File file2) {
-        Diff diff = new AstComparator().compare(file1.getPath(), file2.getPath());
-        assertThat(diff.getAllOperations()).isEmpty();
-    }
-
-    /**
-     * Assert that the two files have different content.
-     * TODO: The content is different even with no modification due to the different "default" formatting.
-     *
-     * @param file1 The first file.
-     * @param file2 The second file.
-     */
-    private static void assertDifferentContent(File file1, File file2) {
-        String file1Content = null;
-        String file2Content = null;
+    private static List<Operation> getDiffOperations(File original, File modification) {
+        Diff diff = null;
         try {
-            file1Content = Files.readString(Path.of(file1.getPath()));
-            file2Content = Files.readString(Path.of(file2.getPath()));
-        } catch (IOException e) {
-            fail("Could not read file content.");
+            diff = new AstComparator().compare(original, modification);
+        } catch (Exception e) {
+            fail("Could not compare files.");
         }
+        return diff.getAllOperations();
+    }
 
-        // Assert that the content is not the same
-        assertNotEquals(file1Content, file2Content);
+    /**
+     * Assert that the two files have the same functionality. Files have the same functionality if only rename
+     * operations are present.
+     *
+     * @param diffOperations The diff operations between the two files.
+     */
+    private static void assertSameFunctionality(List<Operation> diffOperations) {
+        assertThat(diffOperations).allMatch(ResourcesTest::isRename);
+    }
+
+    private static boolean isRenameOfType(Operation<?> operation, Class<? extends CtElement> ctClass) {
+        return operation instanceof UpdateOperation && ctClass.isInstance(operation.getSrcNode());
+    }
+
+    private static boolean isRenameMethod(Operation<?> operation) {
+        return isRenameOfType(operation, CtMethod.class) || isRenameOfType(operation, CtInvocation.class);
+    }
+
+    private static boolean isRenameVariable(Operation<?> operation) {
+        return isRenameOfType(operation, CtVariable.class) || isRenameOfType(operation, CtVariableRead.class) || isRenameOfType(operation, CtVariableWrite.class);
+    }
+
+    private static boolean isRenameField(Operation<?> operation) {
+        return isRenameOfType(operation, CtField.class) || isRenameOfType(operation, CtFieldRead.class) || isRenameOfType(operation, CtFieldWrite.class);
+    }
+
+    private static boolean isInlineMethod(Operation<?> operation) {
+        // TODO
+        return true;
+    }
+
+    private static boolean isRename(Operation<?> operation) {
+        return isRenameMethod(operation) || isRenameVariable(operation) || isRenameField(operation);
+    }
+
+
+    /**
+     * Assert that the two files have different content. Files have different content if at least one diff is present.
+     *
+     * @param diffOperations The diff operations between the two files.
+     */
+    private static void assertDifferentContent(List<Operation> diffOperations) {
+        assertThat(diffOperations.size()).isGreaterThan(0);
     }
 }
