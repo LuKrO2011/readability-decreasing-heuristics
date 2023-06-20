@@ -16,16 +16,20 @@ import spoon.support.reflect.code.CtReturnImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-// TODO: Handle static methods
-// TODO: Handle methods with multiple return statements
-// TODO: Handle variable naming conflicts
+/*
+ TODO: Handle static methods
+ TODO: Handle methods with multiple return statements
+ TODO: Handle variable naming conflicts
+*/
 
 /**
  * This class implements the refactoring for inlining a method.
  */
 public class CtInlineMethodRefactoring implements CtRefactoring {
 
-    // The target is a method invocation
+    /**
+     * The target is a method invocation that should be inlined.
+     */
     private CtMethod<?> target;
 
 
@@ -42,12 +46,13 @@ public class CtInlineMethodRefactoring implements CtRefactoring {
         execRefFilter.addExecutable(target.getReference().getExecutableDeclaration());
 
         // Add all executables with same signature
-        target.getFactory().getModel().filterChildren(execRefFilter).forEach((CtConsumer<CtExecutableReference<?>>) t -> {
-            CtElement parent = t.getParent();
-            if (parent instanceof CtInvocation<?>) {
-                invocations.add((CtInvocation<?>) parent);
-            }
-        });
+        target.getFactory().getModel().filterChildren(execRefFilter).forEach(
+                (CtConsumer<CtExecutableReference<?>>) t -> {
+                    CtElement parent = t.getParent();
+                    if (parent instanceof CtInvocation<?>) {
+                        invocations.add((CtInvocation<?>) parent);
+                    }
+                });
 
         // Clone statements
         List<CtStatement> statements = target.getBody().getStatements();
@@ -105,7 +110,7 @@ public class CtInlineMethodRefactoring implements CtRefactoring {
      *
      * @param target The target of the refactoring.
      */
-    public void setTarget(CtMethod<?> target) {
+    public void setTarget(final CtMethod<?> target) {
         this.target = target;
     }
 }

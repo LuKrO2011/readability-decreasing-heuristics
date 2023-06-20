@@ -11,16 +11,25 @@ import java.nio.file.StandardCopyOption;
 /**
  * Flattens a directory by moving all files in subdirectories to the parent directory and deleting the subdirectories.
  */
-public class DirectoryFlattener {
+public final class DirectoryFlattener {
 
-    private static final Logger log = LoggerFactory.getLogger(DirectoryFlattener.class);
+    /**
+     * This constructor is hidden, because this class is not meant to be instantiated.
+     */
+    private DirectoryFlattener() {
+    }
+
+    /**
+     * The logger of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(DirectoryFlattener.class);
 
     /**
      * Flattens the given directory.
      *
      * @param directory the directory to flatten
      */
-    public static void flatten(File directory) {
+    public static void flatten(final File directory) {
         File[] files = directory.listFiles();
         if (files == null) {
             return;
@@ -34,7 +43,7 @@ public class DirectoryFlattener {
                 // Delete empty directory
                 boolean success = file.delete();
                 if (!success) {
-                    log.error("Could not delete directory " + file.getAbsolutePath());
+                    LOG.error("Could not delete directory " + file.getAbsolutePath());
                 }
             }
         }
@@ -45,7 +54,7 @@ public class DirectoryFlattener {
      *
      * @param directory the directory to move the files from
      */
-    private static void moveFiles(File directory) {
+    private static void moveFiles(final File directory) {
         flatten(directory);
 
         File[] files = directory.listFiles();
@@ -60,7 +69,7 @@ public class DirectoryFlattener {
                     File destFile = new File(directory.getParent(), file.getName());
                     Files.move(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    log.error("Could not move file " + file.getAbsolutePath(), e);
+                    LOG.error("Could not move file " + file.getAbsolutePath(), e);
                 }
             }
         }

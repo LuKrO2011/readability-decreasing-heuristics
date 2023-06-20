@@ -16,10 +16,16 @@ import java.util.regex.Pattern;
  */
 public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<?>> {
 
-    public static final Pattern validVariableNameRE = javaIdentifierRE;
+    /**
+     * This regular expression matches all valid variable names.
+     */
+    public static final Pattern VALID_VARIABLE_NAME_REGEX = javaIdentifierRE;
 
+    /**
+     * This constructor sets the regular expression for valid variable names.
+     */
     public CtRenameFieldRefactoring() {
-        super(validVariableNameRE);
+        super(VALID_VARIABLE_NAME_REGEX);
     }
 
     /**
@@ -30,7 +36,8 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
      */
     @Override
     protected void refactorNoCheck() {
-        getTarget().map(new VariableReferenceFunction()).forEach((CtConsumer<CtReference>) t -> t.setSimpleName(newName));
+        getTarget().map(new VariableReferenceFunction()).forEach(
+                (CtConsumer<CtReference>) t -> t.setSimpleName(newName));
         target.setSimpleName(newName);
     }
 }

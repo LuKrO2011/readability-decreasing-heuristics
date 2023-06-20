@@ -20,9 +20,18 @@ import java.util.List;
  */
 public class LocalVariableRenamer extends Refactoring {
 
-    private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
+    /**
+     * The logger of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
 
-    public LocalVariableRenamer(SpoonAPI spoon, RdcProbabilities probabilities) {
+    /**
+     * This constructor sets the spoon instance and the probabilities to be used.
+     *
+     * @param spoon         the spoon instance
+     * @param probabilities the probabilities
+     */
+    public LocalVariableRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         super(spoon, probabilities);
     }
 
@@ -41,10 +50,11 @@ public class LocalVariableRenamer extends Refactoring {
         CtRenameLocalVariableRefactoring refactoring = new CtRenameLocalVariableRefactoring();
 
         // Get all local variables
-        List<CtLocalVariable<Integer>> localVariables = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtLocalVariable.class));
+        List<CtLocalVariable<Integer>> localVariables =
+                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtLocalVariable.class));
 
         if (localVariables.size() == 0) {
-            log.warn("No local variables found");
+            LOG.warn("No local variables found");
             return;
         }
 
@@ -57,7 +67,7 @@ public class LocalVariableRenamer extends Refactoring {
                     refactoring.setNewName("v" + i);
                     refactoring.refactor();
                 } catch (RefactoringException e) {
-                    log.error("Could not rename local variable", e);
+                    LOG.error("Could not rename local variable", e);
                 }
             }
         }

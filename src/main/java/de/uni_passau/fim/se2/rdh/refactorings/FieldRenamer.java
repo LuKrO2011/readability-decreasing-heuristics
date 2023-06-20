@@ -19,9 +19,18 @@ import java.util.List;
  */
 public class FieldRenamer extends Refactoring {
 
-    private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
+    /**
+     * The logger of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
 
-    public FieldRenamer(SpoonAPI spoon, RdcProbabilities probabilities) {
+    /**
+     * This constructor sets the spoon instance and the probabilities to be used.
+     *
+     * @param spoon         the spoon instance
+     * @param probabilities the probabilities
+     */
+    public FieldRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         super(spoon, probabilities);
     }
 
@@ -40,10 +49,11 @@ public class FieldRenamer extends Refactoring {
         CtRenameFieldRefactoring refactoring = new CtRenameFieldRefactoring();
 
         // Get all global variables
-        List<CtField<Integer>> globalVariables = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtField.class));
+        List<CtField<Integer>> globalVariables =
+                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtField.class));
 
         if (globalVariables.size() == 0) {
-            log.warn("No global variables found");
+            LOG.warn("No global variables found");
             return;
         }
 
@@ -59,7 +69,7 @@ public class FieldRenamer extends Refactoring {
                 refactoring.setNewName("f" + i);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                log.error("Could not rename global variable", e);
+                LOG.error("Could not rename global variable", e);
             }
         }
 

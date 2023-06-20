@@ -18,6 +18,10 @@ import java.util.List;
  * It does not work yet.
  */
 public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
+
+    /**
+     * The executable reference of the method that is currently being inlined.
+     */
     private final CtExecutableReference<?> executableRef;
 
     /**
@@ -25,7 +29,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
      *
      * @param executableRef the executable reference
      */
-    public CtInvocationProcessor(CtExecutableReference<?> executableRef) {
+    public CtInvocationProcessor(final CtExecutableReference<?> executableRef) {
         this.executableRef = executableRef;
     }
 
@@ -37,7 +41,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
      * @param element the element that is currently being scanned
      */
     @Override
-    public void process(CtElement element) {
+    public void process(final CtElement element) {
         if (element instanceof CtStatement statement && callsInvocation((CtStatement) element)) {
             CtInvocation<?> invocation = findInvocationInStatement(statement);
 
@@ -48,9 +52,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
 
                 if (!methodBody.isEmpty()) {
                     List<CtElement> directChildren = executableRef.getDirectChildren();
-                    for (CtElement s : directChildren) {
-                        // TODO: Replace invocation with method body
-                    }
+                    // TODO: Replace invocation with method body
                 }
             }
         }
@@ -62,7 +64,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
      * @param statement the statement that is being checked
      * @return true if the statement contains an invocation of the method that is currently being inlined, false
      */
-    private boolean callsInvocation(CtStatement statement) {
+    private boolean callsInvocation(final CtStatement statement) {
 
         // Check if the statement contains an invocation with the same executable reference
         return findInvocationInStatement(statement) != null;
@@ -75,7 +77,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
      * @return the invocation of the method that is currently being inlined in the given statement, null if there is
      * no such invocation
      */
-    private CtInvocation<?> findInvocationInStatement(CtStatement statement) {
+    private CtInvocation<?> findInvocationInStatement(final CtStatement statement) {
 
         // Find the invocation in the statement using a TypeFilter
         return statement.getElements(new TypeFilter<>(CtInvocation.class))
@@ -91,7 +93,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
      * @param invocation the invocation whose method body is returned
      * @return the method body of the given invocation
      */
-    private List<CtStatement> getMethodBody(CtInvocation<?> invocation) {
+    private List<CtStatement> getMethodBody(final CtInvocation<?> invocation) {
 
         // Get the method body by traversing the invocation's target
         CtElement target = invocation.getTarget();

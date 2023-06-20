@@ -8,18 +8,27 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility class for file operations.
  */
-public class FileManager {
+public final class FileManager {
 
-    private static final Logger log = LoggerFactory.getLogger(FileManager.class);
+    /**
+     * This constructor is hidden, because this class is not meant to be instantiated.
+     */
+    private FileManager() {
+    }
+
+    /**
+     * The logger of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(FileManager.class);
 
     /**
      * Checks if the given files exist.
      *
      * @param files the files to check
      */
-    public static void checkFiles(File... files) {
+    public static void checkFiles(final File... files) {
         if (files == null) {
-            log.error("Files are null");
+            LOG.error("Files are null");
             return;
         }
 
@@ -33,9 +42,9 @@ public class FileManager {
      *
      * @param file the file to check
      */
-    public static void checkFile(File file) {
+    public static void checkFile(final File file) {
         if (file == null || !file.exists()) {
-            log.error("Directory does not exist: " + file);
+            LOG.error("Directory does not exist: " + file);
         }
     }
 
@@ -45,13 +54,13 @@ public class FileManager {
      * @param path the path to the folder
      * @return the folder
      */
-    public static File createFolder(String path) {
+    public static File createFolder(final String path) {
         File folder = new File(path);
         if (!folder.exists()) {
             boolean success = folder.mkdirs();
 
             if (!success) {
-                log.error("Could not create folder: {}", path);
+                LOG.error("Could not create folder: {}", path);
             }
         }
         return folder;

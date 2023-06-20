@@ -19,10 +19,16 @@ import java.util.regex.Pattern;
  */
 public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMethod<?>> {
 
-    private static final Pattern validVariableNameRE = javaIdentifierRE;
+    /**
+     * This regular expression matches all valid variable names.
+     */
+    private static final Pattern VALID_VARIABLE_NAME_REGEX = javaIdentifierRE;
 
+    /**
+     * This constructor sets the regular expression for valid variable names.
+     */
     public CtRenameMethodRefactoring() {
-        super(validVariableNameRE);
+        super(VALID_VARIABLE_NAME_REGEX);
     }
 
     /**
@@ -40,12 +46,13 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
         execRefFilter.addExecutable(target.getReference().getExecutableDeclaration());
 
         // Add all executables with same signature
-        target.getFactory().getModel().filterChildren(execRefFilter).forEach((CtConsumer<CtExecutableReference<?>>) t -> {
-            CtElement parent = t.getParent();
-            if (parent instanceof CtInvocation<?>) {
-                invocations.add((CtInvocation<?>) parent);
-            }
-        });
+        target.getFactory().getModel().filterChildren(execRefFilter).forEach(
+                (CtConsumer<CtExecutableReference<?>>) t -> {
+                    CtElement parent = t.getParent();
+                    if (parent instanceof CtInvocation<?>) {
+                        invocations.add((CtInvocation<?>) parent);
+                    }
+                });
 
         // Change name of method
         target.setSimpleName(newName);
