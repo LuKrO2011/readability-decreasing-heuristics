@@ -17,6 +17,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import picocli.CommandLine;
 
+/**
+ * @author Benedikt Fein
+ */
 public abstract class IOTest {
 
     protected CommandLine commandLine;

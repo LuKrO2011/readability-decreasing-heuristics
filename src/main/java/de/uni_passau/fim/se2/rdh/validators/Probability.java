@@ -7,6 +7,9 @@ import jakarta.validation.constraints.DecimalMin;
 
 import java.lang.annotation.*;
 
+/**
+ * Validates a probability value.
+ */
 @Constraint(validatedBy = {})
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -14,7 +17,7 @@ import java.lang.annotation.*;
 @DecimalMin("0.0")
 @DecimalMax("1.0")
 public @interface Probability {
-    String message() default "Invalid probability value";
+    String message() default "Invalid probability value: must be between 0.0 and 1.0";
 
     Class<?>[] groups() default {};
 

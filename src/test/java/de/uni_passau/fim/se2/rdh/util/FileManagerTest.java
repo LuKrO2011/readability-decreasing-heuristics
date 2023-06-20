@@ -18,6 +18,8 @@ import static org.mockito.Mockito.verify;
 
 // TODO: The disabled tests only work when executed one by one. When executed all at once, the tests fail.
 // TODO: Conflict with other tests using a mock logger.
+// Idea: Throw runtime exception after logging error and test for runtime exception?
+// Idea: Use Spring framework?
 @Disabled
 @ExtendWith(MockitoExtension.class)
 class FileManagerTest {

@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * @author Benedikt Fein
+ */
 class RandomnessTest {
 
     @RepeatedTest(10)
