@@ -1,7 +1,9 @@
 package de.uni_passau.fim.se2.rdh.config;
 
-import lombok.Data;
+import de.uni_passau.fim.se2.rdh.validators.Probability;
 import de.uni_passau.fim.se2.rdh.printer.CharacterType;
+import de.uni_passau.fim.se2.rdh.validators.ProbabilityList;
+import lombok.Data;
 
 import java.util.List;
 import java.util.Random;
@@ -26,22 +28,36 @@ public class RdcProbabilities {
     private final Random random;
 
     // Probabilities of changing the number of characters
+    @ProbabilityList
     private List<Double> newline = List.of(0.0, 1.0);
+    @ProbabilityList
     private List<Double> incTab = List.of(0.0, 1.0);
+    @ProbabilityList
     private List<Double> decTab = List.of(0.0, 1.0);
+    @ProbabilityList
     private List<Double> space = List.of(0.0, 1.0);
 
     // Probabilities of swapping characters with others
+    @Probability
     private double newLineInsteadOfSpace;
+    @Probability
     private double spaceInsteadOfNewline;
+    @Probability
     private double incTabInsteadOfDecTab;
+    @Probability
     private double decTabInsteadOfIncTab;
 
+
     // Probabilities of refactorings
+    @Probability
     private double renameVariable;
+    @Probability
     private double renameField;
+    @Probability
     private double renameMethod;
+    @Probability
     private double inlineMethod;
+    @Probability
     private double removeComment;
     // TODO: writeFullyQualifiedName
     // TODO: writeStarImport
