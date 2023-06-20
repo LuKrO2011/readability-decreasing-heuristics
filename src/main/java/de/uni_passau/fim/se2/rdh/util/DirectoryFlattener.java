@@ -14,15 +14,15 @@ import java.nio.file.StandardCopyOption;
 public final class DirectoryFlattener {
 
     /**
+     * The (logger) of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(DirectoryFlattener.class);
+
+    /**
      * This constructor is hidden, because this class is not meant to be instantiated.
      */
     private DirectoryFlattener() {
     }
-
-    /**
-     * The logger of this class.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(DirectoryFlattener.class);
 
     /**
      * Flattens the given directory.
@@ -43,7 +43,9 @@ public final class DirectoryFlattener {
                 // Delete empty directory
                 boolean success = file.delete();
                 if (!success) {
-                    LOG.error("Could not delete directory " + file.getAbsolutePath());
+                    if (LOG.isErrorEnabled()) {
+                        LOG.error("Could not delete directory " + file.getAbsolutePath());
+                    }
                 }
             }
         }
@@ -69,7 +71,9 @@ public final class DirectoryFlattener {
                     File destFile = new File(directory.getParent(), file.getName());
                     Files.move(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e) {
-                    LOG.error("Could not move file " + file.getAbsolutePath(), e);
+                    if (LOG.isErrorEnabled()) {
+                        LOG.error("Could not move file " + file.getAbsolutePath(), e);
+                    }
                 }
             }
         }

@@ -1,7 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class FieldRenamerTest extends RenamerTest {
+class FieldRenamerTest extends RenamerTest {
 
     @Test
     void testRenameField(@TempDir Path outputDir) {
@@ -26,7 +25,7 @@ public class FieldRenamerTest extends RenamerTest {
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
         rdcProbabilities.setRenameField(1.0);
-        Refactoring renamer = new FieldRenamer(spoon, rdcProbabilities);
+        AbstractModification renamer = new FieldRenamer(spoon, rdcProbabilities);
 
         // Perform method renaming
         renamer.apply();

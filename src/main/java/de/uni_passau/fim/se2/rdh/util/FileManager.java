@@ -11,15 +11,15 @@ import org.slf4j.LoggerFactory;
 public final class FileManager {
 
     /**
+     * The (logger) of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(FileManager.class);
+
+    /**
      * This constructor is hidden, because this class is not meant to be instantiated.
      */
     private FileManager() {
     }
-
-    /**
-     * The logger of this class.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(FileManager.class);
 
     /**
      * Checks if the given files exist.
@@ -44,7 +44,9 @@ public final class FileManager {
      */
     public static void checkFile(final File file) {
         if (file == null || !file.exists()) {
-            LOG.error("Directory does not exist: " + file);
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Directory does not exist: " + file);
+            }
         }
     }
 
@@ -60,7 +62,9 @@ public final class FileManager {
             boolean success = folder.mkdirs();
 
             if (!success) {
-                LOG.error("Could not create folder: {}", path);
+                if (LOG.isErrorEnabled()) {
+                    LOG.error("Could not create folder: {}", path);
+                }
             }
         }
         return folder;

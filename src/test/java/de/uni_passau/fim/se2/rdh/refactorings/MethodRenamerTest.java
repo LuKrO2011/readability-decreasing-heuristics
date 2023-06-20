@@ -14,7 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class MethodRenamerTest extends RenamerTest {
+class MethodRenamerTest extends RenamerTest {
 
     @Test
     void testRenameMethod(@TempDir Path outputDir) {
@@ -25,7 +25,7 @@ public class MethodRenamerTest extends RenamerTest {
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
         rdcProbabilities.setRenameMethod(1.0);
-        Refactoring renamer = new MethodRenamer(spoon, rdcProbabilities);
+        AbstractModification renamer = new MethodRenamer(spoon, rdcProbabilities);
 
         // Perform method renaming
         renamer.apply();

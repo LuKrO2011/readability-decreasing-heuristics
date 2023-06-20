@@ -17,10 +17,10 @@ import java.util.List;
  * the {@link RdcProbabilities} class.
  * </p>
  */
-public class MethodInliner extends Refactoring {
+public class MethodInliner extends AbstractModification {
 
     /**
-     * The logger of this class.
+     * The (logger) of this class.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
 
@@ -57,14 +57,13 @@ public class MethodInliner extends Refactoring {
         }
 
         // Rename all local variables to vl0 ... vlN
-        for (int i = 0; i < methods.size(); i++) {
+        for (CtMethod<?> ctMethod : methods) {
             if (!probabilities.shouldInlineMethod()) {
                 continue;
             }
 
-            CtMethod<?> method = methods.get(i);
             try {
-                refactoring.setTarget(method);
+                refactoring.setTarget(ctMethod);
                 refactoring.refactor();
             } catch (RefactoringException e) {
                 LOG.error("Could not inline method", e);

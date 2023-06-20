@@ -30,7 +30,7 @@ public class ResourcesTest {
     protected Path resourcesPath;
     protected URL resourcesURL;
 
-    protected String sampleClass = "HelloWorld.java";
+    protected final String sampleClass = "HelloWorld.java";
 
     @BeforeEach
     void setupResourcesPath() {

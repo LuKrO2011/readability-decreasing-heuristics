@@ -62,8 +62,7 @@ public class CtInlineMethodRefactoring implements CtRefactoring {
         }
 
         // Make the inlining
-        for (int i = 0; i < invocations.size(); i++) {
-            CtStatement invocation = invocations.get(i);
+        for (CtStatement invocation : invocations) {
             CtStatement parent = (CtStatement) invocation.getParent();
 
             // Go upwards in tree until we find a block to which we can append statements
@@ -77,12 +76,10 @@ public class CtInlineMethodRefactoring implements CtRefactoring {
                 for (CtStatement statement : clonedStatements) {
 
                     // Replace right side of assignment with first found return expression
-                    if (statement instanceof CtReturnImpl<?>) {
-                        CtReturnImpl<?> returnStatement = (CtReturnImpl<?>) statement;
+                    if (statement instanceof CtReturnImpl<?> returnStatement) {
                         CtExpression<?> returnedExpression = returnStatement.getReturnedExpression();
                         if (returnedExpression != null) {
-                            if (invocation instanceof CtLocalVariable) {
-                                CtLocalVariable localVariable = (CtLocalVariable) invocation;
+                            if (invocation instanceof CtLocalVariable localVariable) {
                                 localVariable.setAssignment(returnedExpression);
                                 break;
                             }

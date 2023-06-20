@@ -1,8 +1,10 @@
 package de.uni_passau.fim.se2.rdh.config;
 
+import jakarta.validation.Configuration;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
@@ -31,7 +33,7 @@ public class YamlLoaderSaver {
     private String configFilePath = DEFAULT_CONFIG_FILE_PATH;
 
     /**
-     * Loads the given YAML file. The file must be in the resources folder.
+     * Loads the given YAML file. The file must be in the "resources" folder.
      *
      * @param configFileName the name of the YAML file
      * @return the loaded object
@@ -43,7 +45,9 @@ public class YamlLoaderSaver {
             validate(loadedData);
             return loadedData;
         } catch (IOException e) {
-            LOG.error("Could not load config file: {}", e.getMessage());
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Could not load config file: {}", e.getMessage());
+            }
         }
         return null;
     }
@@ -54,18 +58,23 @@ public class YamlLoaderSaver {
      * @param data the object to validate
      */
     private void validate(@NotNull final RdcProbabilities data) {
-        Validator validator = Validation.byDefaultProvider()
+        Configuration<? extends Configuration<?>> validatorConfig = Validation.byDefaultProvider()
                 .configure()
-                .messageInterpolator(new ParameterMessageInterpolator())
-                .buildValidatorFactory().getValidator();
+                .messageInterpolator(new ParameterMessageInterpolator());
 
-        Set<ConstraintViolation<RdcProbabilities>> violations = validator.validate(data);
+        try (ValidatorFactory validatorFactory = validatorConfig.buildValidatorFactory()) {
+            Validator validator = validatorFactory.getValidator();
 
-        if (!violations.isEmpty()) {
-            for (ConstraintViolation<RdcProbabilities> violation : violations) {
-                LOG.error("Invalid config file: {}", violation.getMessage());
+            Set<ConstraintViolation<RdcProbabilities>> violations = validator.validate(data);
+
+            if (!violations.isEmpty()) {
+                for (ConstraintViolation<RdcProbabilities> violation : violations) {
+                    if (LOG.isErrorEnabled()) {
+                        LOG.error("Invalid config file: {}", violation.getMessage());
+                    }
+                }
+                throw new IllegalArgumentException("Invalid config file");
             }
-            throw new IllegalArgumentException("Invalid config file");
         }
     }
 
@@ -98,7 +107,9 @@ public class YamlLoaderSaver {
             // Convert the RdcProbabilities object to YAML and write it to the file
             yaml.dump(object, fw);
         } catch (IOException e) {
-            e.printStackTrace();
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Could not save config file: {}", e.getMessage());
+            }
         }
     }
 

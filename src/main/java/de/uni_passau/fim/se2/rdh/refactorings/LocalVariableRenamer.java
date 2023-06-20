@@ -18,10 +18,10 @@ import java.util.List;
  * on a method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public class LocalVariableRenamer extends Refactoring {
+public class LocalVariableRenamer extends AbstractModification {
 
     /**
-     * The logger of this class.
+     * The (logger) of this class.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
 

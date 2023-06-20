@@ -9,7 +9,7 @@ import spoon.SpoonAPI;
  * The probability for a refactoring to be performed on a method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public abstract class Refactoring {
+public abstract class AbstractModification {
 
     /**
      * The {@link SpoonAPI} to use.
@@ -30,12 +30,12 @@ public abstract class Refactoring {
     protected final RdcProbabilities probabilities;
 
     /**
-     * Creates a new {@link Refactoring} with the given {@link SpoonAPI} and {@link RdcProbabilities}.
+     * Creates a new {@link AbstractModification} with the given {@link SpoonAPI} and {@link RdcProbabilities}.
      *
      * @param spoon         The {@link SpoonAPI}
      * @param probabilities The {@link RdcProbabilities}
      */
-    public Refactoring(final SpoonAPI spoon, final RdcProbabilities probabilities) {
+    public AbstractModification(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         this.spoon = spoon;
         this.probabilities = new RdcProbabilities(probabilities);
     }

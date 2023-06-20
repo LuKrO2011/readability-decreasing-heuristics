@@ -73,7 +73,7 @@ public final class Main implements Callable<Integer> {
             description = "A number that is used as seed to initialize the random instance to allow for reproducible "
                     + "runs."
     )
-    void setSeed(final int seed) {
+    public void setSeed(final int seed) {
         Randomness.setSeed(seed);
     }
 

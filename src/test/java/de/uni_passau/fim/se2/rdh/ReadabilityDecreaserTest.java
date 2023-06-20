@@ -15,7 +15,7 @@ import java.nio.file.Path;
 
 class ReadabilityDecreaserTest extends ResourcesTest {
 
-    private static String ALL_RENAME_REFACTORINGS_CONFIG = "config-rename.yaml";
+    private final static String ALL_RENAME_REFACTORINGS_CONFIG = "config-rename.yaml";
 
     @ParameterizedTest
     @ValueSource(strings = {"HelloWorld.java", "HeapUtils.java"})

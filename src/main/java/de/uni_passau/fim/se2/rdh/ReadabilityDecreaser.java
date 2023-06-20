@@ -7,7 +7,7 @@ import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
 import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.Refactoring;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class ReadabilityDecreaser {
 
     private final SpoonAPI spoon;
     private final RdcProbabilities probabilities;
-    private List<Refactoring> refactorings;
+    private final List<AbstractModification> modifications;
 
 
     /**
@@ -70,7 +70,7 @@ public class ReadabilityDecreaser {
         probabilities = (RdcProbabilities) yamlReaderWriter.load(configFilePath);
 
         // Create the refactorings
-        refactorings = List.of(
+        modifications = List.of(
                 new LocalVariableRenamer(spoon, probabilities),
                 new FieldRenamer(spoon, probabilities),
                 new MethodRenamer(spoon, probabilities),
@@ -80,7 +80,9 @@ public class ReadabilityDecreaser {
         setupSpoon();
 
         // Setup done
-        LOG.info("ReadabilityDecreaser created with config file: " + configFilePath);
+        if (LOG.isInfoEnabled()) {
+            LOG.info("ReadabilityDecreaser created with config file: " + configFilePath);
+        }
     }
 
     /**
@@ -150,7 +152,7 @@ public class ReadabilityDecreaser {
      */
     public void process() {
         readInput();
-        refactorings.forEach(Refactoring::apply);
+        modifications.forEach(AbstractModification::apply);
         writeOutput();
     }
 
@@ -161,7 +163,7 @@ public class ReadabilityDecreaser {
      */
     public void process(final String... fileNames) {
         readInput(fileNames);
-        refactorings.forEach(Refactoring::apply);
+        modifications.forEach(AbstractModification::apply);
         writeOutput();
     }
 

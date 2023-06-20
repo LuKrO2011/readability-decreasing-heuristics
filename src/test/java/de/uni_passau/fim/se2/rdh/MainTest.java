@@ -5,21 +5,10 @@
 package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.util.IOTest;
-import de.uni_passau.fim.se2.rdh.util.Randomness;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import picocli.CommandLine;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,19 +18,20 @@ class MainTest extends IOTest {
     private static final String INPUT_FILENAME = "HelloWorld.java";
     private static final String INPUT = INPUT_PATH + INPUT_FILENAME;
 
-    private static final String HELP_TEXT = "" +
-            "Usage: readability-decreasing-heuristics [-hV] [-o=<outputPath>]\n" +
-            "       [--seed=<seed>] <inputPath>\n" +
-            "Heuristics for decreasing the readability of Java source code.\n" +
-            "      <inputPath>     The path to the input. Can be a file or a directory.\n" +
-            "  -h, --help          Show this help message and exit.\n" +
-            "  -o, --output=<outputPath>\n" +
-            "                      The path to the output directory. If not specified, the\n" +
-            "                        output is written into the directory of the input\n" +
-            "                        (file).\n" +
-            "      --seed=<seed>   A number that is used as seed to initialize the random\n" +
-            "                        instance to allow for reproducible runs.\n" +
-            "  -V, --version       Print version information and exit.\n";
+    private static final String HELP_TEXT = """
+            Usage: readability-decreasing-heuristics [-hV] [-o=<outputPath>]
+                   [--seed=<seed>] <inputPath>
+            Heuristics for decreasing the readability of Java source code.
+                  <inputPath>     The path to the input. Can be a file or a directory.
+              -h, --help          Show this help message and exit.
+              -o, --output=<outputPath>
+                                  The path to the output directory. If not specified, the
+                                    output is written into the directory of the input
+                                    (file).
+                  --seed=<seed>   A number that is used as seed to initialize the random
+                                    instance to allow for reproducible runs.
+              -V, --version       Print version information and exit.
+            """;
 
 
     @Test

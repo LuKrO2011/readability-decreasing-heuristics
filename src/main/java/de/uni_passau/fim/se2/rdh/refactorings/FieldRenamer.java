@@ -17,10 +17,10 @@ import java.util.List;
  * method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
-public class FieldRenamer extends Refactoring {
+public class FieldRenamer extends AbstractModification {
 
     /**
-     * The logger of this class.
+     * The (logger) of this class.
      */
     private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
 
