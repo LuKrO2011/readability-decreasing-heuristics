@@ -28,7 +28,7 @@ public class RdcTokenWriter implements TokenWriter {
      */
     public RdcTokenWriter(final PrinterHelper printerHelper, final RdcProbabilities probabilities) {
         this.printerHelper = printerHelper;
-        this.probabilities = probabilities;
+        this.probabilities = new RdcProbabilities(probabilities);
     }
 
     /**

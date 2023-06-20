@@ -34,6 +34,15 @@ public final class Randomness {
     }
 
     /**
+     * Returns a double uniformly.
+     *
+     * @return A uniformly and random created double.
+     */
+    public static double nextDouble() {
+        return RANDOM.nextDouble();
+    }
+
+    /**
      * Creates a random string in lower cases.
      *
      * @param limit The maximal limit of the length.

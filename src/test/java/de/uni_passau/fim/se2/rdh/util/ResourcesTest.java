@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,13 +71,13 @@ public class ResourcesTest {
      * @return The diff operations between the two files.
      */
     protected static List<Operation> getDiffOperations(File original, File modification) {
-        Diff diff = null;
         try {
-            diff = new AstComparator().compare(original, modification);
+            Diff diff = new AstComparator().compare(original, modification);
+            return diff.getAllOperations();
         } catch (Exception e) {
             fail("Could not compare files.");
         }
-        return diff.getAllOperations();
+        return new ArrayList<>();
     }
 
     /**
@@ -102,8 +103,8 @@ public class ResourcesTest {
     }
 
     /**
-     * Check if the operation is a rename method operation. It is a rename method operation if it is an update
-     * operation and the source node is of type CtMethod or CtInvocation.
+     * Check if the operation is a rename method operation. It is a rename method operation if it is an update operation
+     * and the source node is of type CtMethod or CtInvocation.
      *
      * @param operation The operation to check.
      * @return True if the operation is a rename method operation, false otherwise.
@@ -120,18 +121,20 @@ public class ResourcesTest {
      * @return True if the operation is a rename variable operation, false otherwise.
      */
     protected static boolean isRenameVariable(Operation<?> operation) {
-        return isRenameOfType(operation, CtVariable.class) || isRenameOfType(operation, CtVariableRead.class) || isRenameOfType(operation, CtVariableWrite.class);
+        return isRenameOfType(operation, CtVariable.class) || isRenameOfType(operation, CtVariableRead.class)
+                || isRenameOfType(operation, CtVariableWrite.class);
     }
 
     /**
-     * Check if the operation is a rename field operation. It is a rename field operation if it is an update
-     * operation and the source node is of type CtField, CtFieldRead or CtFieldWrite.
+     * Check if the operation is a rename field operation. It is a rename field operation if it is an update operation
+     * and the source node is of type CtField, CtFieldRead or CtFieldWrite.
      *
      * @param operation The operation to check.
      * @return True if the operation is a rename field operation, false otherwise.
      */
     protected static boolean isRenameField(Operation<?> operation) {
-        return isRenameOfType(operation, CtField.class) || isRenameOfType(operation, CtFieldRead.class) || isRenameOfType(operation, CtFieldWrite.class);
+        return isRenameOfType(operation, CtField.class) || isRenameOfType(operation, CtFieldRead.class)
+                || isRenameOfType(operation, CtFieldWrite.class);
     }
 
     /**

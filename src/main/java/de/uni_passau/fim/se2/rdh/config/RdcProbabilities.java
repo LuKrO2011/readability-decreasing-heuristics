@@ -1,12 +1,13 @@
 package de.uni_passau.fim.se2.rdh.config;
 
+import de.uni_passau.fim.se2.rdh.util.Randomness;
 import de.uni_passau.fim.se2.rdh.validators.Probability;
 import de.uni_passau.fim.se2.rdh.printer.CharacterType;
 import de.uni_passau.fim.se2.rdh.validators.ProbabilityList;
-import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * This class contains the probabilities for the refactorings and the probabilities for changing the number of
@@ -22,10 +23,7 @@ import java.util.Random;
  * probability for 2 newlines is 0.2. Then the list would look like this: [0.5, 0.3, 0.2].
  * </p>
  */
-@Data
-public class RdcProbabilities {
-
-    private final Random random;
+public final class RdcProbabilities {
 
     // Probabilities of changing the number of characters
     @ProbabilityList
@@ -63,19 +61,30 @@ public class RdcProbabilities {
     // TODO: writeStarImport
 
     /**
-     * Creates a new {@link RdcProbabilities} with a new {@link Random} object.
+     * Creates a new {@link RdcProbabilities} object.
      */
     public RdcProbabilities() {
-        this(new Random());
     }
 
     /**
-     * Creates a new {@link RdcProbabilities} with the given {@link Random} object.
+     * Creates a new {@link RdcProbabilities} object with the given probabilities.
      *
-     * @param random The {@link Random} object to use.
+     * @param probabilities The probabilities to use.
      */
-    public RdcProbabilities(final Random random) {
-        this.random = random;
+    public RdcProbabilities(final RdcProbabilities probabilities) {
+        this.newline = new ArrayList<>(probabilities.newline);
+        this.incTab = new ArrayList<>(probabilities.incTab);
+        this.decTab = new ArrayList<>(probabilities.decTab);
+        this.space = new ArrayList<>(probabilities.space);
+        this.newLineInsteadOfSpace = probabilities.newLineInsteadOfSpace;
+        this.spaceInsteadOfNewline = probabilities.spaceInsteadOfNewline;
+        this.incTabInsteadOfDecTab = probabilities.incTabInsteadOfDecTab;
+        this.decTabInsteadOfIncTab = probabilities.decTabInsteadOfIncTab;
+        this.renameVariable = probabilities.renameVariable;
+        this.renameField = probabilities.renameField;
+        this.renameMethod = probabilities.renameMethod;
+        this.inlineMethod = probabilities.inlineMethod;
+        this.removeComment = probabilities.removeComment;
     }
 
     /**
@@ -87,7 +96,7 @@ public class RdcProbabilities {
     public int getRandomNumberOf(final CharacterType characterType) {
         List<Double> probabilities = getProbabilitiesFor(characterType);
 
-        double randomValue = random.nextDouble();
+        double randomValue = Randomness.nextDouble();
 
         double accumulatedProbability = 0.0;
         for (int i = 0; i < probabilities.size(); i++) {
@@ -126,7 +135,7 @@ public class RdcProbabilities {
      */
     public boolean shouldSwap(final CharacterType characterType) {
         double probability = getSwapProbabilityFor(characterType);
-        return random.nextDouble() <= probability;
+        return Randomness.nextDouble() <= probability;
     }
 
     /**
@@ -152,7 +161,7 @@ public class RdcProbabilities {
      * @return Whether a variable should be renamed.
      */
     public boolean shouldRenameVariable() {
-        return random.nextDouble() <= renameVariable;
+        return Randomness.nextDouble() <= renameVariable;
     }
 
     /**
@@ -161,7 +170,7 @@ public class RdcProbabilities {
      * @return Whether a field (global variable) should be renamed.
      */
     public boolean shouldRenameField() {
-        return random.nextDouble() <= renameField;
+        return Randomness.nextDouble() <= renameField;
     }
 
     /**
@@ -170,7 +179,7 @@ public class RdcProbabilities {
      * @return Whether a method should be renamed.
      */
     public boolean shouldRenameMethod() {
-        return random.nextDouble() <= renameMethod;
+        return Randomness.nextDouble() <= renameMethod;
     }
 
     /**
@@ -179,7 +188,7 @@ public class RdcProbabilities {
      * @return Whether a method should be inlined.
      */
     public boolean shouldInlineMethod() {
-        return random.nextDouble() <= inlineMethod;
+        return Randomness.nextDouble() <= inlineMethod;
     }
 
     /**
@@ -188,6 +197,110 @@ public class RdcProbabilities {
      * @return Whether a comment should be removed.
      */
     public boolean shouldRemoveComment() {
-        return random.nextDouble() <= removeComment;
+        return Randomness.nextDouble() <= removeComment;
+    }
+
+    public List<Double> getNewline() {
+        return Collections.unmodifiableList(newline);
+    }
+
+    public void setNewline(final List<Double> newline) {
+        this.newline = new ArrayList<>(newline);
+    }
+
+    public List<Double> getIncTab() {
+        return Collections.unmodifiableList(incTab);
+    }
+
+    public void setIncTab(final List<Double> incTab) {
+        this.incTab = new ArrayList<>(incTab);
+    }
+
+    public List<Double> getDecTab() {
+        return Collections.unmodifiableList(decTab);
+    }
+
+    public void setDecTab(final List<Double> decTab) {
+        this.decTab = new ArrayList<>(decTab);
+    }
+
+    public List<Double> getSpace() {
+        return Collections.unmodifiableList(space);
+    }
+
+    public void setSpace(final List<Double> space) {
+        this.space = new ArrayList<>(space);
+    }
+
+    public double getNewLineInsteadOfSpace() {
+        return newLineInsteadOfSpace;
+    }
+
+    public void setNewLineInsteadOfSpace(final double newLineInsteadOfSpace) {
+        this.newLineInsteadOfSpace = newLineInsteadOfSpace;
+    }
+
+    public double getSpaceInsteadOfNewline() {
+        return spaceInsteadOfNewline;
+    }
+
+    public void setSpaceInsteadOfNewline(final double spaceInsteadOfNewline) {
+        this.spaceInsteadOfNewline = spaceInsteadOfNewline;
+    }
+
+    public double getIncTabInsteadOfDecTab() {
+        return incTabInsteadOfDecTab;
+    }
+
+    public void setIncTabInsteadOfDecTab(final double incTabInsteadOfDecTab) {
+        this.incTabInsteadOfDecTab = incTabInsteadOfDecTab;
+    }
+
+    public double getDecTabInsteadOfIncTab() {
+        return decTabInsteadOfIncTab;
+    }
+
+    public void setDecTabInsteadOfIncTab(final double decTabInsteadOfIncTab) {
+        this.decTabInsteadOfIncTab = decTabInsteadOfIncTab;
+    }
+
+    public double getRenameVariable() {
+        return renameVariable;
+    }
+
+    public void setRenameVariable(final double renameVariable) {
+        this.renameVariable = renameVariable;
+    }
+
+    public double getRenameField() {
+        return renameField;
+    }
+
+    public void setRenameField(final double renameField) {
+        this.renameField = renameField;
+    }
+
+    public double getRenameMethod() {
+        return renameMethod;
+    }
+
+    public void setRenameMethod(final double renameMethod) {
+        this.renameMethod = renameMethod;
+    }
+
+    public double getInlineMethod() {
+        return inlineMethod;
+    }
+
+    public void setInlineMethod(final double inlineMethod) {
+        this.inlineMethod = inlineMethod;
+    }
+
+    public double getRemoveComment() {
+        return removeComment;
+    }
+
+    public void setRemoveComment(final double removeComment) {
+        this.removeComment = removeComment;
     }
 }

@@ -3,6 +3,7 @@ package de.uni_passau.fim.se2.rdh.config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.yaml.snakeyaml.constructor.ConstructorException;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -50,7 +51,7 @@ class YamlLoaderSaverTest {
 
     @Test
     void testInvalidConfiguration() {
-        assertThrows(IllegalArgumentException.class, () -> yaml.load("config-invalid.yaml"));
+        assertThrows(ConstructorException.class, () -> yaml.load("config-invalid.yaml"));
     }
 
 

@@ -37,7 +37,7 @@ public abstract class Refactoring {
      */
     public Refactoring(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         this.spoon = spoon;
-        this.probabilities = probabilities;
+        this.probabilities = new RdcProbabilities(probabilities);
     }
 
     /**

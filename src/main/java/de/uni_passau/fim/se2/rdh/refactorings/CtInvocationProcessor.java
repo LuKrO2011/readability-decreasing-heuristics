@@ -51,7 +51,7 @@ public class CtInvocationProcessor extends AbstractProcessor<CtElement> {
                 List<CtStatement> methodBody = getMethodBody(invocation);
 
                 if (!methodBody.isEmpty()) {
-                    List<CtElement> directChildren = executableRef.getDirectChildren();
+                    executableRef.getDirectChildren();
                     // TODO: Replace invocation with method body
                 }
             }

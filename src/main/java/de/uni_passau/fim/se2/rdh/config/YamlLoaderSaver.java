@@ -14,6 +14,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /**
@@ -85,7 +86,7 @@ public class YamlLoaderSaver {
      */
     public void save(@NotBlank final String configFileName, @NotNull final Object object) {
 
-        try (FileWriter fw = new FileWriter(configFilePath + "/" + configFileName)) {
+        try (FileWriter fw = new FileWriter(configFilePath + "/" + configFileName, StandardCharsets.UTF_8)) {
 
             // Create DumperOptions to configure the output format
             DumperOptions options = new DumperOptions();
