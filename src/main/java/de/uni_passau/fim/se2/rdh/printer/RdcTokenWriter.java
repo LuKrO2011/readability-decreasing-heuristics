@@ -26,7 +26,7 @@ public class RdcTokenWriter implements TokenWriter {
      * @param printerHelper The {@link PrinterHelper} to use.
      * @param probabilities The {@link RdcProbabilities} to use.
      */
-    public RdcTokenWriter(PrinterHelper printerHelper, RdcProbabilities probabilities) {
+    public RdcTokenWriter(final PrinterHelper printerHelper, final RdcProbabilities probabilities) {
         this.printerHelper = printerHelper;
         this.probabilities = probabilities;
     }
@@ -35,7 +35,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeOperator(String token) {
+    public RdcTokenWriter writeOperator(final String token) {
         printerHelper.write(token);
         return this;
     }
@@ -44,7 +44,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeSeparator(String token) {
+    public RdcTokenWriter writeSeparator(final String token) {
         printerHelper.write(token);
         return this;
     }
@@ -53,7 +53,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeLiteral(String token) {
+    public RdcTokenWriter writeLiteral(final String token) {
         printerHelper.write(token);
         return this;
     }
@@ -62,7 +62,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeKeyword(String token) {
+    public RdcTokenWriter writeKeyword(final String token) {
         printerHelper.write(token);
         return this;
     }
@@ -71,7 +71,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeIdentifier(String token) {
+    public RdcTokenWriter writeIdentifier(final String token) {
         printerHelper.write(token);
         return this;
     }
@@ -80,7 +80,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeCodeSnippet(String token) {
+    public RdcTokenWriter writeCodeSnippet(final String token) {
         printerHelper.write(token);
         return this;
     }
@@ -90,7 +90,7 @@ public class RdcTokenWriter implements TokenWriter {
      * {@inheritDoc}
      */
     @Override
-    public RdcTokenWriter writeComment(CtComment comment) {
+    public RdcTokenWriter writeComment(final CtComment comment) {
         if (!probabilities.shouldRemoveComment()) {
             RdcCommentHelper.printComment(printerHelper, comment);
         }

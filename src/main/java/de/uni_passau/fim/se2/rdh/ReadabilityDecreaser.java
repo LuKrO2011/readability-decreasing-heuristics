@@ -2,7 +2,12 @@ package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
-import de.uni_passau.fim.se2.rdh.refactorings.*;
+
+import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
+import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.Refactoring;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,17 +24,16 @@ import java.util.List;
 /**
  * Decreases the readability of Java code.
  * <p>
- * This class is the main entry point for the Readability Decreaser. It is responsible for setting up the
- * spoon environment and calling the refactorings.
+ * This class is the main entry point for the Readability Decreaser. It is responsible for setting up the spoon
+ * environment and calling the refactorings.
  * </p>
  */
 public class ReadabilityDecreaser {
 
-    // public static final String CONFIG_FILE_NAME = "config-no-modification.yaml";
-    public static final String CONFIG_FILE_NAME = "config.yaml";
+    private static final String CONFIG_FILE_NAME = "config.yaml";
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
-    private static final Logger log = LoggerFactory.getLogger(ReadabilityDecreaser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
     private final SpoonAPI spoon;
     private final RdcProbabilities probabilities;
@@ -42,7 +46,7 @@ public class ReadabilityDecreaser {
      * @param inputDirPath  the path to the input directory
      * @param outputDirPath the path to the output directory
      */
-    public ReadabilityDecreaser(ProcessingPath inputDirPath, ProcessingPath outputDirPath) {
+    public ReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath) {
         this(inputDirPath, outputDirPath, CONFIG_FILE_NAME);
     }
 
@@ -53,7 +57,8 @@ public class ReadabilityDecreaser {
      * @param outputDirPath  the path to the output directory
      * @param configFilePath the path to the config file
      */
-    public ReadabilityDecreaser(ProcessingPath inputDirPath, ProcessingPath outputDirPath, String configFilePath) {
+    public ReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
+                                final String configFilePath) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
 
@@ -75,7 +80,7 @@ public class ReadabilityDecreaser {
         setupSpoon();
 
         // Setup done
-        log.info("ReadabilityDecreaser created with config file: " + configFilePath);
+        LOG.info("ReadabilityDecreaser created with config file: " + configFilePath);
     }
 
     /**
@@ -112,7 +117,7 @@ public class ReadabilityDecreaser {
      *
      * @param fileNames the names of the files
      */
-    public void readInput(String... fileNames) {
+    public void readInput(final String... fileNames) {
 
         // Add all files with the given names to the input
         for (String fileName : fileNames) {
@@ -154,7 +159,7 @@ public class ReadabilityDecreaser {
      *
      * @param fileNames the names of the files
      */
-    public void process(String... fileNames) {
+    public void process(final String... fileNames) {
         readInput(fileNames);
         refactorings.forEach(Refactoring::apply);
         writeOutput();

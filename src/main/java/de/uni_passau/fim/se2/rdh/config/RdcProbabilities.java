@@ -74,7 +74,7 @@ public class RdcProbabilities {
      *
      * @param random The {@link Random} object to use.
      */
-    public RdcProbabilities(Random random) {
+    public RdcProbabilities(final Random random) {
         this.random = random;
     }
 
@@ -84,10 +84,9 @@ public class RdcProbabilities {
      * @param characterType The {@link CharacterType} to get the number of characters for.
      * @return A random number of characters.
      */
-    public int getRandomNumberOf(CharacterType characterType) {
+    public int getRandomNumberOf(final CharacterType characterType) {
         List<Double> probabilities = getProbabilitiesFor(characterType);
 
-        Random random = new Random();
         double randomValue = random.nextDouble();
 
         double accumulatedProbability = 0.0;
@@ -110,7 +109,7 @@ public class RdcProbabilities {
      * @return The probabilities for the given {@link CharacterType}.
      */
     // TODO: How can this be done more elegant using a enum constructor?
-    private List<Double> getProbabilitiesFor(CharacterType characterType) {
+    private List<Double> getProbabilitiesFor(final CharacterType characterType) {
         return switch (characterType) {
             case NEWLINE -> newline;
             case INC_TAB -> incTab;
@@ -125,7 +124,7 @@ public class RdcProbabilities {
      * @param characterType The {@link CharacterType} to check.
      * @return Whether the given {@link CharacterType} should be swapped with another character.
      */
-    public boolean shouldSwap(CharacterType characterType) {
+    public boolean shouldSwap(final CharacterType characterType) {
         double probability = getSwapProbabilityFor(characterType);
         return random.nextDouble() <= probability;
     }
@@ -137,7 +136,7 @@ public class RdcProbabilities {
      * @return The probability for swapping the given {@link CharacterType} with another character.
      */
     // TODO: How can this be done more elegant using a enum constructor?
-    private double getSwapProbabilityFor(CharacterType characterType) {
+    private double getSwapProbabilityFor(final CharacterType characterType) {
         return switch (characterType) {
             case NEWLINE -> newLineInsteadOfSpace;
             case SPACE -> spaceInsteadOfNewline;

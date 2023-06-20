@@ -15,7 +15,7 @@ public class ProbabilityListValidator implements ConstraintValidator<Probability
      * {@inheritDoc}
      */
     @Override
-    public boolean isValid(List<Double> probabilities, ConstraintValidatorContext context) {
+    public boolean isValid(final List<Double> probabilities, final ConstraintValidatorContext context) {
         if (probabilities == null || probabilities.isEmpty()) {
             return false;
         }

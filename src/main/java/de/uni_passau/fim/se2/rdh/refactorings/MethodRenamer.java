@@ -8,7 +8,7 @@ import spoon.refactoring.RefactoringException;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Renames methods to m0 ... mN.
@@ -18,9 +18,19 @@ import java.util.*;
  * </p>
  */
 public class MethodRenamer extends Refactoring {
-    private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
 
-    public MethodRenamer(SpoonAPI spoon, RdcProbabilities probabilities) {
+    /**
+     * The logger of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
+
+    /**
+     * This constructor sets the spoon instance and the probabilities to be used.
+     *
+     * @param spoon         the spoon instance
+     * @param probabilities the probabilities
+     */
+    public MethodRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         super(spoon, probabilities);
     }
 
@@ -39,10 +49,11 @@ public class MethodRenamer extends Refactoring {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
         // Get all local variables
-        List<CtMethod<Integer>> methods = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
+        List<CtMethod<Integer>> methods =
+                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
         if (methods.size() == 0) {
-            log.warn("No methods found");
+            LOG.warn("No methods found");
             return;
         }
 
@@ -58,7 +69,7 @@ public class MethodRenamer extends Refactoring {
                 refactoring.setNewName("m" + i);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                log.error("Could not rename method", e);
+                LOG.error("Could not rename method", e);
             }
         }
     }

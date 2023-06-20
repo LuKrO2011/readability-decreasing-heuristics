@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * Renames global variables.
  * <p>
- * This class is used to rename global variables to f0 ... fN. The probability for this refactoring to be performed
- * on a method is defined in the {@link RdcProbabilities} class.
+ * This class is used to rename global variables to f0 ... fN. The probability for this refactoring to be performed on a
+ * method is defined in the {@link RdcProbabilities} class.
  * </p>
  */
 public class FieldRenamer extends Refactoring {

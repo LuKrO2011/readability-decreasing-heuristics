@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+    <suppress checks=".*" files="src[\\/]main[\\/]resources[\\/]"/>
+    <suppress checks=".*" files="src[\\/]test[\\/]resources[\\/]"/>
+
+    <!-- Suppresses all checks for not own files -->
+    <suppress checks=".*" files="ProcessingPath.java"/>
+    <suppress checks=".*" files="Randomness.java"/>
+    <suppress checks=".*" files="RdcCommentHelper.java"/>
+</suppressions>

@@ -19,9 +19,18 @@ import java.util.List;
  */
 public class MethodInliner extends Refactoring {
 
-    private static final Logger log = LoggerFactory.getLogger(MethodRenamer.class);
+    /**
+     * The logger of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
 
-    public MethodInliner(SpoonAPI spoon, RdcProbabilities probabilities) {
+    /**
+     * This constructor sets the spoon instance and the probabilities to be used.
+     *
+     * @param spoon         the spoon instance
+     * @param probabilities the probabilities
+     */
+    public MethodInliner(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         super(spoon, probabilities);
     }
 
@@ -43,7 +52,7 @@ public class MethodInliner extends Refactoring {
         List<CtMethod<?>> methods = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
         if (methods.size() == 0) {
-            log.warn("No methods found");
+            LOG.warn("No methods found");
             return;
         }
 
@@ -58,7 +67,7 @@ public class MethodInliner extends Refactoring {
                 refactoring.setTarget(method);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                log.error("Could not inline method", e);
+                LOG.error("Could not inline method", e);
             }
         }
     }

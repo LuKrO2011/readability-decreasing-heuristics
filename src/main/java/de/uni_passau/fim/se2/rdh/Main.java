@@ -18,8 +18,8 @@ import java.util.concurrent.Callable;
 /**
  * The main class of the tool.
  * <p>
- * This class is the entry point of the tool. It is responsible for parsing the command line arguments and
- * executing the tool.
+ * This class is the entry point of the tool. It is responsible for parsing the command line arguments and executing the
+ * tool.
  * </p>
  */
 @CommandLine.Command(
@@ -31,27 +31,49 @@ import java.util.concurrent.Callable;
 )
 public final class Main implements Callable<Integer> {
 
+    /**
+     * The default output directory.
+     */
     private static final String DEFAULT_OUTPUT_DIR = "output";
+
+    /**
+     * The path to the input. Can be a file or a directory.
+     * TODO: Add support for console input.
+     */
     @CommandLine.Parameters(
             index = "0",
             description = "The path to the input. Can be a file or a directory.")
     private String inputPath;
 
+    /**
+     * The path to the output directory. If not specified, the output is written into the default output directory
+     * located in the input directory.
+     */
     @CommandLine.Option(
             names = {"-o", "--output"},
-            description = "The path to the output directory. If not specified, the output is written into the directory of the input (file)."
+            description = "The path to the output directory. If not specified, the output is written into the "
+                    + "directory of the input (file)."
     )
     private String outputPath;
 
+    /**
+     * The command line specification. This is used to print messages to the user.
+     */
     @CommandLine.Spec
-    CommandLine.Model.CommandSpec spec;
+    private CommandLine.Model.CommandSpec spec;
 
+    /**
+     * Sets the seed for the random instance.
+     * TODO: Use the provided seed in RdcProbabilities.
+     *
+     * @param seed The seed.
+     */
     @CommandLine.Option(
             names = {"--seed"},
-            description = "A number that is used as seed to initialize the random instance to allow for reproducible runs."
+            description = "A number that is used as seed to initialize the random instance to allow for reproducible "
+                    + "runs."
     )
-    @SuppressWarnings("unused")
-    void setSeed(int seed) {
+    void setSeed(final int seed) {
         Randomness.setSeed(seed);
     }
 
@@ -74,7 +96,6 @@ public final class Main implements Callable<Integer> {
     public Integer call() {
         ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(getInputPath(), getOutputPath());
         readabilityDecreaser.process();
-        // spec.commandLine().usage(System.out);
         return 0;
     }
 

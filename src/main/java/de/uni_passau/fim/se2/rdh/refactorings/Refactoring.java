@@ -11,10 +11,31 @@ import spoon.SpoonAPI;
  */
 public abstract class Refactoring {
 
+    /**
+     * The {@link SpoonAPI} to use.
+     * <p>
+     * The attribute is protected to allow access from subclasses without need of super.getter().
+     * </p>
+     */
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     protected final SpoonAPI spoon;
+
+    /**
+     * The {@link RdcProbabilities} to use.
+     * <p>
+     * The attribute is protected to allow access from subclasses without need of super.getter().
+     * </p>
+     */
+    @SuppressWarnings("checkstyle:VisibilityModifier")
     protected final RdcProbabilities probabilities;
 
-    public Refactoring(SpoonAPI spoon, RdcProbabilities probabilities) {
+    /**
+     * Creates a new {@link Refactoring} with the given {@link SpoonAPI} and {@link RdcProbabilities}.
+     *
+     * @param spoon         The {@link SpoonAPI}
+     * @param probabilities The {@link RdcProbabilities}
+     */
+    public Refactoring(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         this.spoon = spoon;
         this.probabilities = probabilities;
     }
