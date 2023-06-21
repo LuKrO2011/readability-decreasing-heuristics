@@ -8,13 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.refactoring.RefactoringException;
+import spoon.reflect.declaration.CtCompilationUnit;
 import spoon.reflect.declaration.CtImport;
-import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.visitor.filter.TypeFilter;
+import spoon.reflect.declaration.CtType;
 
+import java.util.Collection;
 import java.util.List;
 
-
+/**
+ * This class implements a refactoring that replaces all imports with star imports.
+ */
 public class StarImporter extends AbstractModification {
 
     /**
@@ -40,11 +43,19 @@ public class StarImporter extends AbstractModification {
         replaceWithStarImport();
     }
 
+    /**
+     * Replaces all imports with star imports.
+     * <p>
+     * For getting the imports, a compilation unit is needed. If a reference can not be resolved in this compilation
+     * unit, the unresolved reference (see spoon.experimental.CtUnresolvedImport) is used.
+     */
     private void replaceWithStarImport() {
         CtImportRefactoring refactoring = new CtImportRefactoring();
 
-        // Get all imports
-        List<CtImport> imports = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtImport.class));
+        // Get all import statements from the compilation unit
+        Collection<CtType<?>> types = spoon.getModel().getAllTypes();
+        CtCompilationUnit compilationUnit = types.iterator().next().getPosition().getCompilationUnit();
+        List<CtImport> imports = compilationUnit.getImports();
 
         if (imports.size() == 0) {
             if (LOG.isWarnEnabled()) {

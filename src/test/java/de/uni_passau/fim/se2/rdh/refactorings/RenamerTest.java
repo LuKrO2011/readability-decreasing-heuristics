@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.Launcher;
 import spoon.SpoonAPI;
+import spoon.compiler.Environment;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -55,6 +56,9 @@ public class RenamerTest extends ResourcesTest {
         spoon.addInputResource(resources + "/" + className);
         spoon.setSourceOutputDirectory(outputDir.toString());
         spoon.buildModel();
+
+        Environment env = spoon.getEnvironment();
+        env.setAutoImports(true);
 
         return spoon;
     }

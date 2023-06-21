@@ -1,4 +1,4 @@
-import org.slf4j.Logger;
+import java.nio.file.Path;
 
 /**
  * This sample class contains exactly one method, field and variable.
@@ -7,7 +7,8 @@ public class HelloWorld {
     
     private static final int field;
 
-    public void method() {
+    public Path method() {
         int variable = 1 + 2;
+        return null;
     }
 }
