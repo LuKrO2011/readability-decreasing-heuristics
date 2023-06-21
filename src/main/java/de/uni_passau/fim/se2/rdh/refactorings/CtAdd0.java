@@ -4,18 +4,26 @@ import spoon.refactoring.CtRefactoring;
 import spoon.reflect.code.*;
 import spoon.reflect.factory.CodeFactory;
 
-
+/**
+ * This class implements the refactoring for adding 0 to an expression.
+ */
 public class CtAdd0 implements CtRefactoring {
 
 
     private CtBinaryOperator<?> target;
 
 
+    /**
+     * This constructor sets the target of the refactoring.
+     */
     @Override
     public void refactor() {
         add0();
     }
 
+    /**
+     * This method adds 0 to the target.
+     */
     private void add0() {
         // Clone the target
         CtBinaryOperator<?> newBinaryOperator = target.clone();

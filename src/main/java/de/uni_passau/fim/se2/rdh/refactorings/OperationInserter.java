@@ -10,6 +10,10 @@ import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.util.List;
 
+/**
+ * This class implements the refactoring for inserting an operation. The operation should not change the semantics of
+ * the program.
+ */
 public class OperationInserter extends AbstractModification {
 
     /**
@@ -18,6 +22,12 @@ public class OperationInserter extends AbstractModification {
     private static final Logger LOG = LoggerFactory.getLogger(OperationInserter.class);
 
 
+    /**
+     * Creates a new instance of this class.
+     *
+     * @param spoon         The SpoonAPI instance to use.
+     * @param probabilities The probabilities to use.
+     */
     public OperationInserter(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         super(spoon, probabilities);
     }
@@ -30,7 +40,9 @@ public class OperationInserter extends AbstractModification {
         insertAdd0();
     }
 
-
+    /**
+     * This method inserts add0 on random nodes.
+     */
     private void insertAdd0() {
         CtAdd0 refactoring = new CtAdd0();
 
@@ -44,6 +56,7 @@ public class OperationInserter extends AbstractModification {
             return;
         }
 
+        // Insert add0 on random nodes
         for (CtBinaryOperator<?> ctBinaryOperator : binaryOperations) {
             if (!probabilities.shouldInsertOperation()) {
                 continue;
