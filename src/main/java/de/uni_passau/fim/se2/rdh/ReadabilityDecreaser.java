@@ -4,6 +4,7 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 
 import de.uni_passau.fim.se2.rdh.refactorings.*;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
@@ -78,7 +79,8 @@ public class ReadabilityDecreaser {
             new FieldRenamer(spoon, probabilities),
             new MethodRenamer(spoon, probabilities),
             new MethodInliner(spoon, probabilities),
-            new OperationInserter(spoon, probabilities));
+            new OperationInserter(spoon, probabilities),
+            new StarImporter(spoon, probabilities));
 
         // Setup spoon
         setupSpoon();

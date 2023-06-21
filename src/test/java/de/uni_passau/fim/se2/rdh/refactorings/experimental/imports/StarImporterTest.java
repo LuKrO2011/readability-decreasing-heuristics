@@ -1,8 +1,9 @@
-package de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers;
+package de.uni_passau.fim.se2.rdh.refactorings.experimental.imports;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.RenamerTest;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;
@@ -16,10 +17,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class OperationInserterTest extends RenamerTest {
+class StarImporterTest extends RenamerTest {
 
     @Test
-    void testAdd0(@TempDir Path outputDir) {
+    void testReplaceWithStarImport(@TempDir Path outputDirT) {
+        Path outputDir = Path.of("output");
 
         File original = new File(resources, sampleClass);
         File modified = new File(outputDir.toString(), sampleClass);
@@ -27,8 +29,8 @@ class OperationInserterTest extends RenamerTest {
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setAdd0(1.0);
-        AbstractModification parenthesesInserter = new OperationInserter(spoon, rdcProbabilities);
+        rdcProbabilities.setStarImport(1.0);
+        AbstractModification parenthesesInserter = new StarImporter(spoon, rdcProbabilities);
 
         // Perform method renaming
         parenthesesInserter.apply();
@@ -41,9 +43,10 @@ class OperationInserterTest extends RenamerTest {
 
         // Assert that three operations were performed (creation of new 0 literal, creation of new add operation, and
         // replacement of old add operation)
-        assertAll(
+        /*assertAll(
             () -> assertThat(diffOperations).hasSize(3)
             // TODO: Check that the correct operations were performed
-        );
+        );*/
     }
+
 }

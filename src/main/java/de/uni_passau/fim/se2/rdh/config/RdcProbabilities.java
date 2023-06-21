@@ -61,6 +61,8 @@ public final class RdcProbabilities {
     private double add0;
     @Probability
     private double insertBraces;
+    @Probability
+    private double starImport;
 
     // TODO: writeFullyQualifiedName
     // TODO: writeStarImport
@@ -92,6 +94,7 @@ public final class RdcProbabilities {
         this.removeComment = probabilities.removeComment;
         this.add0 = probabilities.add0;
         this.insertBraces = probabilities.insertBraces;
+        this.starImport = probabilities.starImport;
     }
 
     /**
@@ -227,6 +230,10 @@ public final class RdcProbabilities {
         return Randomness.nextDouble() <= insertBraces;
     }
 
+    public boolean shouldReplaceWithStarImport() {
+        return Randomness.nextDouble() <= starImport;
+    }
+
     public List<Double> getNewline() {
         return Collections.unmodifiableList(newline);
     }
@@ -345,5 +352,13 @@ public final class RdcProbabilities {
 
     public void setInsertBraces(double insertBraces) {
         this.insertBraces = insertBraces;
+    }
+
+    public double getStarImport() {
+        return starImport;
+    }
+
+    public void setStarImport(double starImport) {
+        this.starImport = starImport;
     }
 }
