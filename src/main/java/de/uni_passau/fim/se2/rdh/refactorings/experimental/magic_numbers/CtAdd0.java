@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdh.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers;
 
 import spoon.refactoring.CtRefactoring;
 import spoon.reflect.code.*;

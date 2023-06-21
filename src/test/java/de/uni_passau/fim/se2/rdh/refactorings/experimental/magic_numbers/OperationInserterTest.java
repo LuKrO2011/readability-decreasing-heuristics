@@ -1,7 +1,9 @@
-package de.uni_passau.fim.se2.rdh.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.refactorings.RenamerTest;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

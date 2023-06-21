@@ -1,6 +1,9 @@
-package de.uni_passau.fim.se2.rdh.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.refactorings.RenamerTest;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;

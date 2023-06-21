@@ -28,7 +28,7 @@ import static org.mockito.Mockito.verify;
 // TODO: Conflict with other tests using a mock logger.
 // TODO: Rename class as it is used in not rename refactorings as well
 // @ExtendWith(MockitoExtension.class)
-class RenamerTest extends ResourcesTest {
+public class RenamerTest extends ResourcesTest {
 
     /*@Mock
     private static Logger mockLogger;

@@ -1,6 +1,8 @@
-package de.uni_passau.fim.se2.rdh.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.refactorings.RenamerTest;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;
@@ -14,18 +16,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class LocalVariableRenamerTest extends RenamerTest {
+class FieldRenamerTest extends RenamerTest {
 
     @Test
-    void testRenameVariable(@TempDir Path outputDir) {
+    void testRenameField(@TempDir Path outputDir) {
         File original = new File(resources, sampleClass);
         File modified = new File(outputDir.toString(), sampleClass);
         SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setRenameVariable(1.0);
-        AbstractModification renamer = new LocalVariableRenamer(spoon, rdcProbabilities);
+        rdcProbabilities.setRenameField(1.0);
+        AbstractModification renamer = new FieldRenamer(spoon, rdcProbabilities);
 
         // Perform method renaming
         renamer.apply();
@@ -39,7 +41,7 @@ class LocalVariableRenamerTest extends RenamerTest {
         // Assert that only existing method was renamed
         assertAll(
                 () -> assertThat(diffOperations).hasSize(1),
-                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameVariable)
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameField)
         );
     }
 

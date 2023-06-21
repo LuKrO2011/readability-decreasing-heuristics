@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdh.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.reflect.code.CtInvocation;

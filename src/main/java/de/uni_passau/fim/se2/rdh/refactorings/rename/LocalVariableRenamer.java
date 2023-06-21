@@ -1,6 +1,7 @@
-package de.uni_passau.fim.se2.rdh.refactorings;
+package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;

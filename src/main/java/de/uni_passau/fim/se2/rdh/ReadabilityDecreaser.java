@@ -4,6 +4,11 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 
 import de.uni_passau.fim.se2.rdh.refactorings.*;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.LocalVariableRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
