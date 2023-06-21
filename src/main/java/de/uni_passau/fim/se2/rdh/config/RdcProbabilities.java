@@ -59,6 +59,8 @@ public final class RdcProbabilities {
     private double removeComment;
     @Probability
     private double add0;
+    @Probability
+    private double insertBraces;
 
     // TODO: writeFullyQualifiedName
     // TODO: writeStarImport
@@ -89,6 +91,7 @@ public final class RdcProbabilities {
         this.inlineMethod = probabilities.inlineMethod;
         this.removeComment = probabilities.removeComment;
         this.add0 = probabilities.add0;
+        this.insertBraces = probabilities.insertBraces;
     }
 
     /**
@@ -204,9 +207,24 @@ public final class RdcProbabilities {
         return Randomness.nextDouble() <= removeComment;
     }
 
-
+    /**
+     * Returns whether a new operation should be inserted. The new operation should not change the semantics of the
+     * program.
+     *
+     * @return Whether a new operation should be inserted.
+     */
     public boolean shouldInsertOperation() {
         return Randomness.nextDouble() <= add0;
+    }
+
+    /**
+     * Returns whether braces should be inserted. The braces might be inserted anyway if needed for the semantics of
+     * the program. However, if this method returns true, braces should be inserted even if they are not needed.
+     *
+     * @return Whether braces should be inserted.
+     */
+    public boolean shouldInsertBraces() {
+        return Randomness.nextDouble() <= insertBraces;
     }
 
     public List<Double> getNewline() {
@@ -319,5 +337,13 @@ public final class RdcProbabilities {
 
     public void setAdd0(final double add0) {
         this.add0 = add0;
+    }
+
+    public double getInsertBraces() {
+        return insertBraces;
+    }
+
+    public void setInsertBraces(double insertBraces) {
+        this.insertBraces = insertBraces;
     }
 }

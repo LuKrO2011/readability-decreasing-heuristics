@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,5 +58,41 @@ public class RenamerTest extends ResourcesTest {
 
         return spoon;
     }
+
+    @Test
+    void testNoRefactoring(@TempDir Path outputDir) {
+        File original = new File(resources, sampleClass);
+        File modified = new File(outputDir.toString(), sampleClass);
+        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+
+        // Create modified code file
+        spoon.prettyprint();
+
+        // Perform the refactoring
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert that no refactoring was performed
+        assertThat(diffOperations).isEmpty();
+    }
+
+    @Disabled
+    @Test
+    void testNoRefactoring2() {
+        Path outputDir = Path.of("output");
+
+        File original = new File(resources, sampleClass);
+        File modified = new File(outputDir.toString(), sampleClass);
+        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+
+        // Create modified code file
+        spoon.prettyprint();
+
+        // Perform the refactoring
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert that no refactoring was performed
+        assertThat(diffOperations).isEmpty();
+    }
+
 
 }

@@ -19,6 +19,7 @@ import spoon.support.Internal;
 
 /**
  * Duplicate of CommentHelper with public printComment(PrinterHelper printer, CtComment comment) method.
+ * TODO: DELETE THIS CLASS
  */
 @Internal
 public class RdcCommentHelper {

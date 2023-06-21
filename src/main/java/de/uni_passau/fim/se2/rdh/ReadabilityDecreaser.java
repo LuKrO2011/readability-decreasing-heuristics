@@ -16,8 +16,10 @@ import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
+import spoon.reflect.visitor.PrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
+import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.support.gui.SpoonModelTree;
 
 import java.util.List;
@@ -72,11 +74,11 @@ public class ReadabilityDecreaser {
 
         // Create the refactorings
         modifications = List.of(
-                new LocalVariableRenamer(spoon, probabilities),
-                new FieldRenamer(spoon, probabilities),
-                new MethodRenamer(spoon, probabilities),
-                new MethodInliner(spoon, probabilities),
-                new OperationInserter(spoon, probabilities));
+            new LocalVariableRenamer(spoon, probabilities),
+            new FieldRenamer(spoon, probabilities),
+            new MethodRenamer(spoon, probabilities),
+            new MethodInliner(spoon, probabilities),
+            new OperationInserter(spoon, probabilities));
 
         // Setup spoon
         setupSpoon();
@@ -99,14 +101,14 @@ public class ReadabilityDecreaser {
         // Writing comments is done probabilistic in RdcTokenWriter
         // env.setCommentEnabled(true);
 
-        // Add a change listener that is needed for RdcJavaPrettyPrinter
+        // Add a change listener that is needed for spoon.reflect.visitor.RdcJavaPrettyPrinter
         // new ChangeCollector().attachTo(env)
 
         // Set output type
         // env.setOutputType(OutputType.CLASSES);
 
         // Adjust the pretty printer with own token writer (RdcTokenWriter)
-        DefaultJavaPrettyPrinter prettyPrinter = new DefaultJavaPrettyPrinter(env);
+        DefaultJavaPrettyPrinter prettyPrinter = new RdcJavaPrettyPrinter(env, probabilities);
         PrinterHelper printerHelper = new PrinterHelper(env);
         prettyPrinter.setPrinterTokenWriter(new RdcTokenWriter(printerHelper, probabilities));
         prettyPrinter.setIgnoreImplicit(false);
