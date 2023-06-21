@@ -26,6 +26,7 @@ import static org.mockito.Mockito.verify;
 
 // TODO: The disabled test only work when executed alone.
 // TODO: Conflict with other tests using a mock logger.
+// TODO: Rename class as it is used in not rename refactorings as well
 // @ExtendWith(MockitoExtension.class)
 class RenamerTest extends ResourcesTest {
 

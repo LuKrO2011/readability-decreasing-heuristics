@@ -57,6 +57,9 @@ public final class RdcProbabilities {
     private double inlineMethod;
     @Probability
     private double removeComment;
+    @Probability
+    private double add0;
+
     // TODO: writeFullyQualifiedName
     // TODO: writeStarImport
 
@@ -85,6 +88,7 @@ public final class RdcProbabilities {
         this.renameMethod = probabilities.renameMethod;
         this.inlineMethod = probabilities.inlineMethod;
         this.removeComment = probabilities.removeComment;
+        this.add0 = probabilities.add0;
     }
 
     /**
@@ -200,6 +204,11 @@ public final class RdcProbabilities {
         return Randomness.nextDouble() <= removeComment;
     }
 
+
+    public boolean shouldInsertOperation() {
+        return Randomness.nextDouble() <= add0;
+    }
+
     public List<Double> getNewline() {
         return Collections.unmodifiableList(newline);
     }
@@ -302,5 +311,13 @@ public final class RdcProbabilities {
 
     public void setRemoveComment(final double removeComment) {
         this.removeComment = removeComment;
+    }
+
+    public double getAdd0() {
+        return add0;
+    }
+
+    public void setAdd0(final double add0) {
+        this.add0 = add0;
     }
 }

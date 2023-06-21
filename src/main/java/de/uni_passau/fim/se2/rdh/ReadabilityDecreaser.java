@@ -3,11 +3,7 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 
-import de.uni_passau.fim.se2.rdh.refactorings.FieldRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.LocalVariableRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.MethodInliner;
-import de.uni_passau.fim.se2.rdh.refactorings.MethodRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.refactorings.*;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +70,8 @@ public class ReadabilityDecreaser {
                 new LocalVariableRenamer(spoon, probabilities),
                 new FieldRenamer(spoon, probabilities),
                 new MethodRenamer(spoon, probabilities),
-                new MethodInliner(spoon, probabilities));
+                new MethodInliner(spoon, probabilities),
+                new OperationInserter(spoon, probabilities));
 
         // Setup spoon
         setupSpoon();

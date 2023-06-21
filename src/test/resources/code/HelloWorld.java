@@ -8,6 +8,6 @@ public class HelloWorld {
     private static final int field;
 
     public void method() {
-        int variable = 0;
+        int variable = 1 + 2;
     }
 }
