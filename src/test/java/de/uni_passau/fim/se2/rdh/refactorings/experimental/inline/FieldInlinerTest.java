@@ -1,10 +1,11 @@
-package de.uni_passau.fim.se2.rdh.refactorings.experimental.imports;
+package de.uni_passau.fim.se2.rdh.refactorings.experimental.inline;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
 import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
+import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -18,21 +19,21 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class StarImporterTest extends SpoonTest {
+class FieldInlinerTest extends SpoonTest {
 
     @Test
-    void testReplaceWithStarImport(@TempDir Path outputDir) {
+    void testInlineField(@TempDir Path outputDir) {
         File original = new File(resources, sampleClass);
         File modified = new File(outputDir.toString(), sampleClass);
         SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setStarImport(1.0);
-        AbstractModification starImporter = new StarImporter(spoon, rdcProbabilities);
+        rdcProbabilities.setInlineField(1.0);
+        AbstractModification fieldInliner = new FieldInliner(spoon, rdcProbabilities);
 
         // Perform method renaming
-        starImporter.apply();
+        fieldInliner.apply();
 
         // Create modified code file
         spoon.prettyprint();
@@ -44,16 +45,15 @@ class StarImporterTest extends SpoonTest {
         List<Operation> diffOperations = getDiffOperations(original, modified);
 
         assertAll(
-            () -> assertThat(diffOperations).hasSize(0)
-            // TODO: Check that the correct operations were performed
+                () -> assertThat(diffOperations).hasSize(2)
+                // TODO: Check that the correct operations were performed
         );
     }
 
     @Disabled
     @Test
-    void testReplaceWithStarImport() {
+    void testInlineField() {
         Path outputDir = Path.of("output");
-        String sampleClass = "HeapUtils.java";
 
         File original = new File(resources, sampleClass);
         File modified = new File(outputDir.toString(), sampleClass);
@@ -61,11 +61,11 @@ class StarImporterTest extends SpoonTest {
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setStarImport(1.0);
-        AbstractModification starImporter = new StarImporter(spoon, rdcProbabilities);
+        rdcProbabilities.setInlineField(1.0);
+        AbstractModification fieldInliner = new FieldInliner(spoon, rdcProbabilities);
 
         // Perform method renaming
-        starImporter.apply();
+        fieldInliner.apply();
 
         // Create modified code file
         spoon.prettyprint();
@@ -75,24 +75,6 @@ class StarImporterTest extends SpoonTest {
 
         // Perform the refactoring
         List<Operation> diffOperations = getDiffOperations(original, modified);
-
-        /*
-        TODO: Have a look at the following changes:
-            - import static Global.currentTimeMillis;
-            - import org.apache.cassandra.config.DatabaseDescriptor (is processed, probably not correctly replaced
-            or reintroduced by printer)
-            - import org.apache.cassandra.io.util.File;
-            - import org.apache.cassandra.io.util.PathUtils;
-            - Double imports
-            - How far can one further remove before .*
-            - make sure no references are lost (see diff, e.g. java.io.File/org.apache.cassandra.io.util.File)
-         */
-
-        assertAll(
-            () -> assertThat(diffOperations).hasSize(0)
-            // TODO: Fix me
-            // TODO: Check that the correct operations were performed
-        );
     }
 
 }

@@ -17,3 +17,4 @@ removeComment: 0.2
 add0: 0.2
 insertBraces: 0.2
 starImport: 0.2
+inlineField: 0.2

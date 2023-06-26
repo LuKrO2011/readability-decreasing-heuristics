@@ -63,6 +63,8 @@ public final class RdcProbabilities {
     private double insertBraces;
     @Probability
     private double starImport;
+    @Probability
+    private double inlineField;
 
     // TODO: writeFullyQualifiedName
     // TODO: writeStarImport
@@ -95,6 +97,7 @@ public final class RdcProbabilities {
         this.add0 = probabilities.add0;
         this.insertBraces = probabilities.insertBraces;
         this.starImport = probabilities.starImport;
+        this.inlineField = probabilities.inlineField;
     }
 
     /**
@@ -221,8 +224,8 @@ public final class RdcProbabilities {
     }
 
     /**
-     * Returns whether braces should be inserted. The braces might be inserted anyway if needed for the semantics of
-     * the program. However, if this method returns true, braces should be inserted even if they are not needed.
+     * Returns whether braces should be inserted. The braces might be inserted anyway if needed for the semantics of the
+     * program. However, if this method returns true, braces should be inserted even if they are not needed.
      *
      * @return Whether braces should be inserted.
      */
@@ -230,8 +233,22 @@ public final class RdcProbabilities {
         return Randomness.nextDouble() <= insertBraces;
     }
 
+    /**
+     * Returns whether a star import should be replaced with a normal import.
+     *
+     * @return Whether a star import should be replaced with a normal import.
+     */
     public boolean shouldReplaceWithStarImport() {
         return Randomness.nextDouble() <= starImport;
+    }
+
+    /**
+     * Returns whether a field should be inlined.
+     *
+     * @return Whether a field should be inlined.
+     */
+    public boolean shouldInlineField() {
+        return Randomness.nextDouble() <= inlineField;
     }
 
     public List<Double> getNewline() {
@@ -361,4 +378,14 @@ public final class RdcProbabilities {
     public void setStarImport(double starImport) {
         this.starImport = starImport;
     }
+
+    public void setInlineField(final double inlineField) {
+        this.inlineField = inlineField;
+    }
+
+    public double getInlineField() {
+        return inlineField;
+    }
+
+
 }

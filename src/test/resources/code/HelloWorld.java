@@ -8,7 +8,7 @@ public class HelloWorld {
     private static final int field;
 
     public Path method() {
-        int variable = 1 + 2;
+        int variable = 1 + field;
         return null;
     }
 }

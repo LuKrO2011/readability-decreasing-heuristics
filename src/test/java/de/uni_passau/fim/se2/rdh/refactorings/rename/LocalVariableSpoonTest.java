@@ -2,8 +2,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
-import de.uni_passau.fim.se2.rdh.refactorings.RenamerTest;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.LocalVariableRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class LocalVariableRenamerTest extends RenamerTest {
+class LocalVariableSpoonTest extends SpoonTest {
 
     @Test
     void testRenameVariable(@TempDir Path outputDir) {

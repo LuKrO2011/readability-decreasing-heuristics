@@ -22,3 +22,4 @@ removeComment: 0
 add0: 0
 insertBraces: 0
 starImport: 0
+inlineField: 0.2
