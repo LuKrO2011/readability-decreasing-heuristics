@@ -23,7 +23,7 @@ public class FieldRenamer extends AbstractModification {
     /**
      * The (logger) of this class.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleMethodRenamer.class);
 
     /**
      * This constructor sets the spoon instance and the probabilities to be used.

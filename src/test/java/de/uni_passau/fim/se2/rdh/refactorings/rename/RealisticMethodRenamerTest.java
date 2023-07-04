@@ -1,8 +1,8 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class MethodSpoonTest extends SpoonTest {
+class RealisticMethodRenamerTest extends SpoonTest {
 
     @Test
     void testRenameMethod(@TempDir Path outputDir) {
@@ -27,7 +27,9 @@ class MethodSpoonTest extends SpoonTest {
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
         rdcProbabilities.setRenameMethod(1.0);
-        AbstractModification renamer = new MethodRenamer(spoon, rdcProbabilities);
+
+        MethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
+        MethodRenamer renamer = new RealisticMethodRenamer(spoon, rdcProbabilities, backup);
 
         // Perform method renaming
         renamer.apply();

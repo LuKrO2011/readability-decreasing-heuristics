@@ -3,7 +3,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.experimental;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.imports.CtImportRefactoring;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -23,7 +23,7 @@ public class StarImporter extends AbstractModification {
     /**
      * The (logger) of this class.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(MethodRenamer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleMethodRenamer.class);
 
     /**
      * This constructor sets the spoon instance and the probabilities to be used.

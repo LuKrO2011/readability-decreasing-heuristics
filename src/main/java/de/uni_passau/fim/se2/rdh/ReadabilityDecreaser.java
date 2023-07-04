@@ -3,13 +3,15 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 
-import de.uni_passau.fim.se2.rdh.refactorings.*;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,6 @@ import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
-import spoon.reflect.visitor.PrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
@@ -73,11 +74,13 @@ public class ReadabilityDecreaser {
         YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
         probabilities = (RdcProbabilities) yamlReaderWriter.load(configFilePath);
 
+        MethodRenamer backupMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
+
         // Create the refactorings
         modifications = List.of(
             new LocalVariableRenamer(spoon, probabilities),
             new FieldRenamer(spoon, probabilities),
-            new MethodRenamer(spoon, probabilities),
+            new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer),
             new MethodInliner(spoon, probabilities),
             new OperationInserter(spoon, probabilities),
             new StarImporter(spoon, probabilities));
