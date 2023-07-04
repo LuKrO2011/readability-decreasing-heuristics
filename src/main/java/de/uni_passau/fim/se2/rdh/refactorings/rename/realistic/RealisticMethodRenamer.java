@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename.realistic;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.models.PythonRunner;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.CtRenameMethodRefactoring;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Renames methods to m0 ... mN.
@@ -34,17 +36,21 @@ public class RealisticMethodRenamer extends MethodRenamer {
 
     private final MethodRenamer backup;
 
+    private final Set<String> inputResources;
+
     /**
      * This constructor sets the spoon instance and the probabilities to be used.
      *
-     * @param spoon         the spoon instance
-     * @param probabilities the probabilities
-     * @param backup        the backup method renamer
+     * @param spoon          the spoon instance
+     * @param probabilities  the probabilities
+     * @param backup         the backup method renamer
+     * @param inputResources the input resources
      */
     public RealisticMethodRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities,
-                                  final MethodRenamer backup) {
+                                  final MethodRenamer backup, final Set<String> inputResources) {
         super(spoon, probabilities);
         this.backup = backup;
+        this.inputResources = inputResources;
     }
 
     /**
@@ -76,7 +82,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
         // Get the new names for the methods
         JsonLoader jsonLoader = new JsonLoader();
 
-        // TODO: Generate file with model and get name from java class name
+        // TODO: How to handle those input files? (use inputResources)
         List<MethodRenamingData> newNames =
             jsonLoader.loadMethodRenamingData("src/test/resources/predictions/HeapUtils.json");
 

@@ -11,6 +11,7 @@ import spoon.SpoonAPI;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,7 @@ class RealisticMethodRenamerTest extends SpoonTest {
         rdcProbabilities.setRenameMethod(1.0);
 
         MethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
-        MethodRenamer renamer = new RealisticMethodRenamer(spoon, rdcProbabilities, backup);
+        MethodRenamer renamer = new RealisticMethodRenamer(spoon, rdcProbabilities, backup, new HashSet<>());
 
         // Perform method renaming
         renamer.apply();

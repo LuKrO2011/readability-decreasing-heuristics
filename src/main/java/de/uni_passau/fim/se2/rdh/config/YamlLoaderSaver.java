@@ -36,14 +36,13 @@ public class YamlLoaderSaver {
      * Loads the given YAML file. The file must be in the "resources" folder.
      *
      * @param configFileName the name of the YAML file
+     * @param clazz          the class of the object to load
      * @return the loaded object
      */
-    public Object load(@NotBlank final String configFileName) {
+    public Object load(@NotBlank final String configFileName, @NotNull final Class<?> clazz) {
         try (InputStream inputStream = YamlLoaderSaver.class.getClassLoader().getResourceAsStream(configFileName)) {
             Yaml yaml = new Yaml();
-            RdcProbabilities loadedData = yaml.loadAs(inputStream, RdcProbabilities.class);
-            validate(loadedData);
-            return loadedData;
+            return yaml.loadAs(inputStream, clazz);
         } catch (IOException e) {
             if (LOG.isErrorEnabled()) {
                 LOG.error("Could not load config file: {}", e.getMessage());
@@ -53,14 +52,26 @@ public class YamlLoaderSaver {
     }
 
     /**
+     * Loads the given YAML file. The file must be in the "resources" folder.
+     *
+     * @param configFileName the name of the YAML file
+     * @return the loaded object
+     */
+    public RdcProbabilities loadRdcProbabilities(@NotBlank final String configFileName) {
+        RdcProbabilities loadedData = (RdcProbabilities) load(configFileName, RdcProbabilities.class);
+        validate(loadedData);
+        return loadedData;
+    }
+
+    /**
      * Validates the given object.
      *
      * @param data the object to validate
      */
     private void validate(@NotNull final RdcProbabilities data) {
         Configuration<? extends Configuration<?>> validatorConfig = Validation.byDefaultProvider()
-                .configure()
-                .messageInterpolator(new ParameterMessageInterpolator());
+            .configure()
+            .messageInterpolator(new ParameterMessageInterpolator());
 
         try (ValidatorFactory validatorFactory = validatorConfig.buildValidatorFactory()) {
             Validator validator = validatorFactory.getValidator();
@@ -84,7 +95,7 @@ public class YamlLoaderSaver {
      * @return the loaded object
      */
     public Object load() {
-        return load(DEFAULT_CONFIG_FILE);
+        return load(DEFAULT_CONFIG_FILE, RdcProbabilities.class);
     }
 
     /**

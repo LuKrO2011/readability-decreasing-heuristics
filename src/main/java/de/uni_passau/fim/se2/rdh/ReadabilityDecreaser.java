@@ -24,7 +24,9 @@ import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.support.gui.SpoonModelTree;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Decreases the readability of Java code.
@@ -43,6 +45,8 @@ public class ReadabilityDecreaser {
     private final SpoonAPI spoon;
     private final RdcProbabilities probabilities;
     private final List<AbstractModification> modifications;
+
+    private Set<String> inputResources;
 
 
     /**
@@ -66,13 +70,14 @@ public class ReadabilityDecreaser {
                                 final String configFilePath) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
+        this.inputResources = new HashSet<>();
 
         // Create spoon launcher
         this.spoon = new Launcher();
 
         // Load the configuration
         YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
-        probabilities = (RdcProbabilities) yamlReaderWriter.load(configFilePath);
+        probabilities = yamlReaderWriter.loadRdcProbabilities(configFilePath);
 
         MethodRenamer backupMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
 
@@ -80,7 +85,7 @@ public class ReadabilityDecreaser {
         modifications = List.of(
             new LocalVariableRenamer(spoon, probabilities),
             new FieldRenamer(spoon, probabilities),
-            new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer),
+            new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer, inputResources),
             new MethodInliner(spoon, probabilities),
             new OperationInserter(spoon, probabilities),
             new StarImporter(spoon, probabilities));
@@ -133,6 +138,7 @@ public class ReadabilityDecreaser {
         // Add all files with the given names to the input
         for (String fileName : fileNames) {
             spoon.addInputResource(inputDir.getAbsolutePath() + "/" + fileName);
+            inputResources.add(inputDir.getAbsolutePath() + "/" + fileName);
         }
 
         spoon.buildModel();
@@ -145,6 +151,7 @@ public class ReadabilityDecreaser {
 
         // Add the whole folder to the input
         spoon.addInputResource(inputDir.getAbsolutePath());
+        inputResources.add(inputDir.getAbsolutePath());
 
         spoon.buildModel();
     }

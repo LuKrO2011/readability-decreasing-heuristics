@@ -29,10 +29,8 @@ class YamlLoaderSaverTest {
 
     @Test
     void testLoadDefaultConfig() {
-        Object result = yaml.load("config.yaml");
-        assertAll(
-                () -> assertNotNull(result),
-                () -> assertTrue(result instanceof RdcProbabilities));
+        Object result = yaml.loadRdcProbabilities("config.yaml");
+        assertNotNull(result);
     }
 
     @Test
@@ -51,7 +49,7 @@ class YamlLoaderSaverTest {
 
     @Test
     void testInvalidConfiguration() {
-        assertThrows(ConstructorException.class, () -> yaml.load("config-invalid.yaml"));
+        assertThrows(ConstructorException.class, () -> yaml.loadRdcProbabilities("config-invalid.yaml"));
     }
 
 
