@@ -64,6 +64,12 @@ public class YamlLoaderSaver {
         return loadedData;
     }
 
+    public ModelConfig loadConfig(@NotBlank final String configFileName) {
+        ModelConfig loadedData = (ModelConfig) load(configFileName, ModelConfig.class);
+        // TODO: Validate?
+        return loadedData;
+    }
+
     /**
      * Validates the given object.
      *

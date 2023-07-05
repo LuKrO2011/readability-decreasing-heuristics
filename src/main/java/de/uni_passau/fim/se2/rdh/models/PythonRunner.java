@@ -11,21 +11,19 @@ import java.io.IOException;
  * Runs python scripts.
  */
 public final class PythonRunner {
+    private final static Logger LOG = org.slf4j.LoggerFactory.getLogger(PythonRunner.class);
+    private final ModelConfig config;
 
-    private PythonRunner() {
+    public PythonRunner(ModelConfig modelConfig) {
+        this.config = modelConfig;
     }
-
-    private static final String MODEL_CONFIG_NAME = "modelConfig.yaml";
-
-    private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(PythonRunner.class);
 
     /**
      * Starts code2vec.
      */
-    public static void createMethodNamePredictions() {
+    public void createMethodNamePredictions() {
 
         YamlLoaderSaver yamlLoaderSaver = new YamlLoaderSaver();
-        ModelConfig config = (ModelConfig) yamlLoaderSaver.load(MODEL_CONFIG_NAME, ModelConfig.class);
 
         /*
          C:\Users\lukas>conda run -p C:/Users/lukas/anaconda3/envs/code2vec python

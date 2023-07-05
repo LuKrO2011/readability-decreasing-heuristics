@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.models;
 
+import de.uni_passau.fim.se2.rdh.config.ModelConfig;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,9 @@ class PythonRunnerTest {
     @Disabled
     @Test
     void testRun() {
-        PythonRunner.createMethodNamePredictions();
+        ModelConfig modelConfig = new ModelConfig();
+        PythonRunner pythonRunner = new PythonRunner(modelConfig);
+        pythonRunner.createMethodNamePredictions();
     }
 
 }
