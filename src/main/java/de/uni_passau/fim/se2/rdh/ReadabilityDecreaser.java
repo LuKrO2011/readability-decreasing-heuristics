@@ -42,6 +42,7 @@ public class ReadabilityDecreaser {
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
     private final RdcProbabilities probabilities;
+    private static final Logger LOG = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 
     /**
      * Creates a new ReadabilityDecreaser with default config.
@@ -72,18 +73,38 @@ public class ReadabilityDecreaser {
 
     /**
      * Processes the given files or subdirectories.
+     * <p>
+     * Each file or subdirectory is treated as one unit (e.g. repository) and processed by a own {@link RefactoringProcessor}.
+     * </p>
      *
-     * @param fileNames the files or subdirectories to processs
+     * @param fileNames the files or subdirectories to process
      */
     public void process(final String... fileNames) {
-        RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
-        List<String> fullyQualifiedClassNames = new ArrayList<>();
-
+        preprocess();
         for (String fileName : fileNames) {
-            fullyQualifiedClassNames.add(inputDir.getAbsolutePath() + "/" + fileName);
+            RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
+            String fullyQualifiedClassName = inputDir.getAbsolutePath() + "/" + fileName;
+            refactoringProcessor.process(fullyQualifiedClassName);
         }
+    }
 
-        refactoringProcessor.process(fullyQualifiedClassNames.toArray(new String[0]));
+    /**
+     * Preprocesses the input directory.
+     * TODO: Execute code2vec here.
+     */
+    private void preprocess() {
+        if (LOG.isErrorEnabled()){
+            LOG.error("Preprocessing not implemented yet. Code2vec was not executed.");
+        }
+    }
+
+    /**
+     * Processes the whole input directory by a single {@link RefactoringProcessor}.
+     */
+    public void process() {
+        RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
+        String fullyQualifiedClassName = inputDir.getAbsolutePath();
+        refactoringProcessor.process(fullyQualifiedClassName);
     }
 
 }

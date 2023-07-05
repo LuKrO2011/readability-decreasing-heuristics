@@ -1,20 +1,17 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename.realistic;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.models.PythonRunner;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.CtRenameMethodRefactoring;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.refactoring.RefactoringException;
+import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Renames methods to m0 ... mN.
@@ -38,7 +35,8 @@ public class RealisticMethodRenamer extends MethodRenamer {
 
     private final MethodRenamer backup;
 
-    private final String newNamesPath = "src/test/resources/predictions";
+    // TODO: Get this from config file
+    private final String NEW_NAMES_PATH = "src/test/resources/predictions";
 
     /**
      * This constructor sets the spoon instance and the probabilities to be used.
@@ -58,20 +56,22 @@ public class RealisticMethodRenamer extends MethodRenamer {
      */
     @Override
     public void apply() {
-        rename();
+        // Get all class files
+        List<CtClass<?>> classes =
+                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtClass.class));
+
+        // Rename all methods for each class
+        for (CtClass<?> ctClass : classes){
+            List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
+            rename(ctClass, methodsOfClass);
+        }
     }
 
-
     /**
-     * Renames methods to m0 ... mN.
+     * Renames the given methods.
      */
-    private void rename() {
+    private void rename(CtClass<?> clazz, List<CtMethod<?>> methods) {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
-
-        // Get all methods together with their class files
-        // TODO
-        List<CtMethod<Integer>> methods =
-            spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
         if (methods.size() == 0) {
             if (LOG.isWarnEnabled()) {
@@ -80,16 +80,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
             return;
         }
 
-        // Get the new names for the methods
-        JsonLoader jsonLoader = new JsonLoader();
-
-        // TODO: How to handle those input files? (use inputResources)
-        // Best option: Create a map for (filename -> methods) when adding files to resources
-        // Do not load file one by one, as this might conflict with compilation unit creation
-        // TODO: Add folder loading method, where the ReadabilityDecreaser is reseted once a folder is processed. But do all preprocessing (code2vec) before.
-        List<MethodRenamingData> newNames =
-            jsonLoader.loadMethodRenamingData("src/test/resources/predictions/HeapUtils.json");
-
+        List<MethodRenamingData> newNames = loadNewNames(clazz);
         if (methods.size() != newNames.size()) {
             if (LOG.isWarnEnabled()) {
                 LOG.warn("Number of methods and new names does not match. Using backup method renamer.");
@@ -98,7 +89,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
             return;
         }
 
-        // Rename all local variables according to the predictions of code2vec
+        // Rename all local methods according to the predictions of code2vec
         for (int i = 0; i < methods.size(); i++) {
             if (!probabilities.shouldRenameMethod()) {
                 continue;
@@ -107,8 +98,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
             // Get the class name to find the corresponding new names
             // String className = methods.get(i).getParent(CtMethod.class).getSimpleName();
 
-
-            CtMethod<Integer> method = methods.get(i);
+            CtMethod<?> method = methods.get(i);
             MethodRenamingData renamingData = newNames.get(i);
 
             if (!method.getSimpleName().equals(renamingData.getOriginalName())) {
@@ -129,16 +119,13 @@ public class RealisticMethodRenamer extends MethodRenamer {
         }
     }
 
-    private void loadNewNames(CtMethod<?> method) {
-
+    private List<MethodRenamingData> loadNewNames(CtClass<?> clazz) {
         // Get the class name to find the corresponding new names
-        String className = method.getParent(CtMethod.class).getSimpleName();
+        String className = clazz.getSimpleName();
 
         // Get the new names for the methods
         JsonLoader jsonLoader = new JsonLoader();
-
-        List<MethodRenamingData> newNames =
-                jsonLoader.loadMethodRenamingData(newNamesPath + "/" + className + ".json");
+        return jsonLoader.loadMethodRenamingData(NEW_NAMES_PATH + "/" + className + ".json");
     }
 
 }

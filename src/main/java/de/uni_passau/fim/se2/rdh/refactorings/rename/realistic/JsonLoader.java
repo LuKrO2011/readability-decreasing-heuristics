@@ -34,12 +34,13 @@ public class JsonLoader {
         Gson gson = new Gson();
 
         try (FileReader reader = new FileReader(fileName)) {
-
             return gson.<List<MethodRenamingData>>fromJson(reader, type);
         } catch (IOException e) {
-            e.printStackTrace();
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Could not load JSON file.", e);
+            }
         }
-        return null;
+        return List.of();
     }
 
     /**
@@ -77,7 +78,7 @@ public class JsonLoader {
             LOG.error("Could not validate method renaming data.");
         }
 
-        return null;
+        return List.of();
     }
 
     /**

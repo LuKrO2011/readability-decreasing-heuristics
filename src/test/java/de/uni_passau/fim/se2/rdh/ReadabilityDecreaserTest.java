@@ -66,7 +66,7 @@ class ReadabilityDecreaserTest extends ResourcesTest {
 
     @Disabled
     @Test
-    void testProcessDir() {
+    void testProcessMultipleFiles() {
         String outputPath = "output";
         String file1 = "HeapUtils.java";
         String file2 = "HelloWorld.java";
@@ -76,6 +76,17 @@ class ReadabilityDecreaserTest extends ResourcesTest {
 
         DirectoryFlattener.flatten(new File(outputPath));
 
+    }
+
+    @Disabled
+    @Test
+    void testProcessDir() {
+        String outputPath = "output";
+
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(Path.of(outputPath)));
+        readabilityDecreaser.process();
+
+        DirectoryFlattener.flatten(new File(outputPath));
     }
 
 
