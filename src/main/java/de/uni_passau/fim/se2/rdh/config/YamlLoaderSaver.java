@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -70,8 +71,8 @@ public class YamlLoaderSaver {
      */
     private void validate(@NotNull final RdcProbabilities data) {
         Configuration<? extends Configuration<?>> validatorConfig = Validation.byDefaultProvider()
-            .configure()
-            .messageInterpolator(new ParameterMessageInterpolator());
+                .configure()
+                .messageInterpolator(new ParameterMessageInterpolator());
 
         try (ValidatorFactory validatorFactory = validatorConfig.buildValidatorFactory()) {
             Validator validator = validatorFactory.getValidator();
@@ -85,6 +86,15 @@ public class YamlLoaderSaver {
                     }
                 }
                 throw new IllegalArgumentException("Invalid config file");
+            }
+        }
+
+        List<Double> spaces = new java.util.ArrayList<>(data.getSpace());
+        if (spaces.get(0) != 0) {
+            spaces.set(0, 0.0);
+            data.setSpace(spaces);
+            if (LOG.isWarnEnabled()) {
+                LOG.warn("The first space value was not 0.0. It was set to 0.0.");
             }
         }
     }

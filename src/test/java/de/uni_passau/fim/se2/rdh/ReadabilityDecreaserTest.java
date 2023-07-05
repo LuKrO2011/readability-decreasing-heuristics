@@ -12,6 +12,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.io.File;
 import java.nio.file.Path;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 class ReadabilityDecreaserTest extends ResourcesTest {
 
@@ -47,6 +50,22 @@ class ReadabilityDecreaserTest extends ResourcesTest {
     void testDisplay(@TempDir Path outputDir) {
         ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
         readabilityDecreaser.display();
+    }
+
+    @Test
+    void testProcessDir(@TempDir Path outputDir) {
+        File helloWorldModified = new File(outputDir.toString(), "HelloWorld.java");
+        File heapUtilsModified = new File(outputDir.toString(), "HeapUtils.java");
+
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
+        readabilityDecreaser.process();
+
+        DirectoryFlattener.flatten(new File(outputDir.toString()));
+
+        assertAll(
+                () -> assertTrue(helloWorldModified.exists()),
+                () -> assertTrue(heapUtilsModified.exists())
+        );
     }
 
 

@@ -14,7 +14,7 @@ decTab:
   - 0.2  # Probability for two tabs
   - 0.0  # Probability for three tabs
 space:
-  - 0.2  # Probability for no space
+  - 0.0  # Probability for no space. Must be 0
   - 0.6  # Probability for one space
   - 0.2  # Probability for two spaces
   - 0.0  # Probability for three spaces
