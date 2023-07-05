@@ -47,25 +47,35 @@ class ReadabilityDecreaserTest extends ResourcesTest {
     }
 
     @Test
-    void testDisplay(@TempDir Path outputDir) {
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
-        readabilityDecreaser.display();
-    }
-
-    @Test
     void testProcessDir(@TempDir Path outputDir) {
-        File helloWorldModified = new File(outputDir.toString(), "HelloWorld.java");
-        File heapUtilsModified = new File(outputDir.toString(), "HeapUtils.java");
+        String file1 = "HeapUtils.java";
+        String file2 = "HelloWorld.java";
+        File file1Modified = new File(outputDir.toString(), "HelloWorld.java");
+        File file2Modified = new File(outputDir.toString(), "HeapUtils.java");
 
         ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
-        readabilityDecreaser.process();
+        readabilityDecreaser.process(file1, file2);
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));
 
         assertAll(
-                () -> assertTrue(helloWorldModified.exists()),
-                () -> assertTrue(heapUtilsModified.exists())
+                () -> assertTrue(file1Modified.exists()),
+                () -> assertTrue(file2Modified.exists())
         );
+    }
+
+    @Disabled
+    @Test
+    void testProcessDir() {
+        String outputPath = "output";
+        String file1 = "HeapUtils.java";
+        String file2 = "HelloWorld.java";
+
+        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(Path.of(outputPath)));
+        readabilityDecreaser.process(file1, file2);
+
+        DirectoryFlattener.flatten(new File(outputPath));
+
     }
 
 

@@ -11,7 +11,9 @@ import spoon.refactoring.RefactoringException;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -36,7 +38,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
 
     private final MethodRenamer backup;
 
-    private final Set<String> inputResources;
+    private final String newNamesPath = "src/test/resources/predictions";
 
     /**
      * This constructor sets the spoon instance and the probabilities to be used.
@@ -44,13 +46,11 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @param spoon          the spoon instance
      * @param probabilities  the probabilities
      * @param backup         the backup method renamer
-     * @param inputResources the input resources
      */
     public RealisticMethodRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities,
-                                  final MethodRenamer backup, final Set<String> inputResources) {
+                                  final MethodRenamer backup) {
         super(spoon, probabilities);
         this.backup = backup;
-        this.inputResources = inputResources;
     }
 
     /**
@@ -68,7 +68,8 @@ public class RealisticMethodRenamer extends MethodRenamer {
     private void rename() {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
-        // Get all local variables
+        // Get all methods together with their class files
+        // TODO
         List<CtMethod<Integer>> methods =
             spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
@@ -103,6 +104,10 @@ public class RealisticMethodRenamer extends MethodRenamer {
                 continue;
             }
 
+            // Get the class name to find the corresponding new names
+            // String className = methods.get(i).getParent(CtMethod.class).getSimpleName();
+
+
             CtMethod<Integer> method = methods.get(i);
             MethodRenamingData renamingData = newNames.get(i);
 
@@ -122,6 +127,18 @@ public class RealisticMethodRenamer extends MethodRenamer {
                 LOG.error("Could not rename method", e);
             }
         }
+    }
+
+    private void loadNewNames(CtMethod<?> method) {
+
+        // Get the class name to find the corresponding new names
+        String className = method.getParent(CtMethod.class).getSimpleName();
+
+        // Get the new names for the methods
+        JsonLoader jsonLoader = new JsonLoader();
+
+        List<MethodRenamingData> newNames =
+                jsonLoader.loadMethodRenamingData(newNamesPath + "/" + className + ".json");
     }
 
 }

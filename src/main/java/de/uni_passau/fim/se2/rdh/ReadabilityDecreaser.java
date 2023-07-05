@@ -24,6 +24,7 @@ import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.support.gui.SpoonModelTree;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,14 +41,7 @@ public class ReadabilityDecreaser {
     private static final String CONFIG_FILE_NAME = "config.yaml";
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
-    private static final Logger LOG = LoggerFactory.getLogger(ReadabilityDecreaser.class);
-
-    private final SpoonAPI spoon;
     private final RdcProbabilities probabilities;
-    private final List<AbstractModification> modifications;
-
-    private Set<String> inputResources;
-
 
     /**
      * Creates a new ReadabilityDecreaser with default config.
@@ -70,126 +64,26 @@ public class ReadabilityDecreaser {
                                 final String configFilePath) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
-        this.inputResources = new HashSet<>();
-
-        // Create spoon launcher
-        this.spoon = new Launcher();
 
         // Load the configuration
         YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
         probabilities = yamlReaderWriter.loadRdcProbabilities(configFilePath);
-
-        MethodRenamer backupMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
-
-        // Create the refactorings
-        modifications = List.of(
-            new LocalVariableRenamer(spoon, probabilities),
-            new FieldRenamer(spoon, probabilities),
-            new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer, inputResources),
-            new MethodInliner(spoon, probabilities),
-            new OperationInserter(spoon, probabilities),
-            new StarImporter(spoon, probabilities));
-
-        // Setup spoon
-        setupSpoon();
-
-        // Setup done
-        if (LOG.isInfoEnabled()) {
-            LOG.info("ReadabilityDecreaser created with config file: " + configFilePath);
-        }
     }
 
     /**
-     * Sets up the spoon environment.
-     */
-    private void setupSpoon() {
-        Environment env = spoon.getEnvironment();
-
-        // Imports and comment settings
-        env.setAutoImports(true);
-
-        // Writing comments is done probabilistic in RdcTokenWriter
-        // env.setCommentEnabled(true);
-
-        // Add a change listener that is needed for spoon.reflect.visitor.RdcJavaPrettyPrinter
-        // new ChangeCollector().attachTo(env)
-
-        // Set output type
-        // env.setOutputType(OutputType.CLASSES);
-
-        // Adjust the pretty printer with own token writer (RdcTokenWriter)
-        DefaultJavaPrettyPrinter prettyPrinter = new RdcJavaPrettyPrinter(env, probabilities);
-        PrinterHelper printerHelper = new PrinterHelper(env);
-        prettyPrinter.setPrinterTokenWriter(new RdcTokenWriter(printerHelper, probabilities));
-        prettyPrinter.setIgnoreImplicit(false);
-        env.setPrettyPrinterCreator(() -> prettyPrinter);
-
-        // Set the output directory
-        spoon.setSourceOutputDirectory(outputDir.getAbsolutePath());
-    }
-
-    /**
-     * Add the given files to the input of spoon.
+     * Processes the given files or subdirectories.
      *
-     * @param fileNames the names of the files
-     */
-    public void readInput(final String... fileNames) {
-
-        // Add all files with the given names to the input
-        for (String fileName : fileNames) {
-            spoon.addInputResource(inputDir.getAbsolutePath() + "/" + fileName);
-            inputResources.add(inputDir.getAbsolutePath() + "/" + fileName);
-        }
-
-        spoon.buildModel();
-    }
-
-    /**
-     * Add the whole input directory to the input of spoon.
-     */
-    public void readInput() {
-
-        // Add the whole folder to the input
-        spoon.addInputResource(inputDir.getAbsolutePath());
-        inputResources.add(inputDir.getAbsolutePath());
-
-        spoon.buildModel();
-    }
-
-    /**
-     * Create the output files (java code) using the modified spoon pretty printer.
-     */
-    public void writeOutput() {
-        spoon.prettyprint();
-    }
-
-    /**
-     * Process the input files using the registered refactorings.
-     */
-    public void process() {
-        readInput();
-        modifications.forEach(AbstractModification::apply);
-        writeOutput();
-    }
-
-    /**
-     * Process the given input files using the registered refactorings.
-     *
-     * @param fileNames the names of the files
+     * @param fileNames the files or subdirectories to processs
      */
     public void process(final String... fileNames) {
-        readInput(fileNames);
-        modifications.forEach(AbstractModification::apply);
-        writeOutput();
-    }
+        RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
+        List<String> fullyQualifiedClassNames = new ArrayList<>();
 
-    /**
-     * Display a graphical overview of the spoon model.
-     */
-    public void display() {
-        // Get a graphical overview, constructing is enough
-        new SpoonModelTree(spoon.getFactory());
-    }
+        for (String fileName : fileNames) {
+            fullyQualifiedClassNames.add(inputDir.getAbsolutePath() + "/" + fileName);
+        }
 
+        refactoringProcessor.process(fullyQualifiedClassNames.toArray(new String[0]));
+    }
 
 }

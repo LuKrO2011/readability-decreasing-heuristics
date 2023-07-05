@@ -30,7 +30,7 @@ class RealisticMethodRenamerTest extends SpoonTest {
         rdcProbabilities.setRenameMethod(1.0);
 
         MethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
-        MethodRenamer renamer = new RealisticMethodRenamer(spoon, rdcProbabilities, backup, new HashSet<>());
+        MethodRenamer renamer = new RealisticMethodRenamer(spoon, rdcProbabilities, backup);
 
         // Perform method renaming
         renamer.apply();
