@@ -83,6 +83,9 @@ public class RealisticMethodRenamer extends MethodRenamer {
         JsonLoader jsonLoader = new JsonLoader();
 
         // TODO: How to handle those input files? (use inputResources)
+        // Best option: Create a map for (filename -> methods) when adding files to resources
+        // Do not load file one by one, as this might conflict with compilation unit creation
+        // TODO: Add folder loading method, where the ReadabilityDecreaser is reseted once a folder is processed. But do all preprocessing (code2vec) before.
         List<MethodRenamingData> newNames =
             jsonLoader.loadMethodRenamingData("src/test/resources/predictions/HeapUtils.json");
 
