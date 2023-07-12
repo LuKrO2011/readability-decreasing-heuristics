@@ -70,7 +70,7 @@ class SimpleMethodRenamerTest extends SpoonTest {
         // Assert that the logger logged an error
         assertThat(log.list)
                 .extracting(ILoggingEvent::getFormattedMessage)
-                .containsExactly("Could not rename method");
+                .containsExactly("Could not rename method m0");
     }
 
 }

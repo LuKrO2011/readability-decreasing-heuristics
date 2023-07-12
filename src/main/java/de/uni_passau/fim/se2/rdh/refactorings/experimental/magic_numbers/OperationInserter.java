@@ -2,6 +2,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -67,7 +68,7 @@ public class OperationInserter extends AbstractModification {
                 refactoring.setTarget(ctBinaryOperator);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                LOG.error("Could not inline method", e);
+                Logging.logRefactoringFailed(LOG, "Could not insert +0", e);
             }
         }
     }

@@ -3,6 +3,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.experimental.inline;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
+import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -70,7 +71,7 @@ public class MethodInliner extends AbstractModification {
                 refactoring.setTarget(ctMethod);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                LOG.error("Could not inline method", e);
+                Logging.logRefactoringFailed(LOG, "Could not inline method " + ctMethod.getSimpleName(), e);
             }
         }
     }

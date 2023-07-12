@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -69,9 +70,7 @@ public class SimpleMethodRenamer extends MethodRenamer {
                 refactoring.setNewName("m" + i);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                if(LOG.isWarnEnabled()){
-                    LOG.error("Could not rename method", e);
-                }
+                Logging.logRefactoringFailed(LOG, "Could not rename method " + method.getSimpleName(), e);
             }
         }
     }
