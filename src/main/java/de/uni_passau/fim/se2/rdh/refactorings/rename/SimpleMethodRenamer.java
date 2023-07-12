@@ -69,7 +69,9 @@ public class SimpleMethodRenamer extends MethodRenamer {
                 refactoring.setNewName("m" + i);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                LOG.error("Could not rename method", e);
+                if(LOG.isWarnEnabled()){
+                    LOG.error("Could not rename method", e);
+                }
             }
         }
     }

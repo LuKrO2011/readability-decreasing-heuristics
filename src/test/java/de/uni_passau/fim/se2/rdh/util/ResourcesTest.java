@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Base class for tests that need to access resources.
  */
-public class ResourcesTest {
+public class ResourcesTest extends LoggerTest {
 
     protected String resources;
     protected ProcessingPath resourcesProcessingPath;

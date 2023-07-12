@@ -113,7 +113,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
      *
      * @param conflictMethod The method with the same name and signature
      */
-    private void createNameConflictIssue(CtMethod<?> conflictMethod) throws RefactoringException {
+    private void createNameConflictIssue(CtMethod<?> conflictMethod) {
         throw new RefactoringException("There is already a method with the name " + newName + " and the same signature.");
     }
 }
