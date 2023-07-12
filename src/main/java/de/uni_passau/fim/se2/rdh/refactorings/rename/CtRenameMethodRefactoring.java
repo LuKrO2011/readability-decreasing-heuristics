@@ -10,9 +10,7 @@ import spoon.reflect.declaration.CtVariable;
 import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.reference.CtReference;
 import spoon.reflect.visitor.chain.CtConsumer;
-import spoon.reflect.visitor.filter.AllMethodsSameSignatureFunction;
-import spoon.reflect.visitor.filter.ExecutableReferenceFilter;
-import spoon.reflect.visitor.filter.VariableReferenceFunction;
+import spoon.reflect.visitor.filter.*;
 import spoon.support.reflect.declaration.CtExecutableImpl;
 
 import java.util.ArrayList;
@@ -84,31 +82,38 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
     /**
      * {@inheritDoc}
      * There is a name conflict if there is a method with the same name and signature
-     * TODO: Implement me and test me
-     * TODO: AllMethodsSameSignatureFunction is probably not the right way
+     * TODO: Check for lambdas, anonymous classes, overriding methods etc.
      */
     @Override
     protected void detectNameConflicts() {
-        // Create an executable with the new name from the executable of the target
-        /*CtExecutableImpl<?> executable = (CtExecutableImpl<?>) target.getReference().getExecutableDeclaration();
-        CtExecutableImpl<?> executableWithNewName = (CtExecutableImpl<?>) executable.clone();
-        executableWithNewName.setSimpleName(newName);
+        // Create a method with the new name as the target
+        CtMethod<?> newMethod = target.clone(); // TODO: Try copy method
+        newMethod.setSimpleName(newName);
 
-        // TODO: Include lambdas not working!
-        // Check if there is a method with the same name and signature
-        getTarget().map((new AllMethodsSameSignatureFunction()).includingSelf(false).includingLambdas(false))
-            .forEach(conflict ->
-                createNameConflictIssue((CtMethod<?>) conflict)
-            );*/
+        // Find all executables with same name and signature
+        final List<CtMethod<?>> methods = new ArrayList<>();
+        NamedElementFilter<?> namedElementFilter = new NamedElementFilter<>(CtMethod.class, newName);
+        getTarget().getParent().filterChildren(namedElementFilter).forEach(
+            (CtConsumer<CtMethod<?>>) t -> {
+                if (t.getSignature().equals(newMethod.getSignature())) {
+                    methods.add(t);
+                }
+            });
+
+
+        // If the list is not empty, there is a name conflict
+        if (!methods.isEmpty()) {
+            createNameConflictIssue(methods.get(0));
+        }
     }
 
     /**
-     * Override this method to get access to details about this refactoring issue
+     * This method creates a name conflict issue for the given method.
+     * TODO: Catch the exception?
      *
      * @param conflictMethod The method with the same name and signature
      */
-    protected void createNameConflictIssue(CtMethod<?> conflictMethod) {
-        throw new RefactoringException(conflictMethod.getClass().getSimpleName()
-            + " with name " + conflictMethod.getSimpleName() + " is in conflict.");
+    private void createNameConflictIssue(CtMethod<?> conflictMethod) throws RefactoringException {
+        throw new RefactoringException("There is already a method with the name " + newName + " and the same signature.");
     }
 }
