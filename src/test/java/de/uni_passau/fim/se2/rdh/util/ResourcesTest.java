@@ -30,7 +30,13 @@ public class ResourcesTest {
     protected Path resourcesPath;
     protected URL resourcesURL;
 
-    protected final String sampleClass = "HelloWorld.java";
+    protected final String helloWorld = "HelloWorld.java";
+
+    protected final String nameConflicts = "NameConflicts.java";
+
+    protected final String outputPath = "output";
+
+    protected final Path outputDir = Path.of(outputPath);
 
     @BeforeEach
     void setupResourcesPath() {

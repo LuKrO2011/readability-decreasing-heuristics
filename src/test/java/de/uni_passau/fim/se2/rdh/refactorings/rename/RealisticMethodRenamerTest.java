@@ -11,7 +11,6 @@ import spoon.SpoonAPI;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,9 +20,9 @@ class RealisticMethodRenamerTest extends SpoonTest {
 
     @Test
     void testRenameMethod(@TempDir Path outputDir) {
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();

@@ -56,9 +56,9 @@ public class SpoonTest extends ResourcesTest {
 
     @Test
     void testNoRefactoring(@TempDir Path outputDir) {
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
 
         // Create modified code file
         spoon.prettyprint();
@@ -75,9 +75,9 @@ public class SpoonTest extends ResourcesTest {
     void testNoRefactoring2() {
         Path outputDir = Path.of("output");
 
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
 
         // Create modified code file
         spoon.prettyprint();

@@ -85,20 +85,21 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
      * {@inheritDoc}
      * There is a name conflict if there is a method with the same name and signature
      * TODO: Implement me and test me
+     * TODO: AllMethodsSameSignatureFunction is probably not the right way
      */
     @Override
     protected void detectNameConflicts() {
-
         // Create an executable with the new name from the executable of the target
         /*CtExecutableImpl<?> executable = (CtExecutableImpl<?>) target.getReference().getExecutableDeclaration();
         CtExecutableImpl<?> executableWithNewName = (CtExecutableImpl<?>) executable.clone();
         executableWithNewName.setSimpleName(newName);
 
+        // TODO: Include lambdas not working!
         // Check if there is a method with the same name and signature
-        getTarget().map(new AllMethodsSameSignatureFunction()).forEach(conflict -> {
-                createNameConflictIssue((CtMethod<?>) conflict);
-            }
-        );*/
+        getTarget().map((new AllMethodsSameSignatureFunction()).includingSelf(false).includingLambdas(false))
+            .forEach(conflict ->
+                createNameConflictIssue((CtMethod<?>) conflict)
+            );*/
     }
 
     /**

@@ -57,7 +57,7 @@ public class SimpleMethodRenamer extends MethodRenamer {
             return;
         }
 
-        // Rename all local variables to vl0 ... vlN
+        // Rename all methods to m0 ... mN
         for (int i = 0; i < methods.size(); i++) {
             if (!probabilities.shouldRenameMethod()) {
                 continue;

@@ -37,7 +37,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         prettyPrinter.setIgnoreImplicit(false);
         env.setPrettyPrinterCreator(() -> prettyPrinter);
 
-        spoon.addInputResource(resources + "/" + sampleClass);
+        spoon.addInputResource(resources + "/" + helloWorld);
     }
 
     @Test
@@ -47,7 +47,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
 
         spoon.prettyprint();
 
-        assertThat(outputDir.resolve(sampleClass)).exists();
+        assertThat(outputDir.resolve(helloWorld)).exists();
     }
 
     @Disabled
@@ -60,13 +60,13 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
 
         spoon.prettyprint();
 
-        assertThat(path.resolve(sampleClass)).exists();
+        assertThat(path.resolve(helloWorld)).exists();
     }
 
     @Test
     void testAdditionalBraces(@TempDir Path outputDir) {
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
 
         probabilities.setInsertBraces(1.0);
 
@@ -86,8 +86,8 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
     void testAdditionalBraces() {
         Path outputDir = Path.of("output");
 
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
 
         probabilities.setInsertBraces(1.0);
 

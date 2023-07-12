@@ -3,9 +3,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.experimental.inline;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
 import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
-import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -23,9 +21,9 @@ class FieldInlinerTest extends SpoonTest {
 
     @Test
     void testInlineField(@TempDir Path outputDir) {
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
@@ -55,9 +53,9 @@ class FieldInlinerTest extends SpoonTest {
     void testInlineField() {
         Path outputDir = Path.of("output");
 
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();

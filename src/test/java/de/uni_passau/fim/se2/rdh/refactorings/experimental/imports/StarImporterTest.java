@@ -22,9 +22,9 @@ class StarImporterTest extends SpoonTest {
 
     @Test
     void testReplaceWithStarImport(@TempDir Path outputDir) {
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
