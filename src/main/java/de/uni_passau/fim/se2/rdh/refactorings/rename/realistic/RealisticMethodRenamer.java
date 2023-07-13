@@ -123,6 +123,12 @@ public class RealisticMethodRenamer extends MethodRenamer {
         }
     }
 
+    /**
+     * Returns the new name for the given renaming data depending on the name selection mode.
+     *
+     * @param renamingData the renaming data
+     * @return the new name
+     */
     private String getNewName(MethodRenamingData renamingData) {
         switch (nameSelectionMode) {
             case QUALITY:
@@ -134,6 +140,12 @@ public class RealisticMethodRenamer extends MethodRenamer {
         }
     }
 
+    /**
+     * Loads the new method names for the given class.
+     *
+     * @param clazz the class
+     * @return the new names
+     */
     private List<MethodRenamingData> loadNewNames(CtClass<?> clazz) {
         // Get the class name to find the corresponding new names
         String className = clazz.getSimpleName();

@@ -34,6 +34,8 @@ public class ResourcesTest extends LoggerTest {
 
     protected final String nameConflicts = "NameConflicts.java";
 
+    protected final String staticCodeOptimizable = "StaticCodeOptimizable.java";
+
     protected final String outputPath = "output";
 
     protected final Path outputDir = Path.of(outputPath);
