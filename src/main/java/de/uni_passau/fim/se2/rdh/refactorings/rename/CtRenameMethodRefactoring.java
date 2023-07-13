@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
+import de.uni_passau.fim.se2.rdh.refactorings.RefactoringsUtils;
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.code.CtInvocation;
@@ -38,24 +39,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
      */
     @Override
     protected void refactorNoCheck() {
-        ExecutableReferenceFilter execRefFilter = new ExecutableReferenceFilter();
-        final List<CtInvocation<?>> invocations = new ArrayList<>();
-
-        /*
-         * TODO: Use filter instead for all methods with same signature? @see CtRenameLocalVariableRefactoring,
-         *  @see VariableReferenceFunction. Consider super/subclasses?
-         */
-        // Add own executable
-        execRefFilter.addExecutable(target.getReference().getExecutableDeclaration());
-
-        // Add all executables with same signature
-        target.getFactory().getModel().filterChildren(execRefFilter).forEach(
-            (CtConsumer<CtExecutableReference<?>>) t -> {
-                CtElement parent = t.getParent();
-                if (parent instanceof CtInvocation<?>) {
-                    invocations.add((CtInvocation<?>) parent);
-                }
-            });
+        final List<CtInvocation<?>> invocations = RefactoringsUtils.getMethodInvocations(target);
 
         // Change name of method
         target.setSimpleName(newName);
@@ -64,7 +48,6 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
         for (CtInvocation<?> invocation : invocations) {
             invocation.getExecutable().setSimpleName(newName);
         }
-
     }
 
     /**
@@ -92,11 +75,11 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
         final List<CtMethod<?>> methods = new ArrayList<>();
         NamedElementFilter<?> namedElementFilter = new NamedElementFilter<>(CtMethod.class, newName);
         getTarget().getParent().filterChildren(namedElementFilter).forEach(
-            (CtConsumer<CtMethod<?>>) t -> {
-                if (t.getSignature().equals(newMethod.getSignature())) {
-                    methods.add(t);
-                }
-            });
+                (CtConsumer<CtMethod<?>>) t -> {
+                    if (t.getSignature().equals(newMethod.getSignature())) {
+                        methods.add(t);
+                    }
+                });
 
 
         // If the list is not empty, there is a name conflict
