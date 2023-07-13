@@ -17,18 +17,19 @@ class StaticCodeOptimizerTest extends SpoonTest {
 
     @BeforeEach
     void setUp() {
-        attachAppender(StaticCodeOptimizer.class);
+        attachAppender(PartiallyEvaluator.class);
     }
 
     @Test
-    void testOptimize() {
+    void testPartiallyEvaluate() {
         File original = new File(resources, staticCodeOptimizable);
         File modified = new File(outputDir.toString(), staticCodeOptimizable);
         SpoonAPI spoon = setupSpoon(staticCodeOptimizable, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        AbstractModification renamer = new StaticCodeOptimizer(spoon, rdcProbabilities);
+        rdcProbabilities.setPartiallyEvaluate(1.0);
+        AbstractModification renamer = new PartiallyEvaluator(spoon, rdcProbabilities);
 
         // Perform method renaming
         renamer.apply();

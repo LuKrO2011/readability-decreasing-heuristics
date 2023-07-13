@@ -65,6 +65,8 @@ public final class RdcProbabilities {
     private double starImport;
     @Probability
     private double inlineField;
+    @Probability
+    private double partiallyEvaluate;
 
     // TODO: writeFullyQualifiedName
     // TODO: writeStarImport
@@ -98,6 +100,7 @@ public final class RdcProbabilities {
         this.insertBraces = probabilities.insertBraces;
         this.starImport = probabilities.starImport;
         this.inlineField = probabilities.inlineField;
+        this.partiallyEvaluate = probabilities.partiallyEvaluate;
     }
 
     /**
@@ -251,6 +254,15 @@ public final class RdcProbabilities {
         return Randomness.nextDouble() <= inlineField;
     }
 
+    /**
+     * Returns whether an expression should be partially evaluated.
+     *
+     * @return Whether an expression should be partially evaluated.
+     */
+    public boolean shouldPartiallyEvaluate() {
+        return Randomness.nextDouble() <= partiallyEvaluate;
+    }
+
     public List<Double> getNewline() {
         return Collections.unmodifiableList(newline);
     }
@@ -387,5 +399,11 @@ public final class RdcProbabilities {
         return inlineField;
     }
 
+    public double getPartiallyEvaluate() {
+        return partiallyEvaluate;
+    }
 
+    public void setPartiallyEvaluate(double partiallyEvaluate) {
+        this.partiallyEvaluate = partiallyEvaluate;
+    }
 }
