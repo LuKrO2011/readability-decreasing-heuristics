@@ -5,9 +5,11 @@ import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import spoon.SpoonAPI;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +23,7 @@ class StaticCodeOptimizerTest extends SpoonTest {
     }
 
     @Test
-    void testPartiallyEvaluate() {
+    void testPartiallyEvaluate(@TempDir Path outputDir) {
         File original = new File(resources, staticCodeOptimizable);
         File modified = new File(outputDir.toString(), staticCodeOptimizable);
         SpoonAPI spoon = setupSpoon(staticCodeOptimizable, outputDir);
