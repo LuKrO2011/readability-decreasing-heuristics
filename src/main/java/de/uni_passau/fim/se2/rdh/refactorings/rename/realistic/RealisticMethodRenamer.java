@@ -39,12 +39,15 @@ public class RealisticMethodRenamer extends MethodRenamer {
     // TODO: Get this from config file
     private final String NEW_NAMES_PATH = "src/test/resources/predictions";
 
+    // TODO: Get this from config file
+    private final NameSelectionMode nameSelectionMode = NameSelectionMode.LONGEST;
+
     /**
      * This constructor sets the spoon instance and the probabilities to be used.
      *
-     * @param spoon          the spoon instance
-     * @param probabilities  the probabilities
-     * @param backup         the backup method renamer
+     * @param spoon         the spoon instance
+     * @param probabilities the probabilities
+     * @param backup        the backup method renamer
      */
     public RealisticMethodRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities,
                                   final MethodRenamer backup) {
@@ -62,7 +65,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtClass.class));
 
         // Rename all methods for each class
-        for (CtClass<?> ctClass : classes){
+        for (CtClass<?> ctClass : classes) {
             List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
             rename(ctClass, methodsOfClass);
         }
@@ -105,18 +108,29 @@ public class RealisticMethodRenamer extends MethodRenamer {
             if (!method.getSimpleName().equals(renamingData.getOriginalName())) {
                 if (LOG.isWarnEnabled()) {
                     LOG.warn("Method name of method to rename did not match. Expected: "
-                        + renamingData.getOriginalName() + " but was " + method.getSimpleName() + ".");
+                            + renamingData.getOriginalName() + " but was " + method.getSimpleName() + ".");
                 }
             }
 
             try {
                 refactoring.setTarget(method);
-                String newName = renamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
+                String newName = getNewName(renamingData);
                 refactoring.setNewName(newName);
                 refactoring.refactor();
             } catch (RefactoringException e) {
                 Logging.logRefactoringFailed(LOG, "Could not rename method " + method.getSimpleName(), e);
             }
+        }
+    }
+
+    private String getNewName(MethodRenamingData renamingData) {
+        switch (nameSelectionMode) {
+            case QUALITY:
+                return renamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
+            case LONGEST:
+                return renamingData.getLongestPrediction().getName();
+            default:
+                throw new IllegalStateException("Unknown name selection mode: " + nameSelectionMode);
         }
     }
 

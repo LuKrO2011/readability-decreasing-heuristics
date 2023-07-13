@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-// TODO: Add checks for valid field names
-
 /**
  * This class implements the refactoring for renaming a field/global variable.
  * It does not check for valid field names.
