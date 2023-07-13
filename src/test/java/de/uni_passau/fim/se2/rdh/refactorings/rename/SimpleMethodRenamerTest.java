@@ -23,7 +23,7 @@ class SimpleMethodRenamerTest extends SpoonTest {
 
     @BeforeEach
     void setUp() {
-        log = attachAppender(SimpleMethodRenamer.class);
+        attachAppender(SimpleMethodRenamer.class);
     }
 
     @Test

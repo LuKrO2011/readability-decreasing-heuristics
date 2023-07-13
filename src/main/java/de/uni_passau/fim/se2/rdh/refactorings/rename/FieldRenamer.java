@@ -24,7 +24,7 @@ public class FieldRenamer extends AbstractModification {
     /**
      * The (logger) of this class.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(SimpleMethodRenamer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FieldRenamer.class);
 
     /**
      * This constructor sets the spoon instance and the probabilities to be used.
@@ -51,7 +51,7 @@ public class FieldRenamer extends AbstractModification {
         CtRenameFieldRefactoring refactoring = new CtRenameFieldRefactoring();
 
         // Get all global variables
-        List<CtField<Integer>> globalVariables =
+        List<CtField<?>> globalVariables =
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtField.class));
 
         if (globalVariables.size() == 0) {
@@ -65,7 +65,7 @@ public class FieldRenamer extends AbstractModification {
                 continue;
             }
 
-            CtField<Integer> globalVariable = globalVariables.get(i);
+            CtField<?> globalVariable = globalVariables.get(i);
             try {
                 refactoring.setTarget(globalVariable);
                 refactoring.setNewName("f" + i);

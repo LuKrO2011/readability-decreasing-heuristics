@@ -37,7 +37,7 @@ public class LoggerTest {
      * @param clazz The class to attach the appender to.
      * @return The attached appender which can be used to assert log output.
      */
-    protected ListAppender<ILoggingEvent> attachAppender(Class<?> clazz) {
+    protected void attachAppender(Class<?> clazz) {
         logger = (Logger) LoggerFactory.getLogger(clazz);
 
         // Create and start a ListAppender
@@ -47,7 +47,8 @@ public class LoggerTest {
         // Add the appender to the logger
         logger.addAppender(listAppender);
 
-        return listAppender;
+        // Remember the appender to detach it later
+        log = listAppender;
     }
 
     /**
