@@ -49,7 +49,7 @@ class FieldRenamerTest extends SpoonTest {
         assertAll(
                 () -> assertThat(diffOperations).hasSize(2),
                 () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameField),
-                () -> assertThat(log.list).isEmpty()
+                this::assertLogIsEmpty
         );
     }
 
@@ -67,9 +67,7 @@ class FieldRenamerTest extends SpoonTest {
         renamer.apply();
 
         // Assert that the logger logged an error
-        assertThat(log.list)
-                .extracting(ILoggingEvent::getFormattedMessage)
-                .containsExactly("Could not rename global variable f0");
+        assertLogContainsExactly("Could not rename global variable f0");
     }
 
 }

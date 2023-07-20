@@ -18,29 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
-// TODO: The disabled test only work when executed alone.
-// TODO: Conflict with other tests using a mock logger.
-// @ExtendWith(MockitoExtension.class)
 public class SpoonTest extends ResourcesTest {
-
-    /*@Mock
-    private static Logger mockLogger;
-
-    @BeforeAll
-    static void setUp() {
-        mockStatic(LoggerFactory.class, invocation -> mockLogger);
-    }
-
-    @Disabled
-    @Test
-    void testRenameMethodEmpty() {
-        SpoonAPI spoon = new Launcher();
-        RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        Refactoring refactoring = new MethodRenamer(spoon, rdcProbabilities);
-
-        refactoring.apply();
-        verify(mockLogger).warn("No methods found");
-    }*/
 
     protected SpoonAPI setupSpoon(String className, Path outputDir) {
         SpoonAPI spoon = new Launcher();
@@ -56,25 +34,6 @@ public class SpoonTest extends ResourcesTest {
 
     @Test
     void testNoRefactoring(@TempDir Path outputDir) {
-        File original = new File(resources, helloWorld);
-        File modified = new File(outputDir.toString(), helloWorld);
-        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
-
-        // Create modified code file
-        spoon.prettyprint();
-
-        // Perform the refactoring
-        List<Operation> diffOperations = getDiffOperations(original, modified);
-
-        // Assert that no refactoring was performed
-        assertThat(diffOperations).isEmpty();
-    }
-
-    @Disabled
-    @Test
-    void testNoRefactoring2() {
-        Path outputDir = Path.of("output");
-
         File original = new File(resources, helloWorld);
         File modified = new File(outputDir.toString(), helloWorld);
         SpoonAPI spoon = setupSpoon(helloWorld, outputDir);

@@ -6,6 +6,8 @@ import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.AfterEach;
 import org.slf4j.LoggerFactory;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * This class enables testing on logger output.
  */
@@ -58,5 +60,30 @@ public class LoggerTest {
      */
     private void detachAppender(ListAppender<ILoggingEvent> appender) {
         logger.detachAppender(appender);
+    }
+
+    /**
+     * Asserts that the log is empty.
+     */
+    protected void assertLogIsEmpty() {
+        assertThat(log.list).isEmpty();
+    }
+
+    /**
+     * Asserts that the log contains exactly the given messages.
+     * @param messages The messages to check for.
+     */
+    protected void assertLogContainsExactly(String... messages) {
+        assertThat(log.list).extracting(ILoggingEvent::getFormattedMessage)
+                .containsExactly(messages);
+    }
+
+    /**
+     * Asserts that the log contains the given messages.
+     * @param messages The messages to check for.
+     */
+    protected void assertLogContains(String... messages) {
+        assertThat(log.list).extracting(ILoggingEvent::getFormattedMessage)
+                .contains(messages);
     }
 }

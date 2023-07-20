@@ -9,6 +9,7 @@ import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import spoon.Launcher;
 import spoon.SpoonAPI;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.verify;
 
 
 class SimpleMethodRenamerTest extends SpoonTest {
@@ -50,9 +52,24 @@ class SimpleMethodRenamerTest extends SpoonTest {
         assertAll(
                 () -> assertThat(diffOperations).hasSize(1),
                 () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
-                () -> assertThat(log.list).isEmpty()
+                this::assertLogIsEmpty
         );
     }
+
+    @Test
+    void testRenameMethodEmpty() {
+        // Set up spoon
+        SpoonAPI spoon = new Launcher();
+        RdcProbabilities rdcProbabilities = new RdcProbabilities();
+        AbstractModification refactoring = new SimpleMethodRenamer(spoon, rdcProbabilities);
+
+        // Perform method renaming
+        refactoring.apply();
+
+        // Assert that the logger logged an error
+        assertLogContainsExactly("No methods found");
+    }
+
 
     @Test
     void testRenameMethodNameAlreadyExists(@TempDir Path outputDir) {
@@ -68,9 +85,7 @@ class SimpleMethodRenamerTest extends SpoonTest {
         renamer.apply();
 
         // Assert that the logger logged an error
-        assertThat(log.list)
-                .extracting(ILoggingEvent::getFormattedMessage)
-                .containsExactly("Could not rename method m0");
+        assertLogContainsExactly("Could not rename method m0");
     }
 
 }

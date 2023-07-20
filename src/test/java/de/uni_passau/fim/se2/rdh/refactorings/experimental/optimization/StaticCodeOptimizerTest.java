@@ -52,7 +52,7 @@ class StaticCodeOptimizerTest extends SpoonTest {
                 () -> assertThat(diffOperations.get(1).toString()).contains("Delete"),
                 () -> assertThat(diffOperations.get(2).toString()).contains("Delete"),
                 () -> assertThat(diffOperations.get(3).toString()).contains("Delete"),
-                () -> assertThat(log.list).isEmpty()
+                this::assertLogIsEmpty
         );
     }
 
