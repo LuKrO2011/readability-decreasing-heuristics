@@ -2,9 +2,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.refactoring.RefactoringException;
-import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtField;
-import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.reference.CtReference;
 import spoon.reflect.visitor.chain.CtConsumer;
 import spoon.reflect.visitor.filter.NamedElementFilter;
@@ -15,8 +13,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * This class implements the refactoring for renaming a field/global variable.
- * It does not check for valid field names.
+ * This class implements the refactoring for renaming a field/global variable. It does not check for valid field names.
  */
 public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<?>> {
 
@@ -33,8 +30,7 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
     }
 
     /**
-     * This method refactors the field name and all references to the field.
-     * It does not check for valid field names.
+     * This method refactors the field name and all references to the field. It does not check for valid field names.
      *
      * @see AbstractRenameRefactoring#refactorNoCheck()
      */
@@ -56,8 +52,7 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
     }
 
     /**
-     * {@inheritDoc}
-     * There is a name conflict if there is another field with the same name in the class scope.
+     * {@inheritDoc} There is a name conflict if there is another field with the same name in the class scope.
      */
     @Override
     protected void detectNameConflicts() {
@@ -81,8 +76,10 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
      *
      * @param conflictField The field that causes the name conflict.
      */
-    private void createNameConflictIssue(CtField<?> conflictField) {
-        throw new RefactoringException("There is already a field with the name " + newName + " in the class " + target.getDeclaringType().getQualifiedName());
+    private void createNameConflictIssue(final CtField<?> conflictField) {
+        throw new RefactoringException(
+                "There is already a field with the name " + newName + " in the class " + target.getDeclaringType()
+                        .getQualifiedName());
     }
 
 

@@ -10,7 +10,10 @@ import spoon.reflect.visitor.filter.ExecutableReferenceFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefactoringsUtils {
+public final class RefactoringsUtils {
+
+    private RefactoringsUtils() {
+    }
 
     /**
      * This method returns all invocations of the given method (within the whole model?).
@@ -18,7 +21,7 @@ public class RefactoringsUtils {
      * @param target The method whose invocations should be returned.
      * @return A list of all invocations of the given method.
      */
-    public static List<CtInvocation<?>> getMethodInvocations(CtMethod<?> target) {
+    public static List<CtInvocation<?>> getMethodInvocations(final CtMethod<?> target) {
         ExecutableReferenceFilter execRefFilter = new ExecutableReferenceFilter();
         final List<CtInvocation<?>> invocations = new ArrayList<>();
 

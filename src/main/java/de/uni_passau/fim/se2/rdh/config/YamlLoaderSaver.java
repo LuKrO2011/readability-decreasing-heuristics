@@ -64,6 +64,12 @@ public class YamlLoaderSaver {
         return loadedData;
     }
 
+    /**
+     * Loads a {@link ModelConfig} from the file with the given name.
+     *
+     * @param configFileName the name of the file to load
+     * @return the loaded {@link ModelConfig}
+     */
     public ModelConfig loadConfig(@NotBlank final String configFileName) {
         ModelConfig loadedData = (ModelConfig) load(configFileName, ModelConfig.class);
         // TODO: Validate?

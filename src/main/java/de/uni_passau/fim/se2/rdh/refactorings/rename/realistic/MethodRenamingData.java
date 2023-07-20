@@ -1,7 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename.realistic;
 
 import lombok.Data;
-import org.eclipse.jdt.core.CompletionProposal;
 
 import java.util.Comparator;
 import java.util.List;

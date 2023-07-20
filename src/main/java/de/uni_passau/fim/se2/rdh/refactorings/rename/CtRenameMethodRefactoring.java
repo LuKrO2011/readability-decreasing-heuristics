@@ -4,11 +4,9 @@ import de.uni_passau.fim.se2.rdh.refactorings.RefactoringsUtils;
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.code.CtInvocation;
-import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.reference.CtExecutableReference;
 import spoon.reflect.visitor.chain.CtConsumer;
-import spoon.reflect.visitor.filter.*;
+import spoon.reflect.visitor.filter.NamedElementFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +30,8 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
     }
 
     /**
-     * This method refactors the method name and all invocations of the method.
-     * It does not check for valid method names.
+     * This method refactors the method name and all invocations of the method. It does not check for valid method
+     * names.
      *
      * @see AbstractRenameRefactoring#refactorNoCheck()
      */
@@ -61,8 +59,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
     }
 
     /**
-     * {@inheritDoc}
-     * There is a name conflict if there is a method with the same name and signature
+     * {@inheritDoc} There is a name conflict if there is a method with the same name and signature
      * TODO: Check for super/subclass conflicts
      */
     @Override
@@ -93,7 +90,8 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
      *
      * @param conflictMethod The method with the same name and signature
      */
-    private void createNameConflictIssue(CtMethod<?> conflictMethod) {
-        throw new RefactoringException("There is already a method with the name " + newName + " and the same signature.");
+    private void createNameConflictIssue(final CtMethod<?> conflictMethod) {
+        throw new RefactoringException(
+                "There is already a method with the name " + newName + " and the same signature.");
     }
 }

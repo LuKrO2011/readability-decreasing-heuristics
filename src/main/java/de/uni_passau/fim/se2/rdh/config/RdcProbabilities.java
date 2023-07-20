@@ -379,7 +379,7 @@ public final class RdcProbabilities {
         return insertBraces;
     }
 
-    public void setInsertBraces(double insertBraces) {
+    public void setInsertBraces(final double insertBraces) {
         this.insertBraces = insertBraces;
     }
 
@@ -387,7 +387,7 @@ public final class RdcProbabilities {
         return starImport;
     }
 
-    public void setStarImport(double starImport) {
+    public void setStarImport(final double starImport) {
         this.starImport = starImport;
     }
 
@@ -403,7 +403,7 @@ public final class RdcProbabilities {
         return partiallyEvaluate;
     }
 
-    public void setPartiallyEvaluate(double partiallyEvaluate) {
+    public void setPartiallyEvaluate(final double partiallyEvaluate) {
         this.partiallyEvaluate = partiallyEvaluate;
     }
 }

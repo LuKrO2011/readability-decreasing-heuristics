@@ -11,10 +11,14 @@ import java.io.IOException;
  * Runs python scripts.
  */
 public final class PythonRunner {
-    private final static Logger LOG = org.slf4j.LoggerFactory.getLogger(PythonRunner.class);
+    private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(PythonRunner.class);
     private final ModelConfig config;
 
-    public PythonRunner(ModelConfig modelConfig) {
+    /**
+     * Creates a new instance of this class.
+     * @param modelConfig The model config to use.
+     */
+    public PythonRunner(final ModelConfig modelConfig) {
         this.config = modelConfig;
     }
 

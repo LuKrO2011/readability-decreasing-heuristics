@@ -3,7 +3,7 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.imports.StarImporter;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
@@ -41,6 +41,7 @@ public class RefactoringProcessor {
      * Creates a new RefactoringProcessor.
      *
      * @param outputDirPath the path to the output directory
+     * @param probabilities the probabilities to use
      */
     public RefactoringProcessor(final ProcessingPath outputDirPath, final RdcProbabilities probabilities) {
         this.outputDir = outputDirPath;

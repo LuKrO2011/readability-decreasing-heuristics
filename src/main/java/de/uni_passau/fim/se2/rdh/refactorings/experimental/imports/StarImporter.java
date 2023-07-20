@@ -1,8 +1,7 @@
-package de.uni_passau.fim.se2.rdh.refactorings.experimental;
+package de.uni_passau.fim.se2.rdh.refactorings.experimental.imports;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.imports.CtImportRefactoring;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,7 @@ public class StarImporter extends AbstractModification {
         // Get all import statements from the compilation unit
         Collection<CtType<?>> types = spoon.getModel().getAllTypes();
 
-        if (!types.iterator().hasNext()){
+        if (!types.iterator().hasNext()) {
             if (LOG.isWarnEnabled()) {
                 LOG.warn("Compilation unit can not be created as there are no types");
             }

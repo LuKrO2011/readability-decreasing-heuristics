@@ -49,7 +49,8 @@ public class OperationInserter extends AbstractModification {
         CtAdd0 refactoring = new CtAdd0();
 
         // Get expression nodes
-        List<CtBinaryOperator<?>> binaryOperations = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtBinaryOperator.class));
+        List<CtBinaryOperator<?>> binaryOperations =
+                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtBinaryOperator.class));
 
         if (binaryOperations.size() == 0) {
             if (LOG.isWarnEnabled()) {

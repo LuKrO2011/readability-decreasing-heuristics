@@ -71,7 +71,8 @@ public class ReadabilityDecreaser {
     /**
      * Processes the given files or subdirectories.
      * <p>
-     * Each file or subdirectory is treated as one unit (e.g. repository) and processed by a own {@link RefactoringProcessor}.
+     * Each file or subdirectory is treated as one unit (e.g. repository) and processed by a own
+     * {@link RefactoringProcessor}.
      * </p>
      *
      * @param fileNames the files or subdirectories to process

@@ -71,7 +71,8 @@ public class FieldRenamer extends AbstractModification {
                 refactoring.setNewName("f" + i);
                 refactoring.refactor();
             } catch (RefactoringException e) {
-                Logging.logRefactoringFailed(LOG, "Could not rename global variable " + globalVariable.getSimpleName(), e);
+                Logging.logRefactoringFailed(LOG, "Could not rename global variable "
+                        + globalVariable.getSimpleName(), e);
             }
         }
 

@@ -37,7 +37,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
     private final MethodRenamer backup;
 
     // TODO: Get this from config file
-    private final String NEW_NAMES_PATH = "src/test/resources/predictions";
+    private static final String NEW_NAMES_PATH = "src/test/resources/predictions";
 
     // TODO: Get this from config file
     private final NameSelectionMode nameSelectionMode = NameSelectionMode.LONGEST;
@@ -72,9 +72,13 @@ public class RealisticMethodRenamer extends MethodRenamer {
     }
 
     /**
-     * Renames the given methods.
+     * Renames the given methods with a certain probability. The new names are loaded from a json file containing the
+     * predictions of code2vec.
+     *
+     * @param clazz   the class containing the methods
+     * @param methods the methods to be renamed
      */
-    private void rename(CtClass<?> clazz, List<CtMethod<?>> methods) {
+    private void rename(final CtClass<?> clazz, final List<CtMethod<?>> methods) {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
         if (methods.size() == 0) {
@@ -129,7 +133,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @param renamingData the renaming data
      * @return the new name
      */
-    private String getNewName(MethodRenamingData renamingData) {
+    private String getNewName(final MethodRenamingData renamingData) {
         switch (nameSelectionMode) {
             case QUALITY:
                 return renamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
@@ -146,7 +150,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @param clazz the class
      * @return the new names
      */
-    private List<MethodRenamingData> loadNewNames(CtClass<?> clazz) {
+    private List<MethodRenamingData> loadNewNames(final CtClass<?> clazz) {
         // Get the class name to find the corresponding new names
         String className = clazz.getSimpleName();
 

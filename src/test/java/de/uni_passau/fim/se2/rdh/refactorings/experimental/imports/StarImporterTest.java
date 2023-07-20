@@ -3,12 +3,9 @@ package de.uni_passau.fim.se2.rdh.refactorings.experimental.imports;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import spoon.SpoonAPI;
@@ -18,7 +15,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class StarImporterTest extends SpoonTest {
 

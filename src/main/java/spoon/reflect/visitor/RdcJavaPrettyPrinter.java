@@ -2,7 +2,18 @@ package spoon.reflect.visitor;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import spoon.compiler.Environment;
-import spoon.reflect.code.*;
+import spoon.reflect.code.CtBinaryOperator;
+import spoon.reflect.code.CtBlock;
+import spoon.reflect.code.CtComment;
+import spoon.reflect.code.CtExpression;
+import spoon.reflect.code.CtFor;
+import spoon.reflect.code.CtForEach;
+import spoon.reflect.code.CtIf;
+import spoon.reflect.code.CtStatement;
+import spoon.reflect.code.CtSwitch;
+import spoon.reflect.code.CtSynchronized;
+import spoon.reflect.code.CtTry;
+import spoon.reflect.code.CtWhile;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.visitor.printer.CommentOffset;
 
@@ -22,9 +33,10 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
     /**
      * Creates a new code generator visitor.
      *
-     * @param env The environment to use.
+     * @param env           The environment to use.
+     * @param probabilities The probabilities to use.
      */
-    public RdcJavaPrettyPrinter(Environment env, RdcProbabilities probabilities) {
+    public RdcJavaPrettyPrinter(final Environment env, final RdcProbabilities probabilities) {
         super(env);
         this.probabilities = probabilities;
     }
@@ -33,7 +45,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * {@inheritDoc}
      */
     @Override
-    public DefaultJavaPrettyPrinter setPrinterTokenWriter(TokenWriter tokenWriter) {
+    public DefaultJavaPrettyPrinter setPrinterTokenWriter(final TokenWriter tokenWriter) {
         this.printer = tokenWriter;
         elementPrinterHelper = new ElementPrinterHelper(tokenWriter, this, env);
         return super.setPrinterTokenWriter(tokenWriter);
@@ -45,12 +57,14 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * Method copied from {@link DefaultJavaPrettyPrinter}.
      */
     @Override
-    protected void enterCtStatement(CtStatement s) {
+    protected void enterCtStatement(final CtStatement s) {
         elementPrinterHelper.writeComment(s, CommentOffset.BEFORE);
         getPrinterHelper().mapLine(s, sourceCompilationUnit);
         if (!context.isNextForVariable()) {
-            //TODO AnnotationLoopTest#testAnnotationDeclaredInForInit expects that annotations of next for variables are not printed
-            //but may be correct is that the next variables are not annotated, because they might have different annotation then first param!
+            //TODO AnnotationLoopTest#testAnnotationDeclaredInForInit expects that annotations of next for variables
+            // are not printed
+            //but may be correct is that the next variables are not annotated, because they might have different
+            // annotation then first param!
             elementPrinterHelper.writeAnnotations(s);
         }
         if (!context.isFirstForVariable() && !context.isNextForVariable()) {
@@ -67,9 +81,11 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * Method copied from {@link DefaultJavaPrettyPrinter}.
      */
     @Override
-    protected void exitCtStatement(CtStatement statement) {
-        if (!(statement instanceof CtBlock || statement instanceof CtIf || statement instanceof CtFor || statement instanceof CtForEach || statement instanceof CtWhile || statement instanceof CtTry
-            || statement instanceof CtSwitch || statement instanceof CtSynchronized || statement instanceof CtClass || statement instanceof CtComment)) {
+    protected void exitCtStatement(final CtStatement statement) {
+        if (!(statement instanceof CtBlock || statement instanceof CtIf || statement instanceof CtFor
+                || statement instanceof CtForEach || statement instanceof CtWhile || statement instanceof CtTry
+                || statement instanceof CtSwitch || statement instanceof CtSynchronized || statement instanceof CtClass
+                || statement instanceof CtComment)) {
             if (context.isStatement(statement) && !context.isFirstForVariable() && !context.isNextForVariable()) {
                 printer.writeSeparator(";");
             }
@@ -84,7 +100,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * Method copied from {@link DefaultJavaPrettyPrinter}.
      */
     @Override
-    protected void exitCtExpression(CtExpression<?> e) {
+    protected void exitCtExpression(final CtExpression<?> e) {
         while ((!context.parenthesedExpression.isEmpty()) && e == context.parenthesedExpression.peek()) {
             context.parenthesedExpression.pop();
             printer.writeSeparator(")");
@@ -100,7 +116,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * <p>
      * {@inheritDoc}
      */
-    protected void enterCtExpression(CtExpression<?> e) {
+    protected void enterCtExpression(final CtExpression<?> e) {
         if (e instanceof CtBinaryOperator<?> && probabilities.shouldInsertBraces()) {
             context.parenthesedExpression.push(e);
             printer.writeSeparator("(");
