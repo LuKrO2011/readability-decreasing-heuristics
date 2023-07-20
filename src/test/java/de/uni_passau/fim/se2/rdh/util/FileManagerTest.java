@@ -1,35 +1,18 @@
 package de.uni_passau.fim.se2.rdh.util;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.verify;
 
-// TODO: The disabled tests only work when executed one by one. When executed all at once, the tests fail.
-// TODO: Conflict with other tests using a mock logger.
-// Idea: Throw runtime exception after logging error and test for runtime exception?
-// Idea: Use Spring framework?
-@Disabled
-@ExtendWith(MockitoExtension.class)
-class FileManagerTest {
+class FileManagerTest extends LoggerTest {
 
-    @Mock
-    private static Logger mockLogger;
-
-    @BeforeAll
-    static void setUp() {
-        mockStatic(LoggerFactory.class, invocation -> mockLogger);
+    @BeforeEach
+    void setUp() {
+        attachAppender(FileManager.class);
     }
 
     @Test
@@ -39,12 +22,11 @@ class FileManagerTest {
         FileManager.checkFiles(file1, file2);
     }
 
-    @Disabled
     @Test
     void testCheckFilesNull() {
         File[] files = null;
         FileManager.checkFiles(files);
-        verify(mockLogger).error("Files are null");
+        assertLogContainsExactly("Files are null");
     }
 
     @Test
@@ -53,21 +35,19 @@ class FileManagerTest {
         FileManager.checkFile(file);
     }
 
-    @Disabled
     @Test
     void testCheckFileNull() {
         File file = null;
         FileManager.checkFile(file);
-        verify(mockLogger).error("Directory does not exist: null");
+        assertLogContainsExactly("Directory does not exist: null");
     }
 
-    @Disabled
     @Test
     void testCheckFileNotExists(@TempDir File tempDir) {
         File file = new File(tempDir, "test");
         file.delete();
         FileManager.checkFile(file);
-        verify(mockLogger).error("Directory does not exist: " + file);
+        assertLogContainsExactly("Directory does not exist: " + file);
     }
 
     @Test

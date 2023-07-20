@@ -12,11 +12,16 @@ import org.junit.jupiter.api.io.TempDir;
 import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 class MainTest extends IOTest {
 
     private static final String INPUT_PATH = "src/test/resources/code/";
+
+    private static final String PROJECT_PATH = "src/test/resources/project1";
     private static final String INPUT_FILENAME = "HelloWorld.java";
+
+    private static final String SEED = "1234";
     private static final String INPUT = INPUT_PATH + INPUT_FILENAME;
 
     private static final String HELP_TEXT = """
@@ -47,23 +52,18 @@ class MainTest extends IOTest {
         assertOutput(HELP_TEXT);
     }
 
-    // TODO: Why not working?
-    @Disabled
     @Test
     void testRunInputFile(@TempDir Path tmpDir) {
-        String seed = "1234";
-        execute(0, INPUT, "--seed", seed, "-o", tmpDir.toString());
+        execute(0, INPUT, "--seed", SEED, "-o", tmpDir.toString());
 
         // Assert that file exists
         Path outputFile = tmpDir.resolve(INPUT_FILENAME);
         assertThat(outputFile).exists();
     }
 
-    // TODO: Why not working?
-    @Disabled
     @Test
     void testRunInputDir(@TempDir Path tmpDir) {
-        execute(0, INPUT_PATH, "-o", tmpDir.toString());
+        execute(0, PROJECT_PATH,"--seed", SEED, "-o", tmpDir.toString());
 
         // Assert that the directory is not empty
         assertThat(tmpDir).isNotEmptyDirectory();

@@ -5,7 +5,6 @@ import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import spoon.Launcher;
@@ -17,6 +16,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class RdcJavaPrettyPrinterTest extends ResourcesTest {
     private SpoonAPI spoon;
@@ -24,6 +24,8 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
 
     @BeforeEach
     void setUp() {
+        setUpLogger();
+
         spoon = new Launcher();
 
         Environment env = spoon.getEnvironment();
@@ -40,6 +42,10 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         spoon.addInputResource(resources + "/" + helloWorld);
     }
 
+    private void setUpLogger() {
+        attachAppender(RdcJavaPrettyPrinter.class);
+    }
+
     @Test
     void testWriteFile(@TempDir Path outputDir) {
         spoon.setSourceOutputDirectory(outputDir.toString());
@@ -47,20 +53,10 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
 
         spoon.prettyprint();
 
-        assertThat(outputDir.resolve(helloWorld)).exists();
-    }
-
-    @Disabled
-    @Test
-    void testWriteFile() {
-        Path path = Path.of("output");
-
-        spoon.setSourceOutputDirectory(path.toString());
-        spoon.buildModel();
-
-        spoon.prettyprint();
-
-        assertThat(path.resolve(helloWorld)).exists();
+        assertAll(
+                () -> assertThat(outputDir.resolve(helloWorld)).exists(),
+                this::assertLogIsEmpty
+        );
     }
 
     @Test
@@ -78,28 +74,10 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         List<Operation> diffOperations = getDiffOperations(original, modified);
 
         // Assert no change in the semantics of the code
-        assertThat(diffOperations).isEmpty();
-    }
-
-    @Disabled
-    @Test
-    void testAdditionalBraces() {
-        Path outputDir = Path.of("output");
-
-        File original = new File(resources, helloWorld);
-        File modified = new File(outputDir.toString(), helloWorld);
-
-        probabilities.setInsertBraces(1.0);
-
-        spoon.setSourceOutputDirectory(outputDir.toString());
-        spoon.buildModel();
-
-        spoon.prettyprint();
-
-        List<Operation> diffOperations = getDiffOperations(original, modified);
-
-        // Assert no change in the semantics of the code
-        assertThat(diffOperations).isEmpty();
+        assertAll(
+                () -> assertThat(diffOperations).isEmpty(),
+                this::assertLogIsEmpty
+        );
     }
 
 }

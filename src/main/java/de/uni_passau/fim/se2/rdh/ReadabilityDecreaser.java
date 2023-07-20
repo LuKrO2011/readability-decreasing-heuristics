@@ -77,7 +77,7 @@ public class ReadabilityDecreaser {
      * @param fileNames the files or subdirectories to process
      */
     public void process(final String... fileNames) {
-        preprocess();
+        // preprocess();
         for (String fileName : fileNames) {
             RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
             String fullyQualifiedClassName = inputDir.getAbsolutePath() + "/" + fileName;

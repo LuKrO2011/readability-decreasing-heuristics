@@ -32,6 +32,8 @@ public class ResourcesTest extends LoggerTest {
 
     protected final String helloWorld = "HelloWorld.java";
 
+    protected final String heapUtils = "HeapUtils.java";
+
     protected final String nameConflicts = "NameConflicts.java";
 
     protected final String staticCodeOptimizable = "StaticCodeOptimizable.java";
