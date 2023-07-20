@@ -1,0 +1,89 @@
+[
+{
+	"originalName": "main",
+	"predictions": [
+		{
+			"name": "main",
+			"probability": 0.9999998807907104
+		},
+		{
+			"name": "foo",
+			"probability": 6.539362118473946e-08
+		},
+		{
+			"name": "extracted",
+			"probability": 2.1212555267879907e-08
+		},
+		{
+			"name": "bar",
+			"probability": 1.8416468350324067e-08
+		},
+		{
+			"name": "invoke",
+			"probability": 1.5375468676026571e-09
+		},
+		{
+			"name": "f",
+			"probability": 1.434039886838434e-09
+		},
+		{
+			"name": "method",
+			"probability": 1.1393695986683383e-09
+		},
+		{
+			"name": "g",
+			"probability": 7.702041227020118e-10
+		},
+		{
+			"name": "m",
+			"probability": 4.596117098021324e-10
+		},
+		{
+			"name": "run",
+			"probability": 3.0584057508775686e-10
+		}	]
+},
+{
+	"originalName": "foo",
+	"predictions": [
+		{
+			"name": "i",
+			"probability": 0.3321666419506073
+		},
+		{
+			"name": "foo",
+			"probability": 0.18249653279781342
+		},
+		{
+			"name": "r",
+			"probability": 0.13824544847011566
+		},
+		{
+			"name": "f",
+			"probability": 0.09372925758361816
+		},
+		{
+			"name": "extracted",
+			"probability": 0.09265141189098358
+		},
+		{
+			"name": "d",
+			"probability": 0.05643007904291153
+		},
+		{
+			"name": "g",
+			"probability": 0.04616902768611908
+		},
+		{
+			"name": "m",
+			"probability": 0.03253084048628807
+		},
+		{
+			"name": "method",
+			"probability": 0.016335008665919304
+		},
+		{
+			"name": "toInline",
+			"probability": 0.009245728142559528
+		}	]
+}]

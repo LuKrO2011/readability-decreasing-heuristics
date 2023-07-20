@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class StaticCodeOptimizerTest extends SpoonTest {
+class PartiallyEvaluatorTest extends SpoonTest {
 
     @BeforeEach
     void setUp() {

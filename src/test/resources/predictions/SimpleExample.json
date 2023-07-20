@@ -1,0 +1,133 @@
+[
+{
+	"originalName": "bar",
+	"predictions": [
+		{
+			"name": "foo",
+			"probability": 0.3182288110256195
+		},
+		{
+			"name": "extracted",
+			"probability": 0.1391788125038147
+		},
+		{
+			"name": "m",
+			"probability": 0.13434262573719025
+		},
+		{
+			"name": "f",
+			"probability": 0.12997014820575714
+		},
+		{
+			"name": "d",
+			"probability": 0.07485941052436829
+		},
+		{
+			"name": "method",
+			"probability": 0.04668205976486206
+		},
+		{
+			"name": "r",
+			"probability": 0.045794691890478134
+		},
+		{
+			"name": "i",
+			"probability": 0.04194653406739235
+		},
+		{
+			"name": "s",
+			"probability": 0.03489316254854202
+		},
+		{
+			"name": "g",
+			"probability": 0.03410378843545914
+		}	]
+},
+{
+	"originalName": "main",
+	"predictions": [
+		{
+			"name": "main",
+			"probability": 0.349318265914917
+		},
+		{
+			"name": "f",
+			"probability": 0.21801568567752838
+		},
+		{
+			"name": "foo",
+			"probability": 0.1419810950756073
+		},
+		{
+			"name": "r",
+			"probability": 0.08616863191127777
+		},
+		{
+			"name": "extracted",
+			"probability": 0.05016417056322098
+		},
+		{
+			"name": "m",
+			"probability": 0.04566454514861107
+		},
+		{
+			"name": "g",
+			"probability": 0.043631087988615036
+		},
+		{
+			"name": "method",
+			"probability": 0.03593725338578224
+		},
+		{
+			"name": "d",
+			"probability": 0.02049352414906025
+		},
+		{
+			"name": "a",
+			"probability": 0.008625796064734459
+		}	]
+},
+{
+	"originalName": "foo",
+	"predictions": [
+		{
+			"name": "f",
+			"probability": 0.5764716267585754
+		},
+		{
+			"name": "foo",
+			"probability": 0.12734054028987885
+		},
+		{
+			"name": "g",
+			"probability": 0.0946444496512413
+		},
+		{
+			"name": "m",
+			"probability": 0.06660885363817215
+		},
+		{
+			"name": "d",
+			"probability": 0.036766525357961655
+		},
+		{
+			"name": "method",
+			"probability": 0.03314585238695145
+		},
+		{
+			"name": "t",
+			"probability": 0.02910558134317398
+		},
+		{
+			"name": "r",
+			"probability": 0.014668237417936325
+		},
+		{
+			"name": "s",
+			"probability": 0.014607568271458149
+		},
+		{
+			"name": "i",
+			"probability": 0.0066406745463609695
+		}	]
+}]

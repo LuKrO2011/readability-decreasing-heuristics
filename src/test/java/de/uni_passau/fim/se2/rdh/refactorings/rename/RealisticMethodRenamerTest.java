@@ -2,9 +2,11 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
+import de.uni_passau.fim.se2.rdh.refactorings.experimental.optimization.PartiallyEvaluator;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import spoon.SpoonAPI;
@@ -17,6 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class RealisticMethodRenamerTest extends SpoonTest {
+
+    @BeforeEach
+    void setUp() {
+        attachAppender(RealisticMethodRenamer.class);
+    }
 
     @Test
     void testRenameMethod(@TempDir Path outputDir) {
@@ -43,7 +50,8 @@ class RealisticMethodRenamerTest extends SpoonTest {
         // Assert that only existing method was renamed
         assertAll(
                 () -> assertThat(diffOperations).hasSize(1),
-                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod)
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
+                this::assertLogIsEmpty
         );
     }
 

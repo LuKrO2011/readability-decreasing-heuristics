@@ -4,8 +4,10 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.StarImporter;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
 import gumtree.spoon.diff.operations.Operation;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -20,44 +22,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StarImporterTest extends SpoonTest {
 
+    @BeforeEach
+    void setUp() {
+        attachAppender(StarImporter.class);
+    }
+
     @Test
     void testReplaceWithStarImport(@TempDir Path outputDir) {
         File original = new File(resources, helloWorld);
         File modified = new File(outputDir.toString(), helloWorld);
         SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
-
-        // Set up the refactoring
-        RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setStarImport(1.0);
-        AbstractModification starImporter = new StarImporter(spoon, rdcProbabilities);
-
-        // Perform method renaming
-        starImporter.apply();
-
-        // Create modified code file
-        spoon.prettyprint();
-
-        // Flatten the output directory
-        DirectoryFlattener.flatten(new File(outputDir.toString()));
-
-        // Perform the refactoring
-        List<Operation> diffOperations = getDiffOperations(original, modified);
-
-        assertAll(
-            () -> assertThat(diffOperations).hasSize(0)
-            // TODO: Check that the correct operations were performed
-        );
-    }
-
-    @Disabled
-    @Test
-    void testReplaceWithStarImport() {
-        Path outputDir = Path.of("output");
-        String sampleClass = "HeapUtils.java";
-
-        File original = new File(resources, sampleClass);
-        File modified = new File(outputDir.toString(), sampleClass);
-        SpoonAPI spoon = setupSpoon(sampleClass, outputDir);
 
         // Set up the refactoring
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
@@ -87,10 +61,9 @@ class StarImporterTest extends SpoonTest {
             - How far can one further remove before .*
             - make sure no references are lost (see diff, e.g. java.io.File/org.apache.cassandra.io.util.File)
          */
-
         assertAll(
-            () -> assertThat(diffOperations).hasSize(0)
-            // TODO: Fix me
+            () -> assertThat(diffOperations).hasSize(0),
+            this::assertLogIsEmpty
             // TODO: Check that the correct operations were performed
         );
     }
