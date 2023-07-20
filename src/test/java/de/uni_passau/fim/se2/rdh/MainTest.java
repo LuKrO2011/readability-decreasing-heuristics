@@ -13,12 +13,13 @@ import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class MainTest extends IOTest {
 
     private static final String INPUT_PATH = "src/test/resources/code/";
 
-    private static final String PROJECT_PATH = "src/test/resources/project1";
+    private static final String PROJECT_PATH = "src/test/resources/code/project1";
     private static final String INPUT_FILENAME = "HelloWorld.java";
 
     private static final String SEED = "1234";
@@ -65,8 +66,11 @@ class MainTest extends IOTest {
     void testRunInputDir(@TempDir Path tmpDir) {
         execute(0, PROJECT_PATH,"--seed", SEED, "-o", tmpDir.toString());
 
-        // Assert that the directory is not empty
-        assertThat(tmpDir).isNotEmptyDirectory();
+        // Assert that the directory contains two files
+        assertAll(
+                () -> assertThat(tmpDir.resolve("HelloWorld.java")).exists(),
+                () -> assertThat(tmpDir.resolve("org/apache/cassandra/utils/HeapUtils.java")).exists()
+        );
     }
 
     @Test
