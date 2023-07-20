@@ -167,7 +167,6 @@ public final class RdcProbabilities {
             case SPACE -> spaceInsteadOfNewline;
             case INC_TAB -> incTabInsteadOfDecTab;
             case DEC_TAB -> decTabInsteadOfIncTab;
-            default -> throw new RuntimeException("Unknown character type");
         };
     }
 

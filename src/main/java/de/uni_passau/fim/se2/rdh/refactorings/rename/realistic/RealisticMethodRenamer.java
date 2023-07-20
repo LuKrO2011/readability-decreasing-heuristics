@@ -134,14 +134,10 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @return the new name
      */
     private String getNewName(final MethodRenamingData renamingData) {
-        switch (nameSelectionMode) {
-            case QUALITY:
-                return renamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
-            case LONGEST:
-                return renamingData.getLongestPrediction().getName();
-            default:
-                throw new IllegalStateException("Unknown name selection mode: " + nameSelectionMode);
-        }
+        return switch (nameSelectionMode) {
+            case QUALITY -> renamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
+            case LONGEST -> renamingData.getLongestPrediction().getName();
+        };
     }
 
     /**

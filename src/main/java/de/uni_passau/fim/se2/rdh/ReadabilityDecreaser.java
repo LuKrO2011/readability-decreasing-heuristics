@@ -22,6 +22,8 @@ public class ReadabilityDecreaser {
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
     private final RdcProbabilities probabilities;
+
+    // TODO: Use this in preprocessing
     private final ModelConfig modelConfig;
     private static final Logger LOG = LoggerFactory.getLogger(ReadabilityDecreaser.class);
 

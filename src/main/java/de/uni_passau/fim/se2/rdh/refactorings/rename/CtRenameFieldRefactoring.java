@@ -67,16 +67,15 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
 
         // If the list is not empty, there is a name conflict
         if (!fields.isEmpty()) {
-            createNameConflictIssue(fields.get(0));
+            createNameConflictIssue();
         }
     }
 
     /**
      * This method creates a name conflict issue for the given field.
      *
-     * @param conflictField The field that causes the name conflict.
      */
-    private void createNameConflictIssue(final CtField<?> conflictField) {
+    private void createNameConflictIssue() {
         throw new RefactoringException(
                 "There is already a field with the name " + newName + " in the class " + target.getDeclaringType()
                         .getQualifiedName());
