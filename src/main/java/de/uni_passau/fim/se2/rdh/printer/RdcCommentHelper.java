@@ -10,6 +10,8 @@ package de.uni_passau.fim.se2.rdh.printer;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Stream;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.reflect.code.CtComment;
 import spoon.reflect.code.CtJavaDoc;
 import spoon.reflect.code.CtJavaDocTag;
@@ -19,8 +21,8 @@ import spoon.support.Internal;
 
 /**
  * Duplicate of CommentHelper with public printComment(PrinterHelper printer, CtComment comment) method.
- * TODO: DELETE THIS CLASS
  */
+@SuppressFBWarnings("SF_SWITCH_NO_DEFAULT")
 @Internal
 public class RdcCommentHelper {
 

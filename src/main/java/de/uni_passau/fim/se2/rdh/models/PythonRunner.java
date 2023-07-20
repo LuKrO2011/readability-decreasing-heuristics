@@ -19,7 +19,7 @@ public final class PythonRunner {
      * @param modelConfig The model config to use.
      */
     public PythonRunner(final ModelConfig modelConfig) {
-        this.config = modelConfig;
+        this.config = new ModelConfig(modelConfig);
     }
 
     /**

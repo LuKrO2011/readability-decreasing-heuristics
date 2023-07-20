@@ -45,7 +45,7 @@ public class RefactoringProcessor {
      */
     public RefactoringProcessor(final ProcessingPath outputDirPath, final RdcProbabilities probabilities) {
         this.outputDir = outputDirPath;
-        this.probabilities = probabilities;
+        this.probabilities = new RdcProbabilities(probabilities);
 
         setup();
     }

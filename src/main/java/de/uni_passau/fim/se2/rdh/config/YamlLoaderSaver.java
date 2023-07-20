@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.config;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.validation.Configuration;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -81,6 +82,7 @@ public class YamlLoaderSaver {
      *
      * @param data the object to validate
      */
+    @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
     private void validate(@NotNull final RdcProbabilities data) {
         Configuration<? extends Configuration<?>> validatorConfig = Validation.byDefaultProvider()
                 .configure()

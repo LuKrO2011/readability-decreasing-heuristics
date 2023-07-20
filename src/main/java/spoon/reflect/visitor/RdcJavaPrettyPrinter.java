@@ -38,7 +38,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      */
     public RdcJavaPrettyPrinter(final Environment env, final RdcProbabilities probabilities) {
         super(env);
-        this.probabilities = probabilities;
+        this.probabilities = new RdcProbabilities(probabilities);
     }
 
     /**

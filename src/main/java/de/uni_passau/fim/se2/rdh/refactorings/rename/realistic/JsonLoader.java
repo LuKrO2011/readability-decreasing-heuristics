@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class JsonLoader {
     private Object load(final Type type, @JsonFile final String fileName) {
         Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader(fileName)) {
+        try (FileReader reader = new FileReader(fileName, StandardCharsets.UTF_8)) {
             return gson.<List<MethodRenamingData>>fromJson(reader, type);
         } catch (IOException e) {
             if (LOG.isErrorEnabled()) {

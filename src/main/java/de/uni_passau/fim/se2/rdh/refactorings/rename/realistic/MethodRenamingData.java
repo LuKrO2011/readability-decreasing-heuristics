@@ -1,15 +1,14 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename.realistic;
 
-import lombok.Data;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
  * Represents the data of a method renaming.
  */
-@Data
-public class MethodRenamingData {
+public final class MethodRenamingData {
     private String originalName;
     private List<PredictionData> predictions;
 
@@ -28,7 +27,24 @@ public class MethodRenamingData {
      * @return the longest predicted name
      */
     public PredictionData getLongestPrediction() {
-        return predictions.stream().max(Comparator.comparingInt(p -> p.getName().length()))
+        return predictions.stream()
+                .max(Comparator.comparingInt(p -> p.getName().length()))
                 .orElseThrow(() -> new RuntimeException("No prediction found"));
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(final String originalName) {
+        this.originalName = originalName;
+    }
+
+    public List<PredictionData> getPredictions() {
+        return Collections.unmodifiableList(predictions);
+    }
+
+    public void setPredictions(final List<PredictionData> predictions) {
+        this.predictions = new ArrayList<>(predictions);
     }
 }

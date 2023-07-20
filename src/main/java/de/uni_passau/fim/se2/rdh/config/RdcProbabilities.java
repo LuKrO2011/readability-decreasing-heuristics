@@ -72,25 +72,21 @@ public final class RdcProbabilities {
     // TODO: writeStarImport
 
     /**
-     * Creates a new {@link RdcProbabilities} object.
+     * Creates a new {@link RdcProbabilities} object with the default probabilities (= no modification).
      */
     public RdcProbabilities() {
     }
 
     /**
-     * Creates a new {@link RdcProbabilities} object with the given probabilities.
+     * A copy constructor that creates a new {@link RdcProbabilities} object with the given probabilities.
      *
-     * @param probabilities The probabilities to use.
+     * @param probabilities The probabilities to use/copy.
      */
     public RdcProbabilities(final RdcProbabilities probabilities) {
         this.newline = new ArrayList<>(probabilities.newline);
         this.incTab = new ArrayList<>(probabilities.incTab);
         this.decTab = new ArrayList<>(probabilities.decTab);
         this.space = new ArrayList<>(probabilities.space);
-        this.newLineInsteadOfSpace = probabilities.newLineInsteadOfSpace;
-        this.spaceInsteadOfNewline = probabilities.spaceInsteadOfNewline;
-        this.incTabInsteadOfDecTab = probabilities.incTabInsteadOfDecTab;
-        this.decTabInsteadOfIncTab = probabilities.decTabInsteadOfIncTab;
         this.renameVariable = probabilities.renameVariable;
         this.renameField = probabilities.renameField;
         this.renameMethod = probabilities.renameMethod;
@@ -101,6 +97,10 @@ public final class RdcProbabilities {
         this.starImport = probabilities.starImport;
         this.inlineField = probabilities.inlineField;
         this.partiallyEvaluate = probabilities.partiallyEvaluate;
+        this.newLineInsteadOfSpace = probabilities.newLineInsteadOfSpace;
+        this.spaceInsteadOfNewline = probabilities.spaceInsteadOfNewline;
+        this.incTabInsteadOfDecTab = probabilities.incTabInsteadOfDecTab;
+        this.decTabInsteadOfIncTab = probabilities.decTabInsteadOfIncTab;
     }
 
     /**
