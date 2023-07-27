@@ -6,8 +6,8 @@ import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
+import spoon.SpoonException;
 import spoon.refactoring.CtRenameLocalVariableRefactoring;
-import spoon.refactoring.RefactoringException;
 import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.visitor.filter.TypeFilter;
 
@@ -68,7 +68,7 @@ public class LocalVariableRenamer extends AbstractModification {
                     refactoring.setTarget(localVariable);
                     refactoring.setNewName("v" + i);
                     refactoring.refactor();
-                } catch (RefactoringException e) {
+                } catch (SpoonException e) {
                     Logging.logRefactoringFailed(LOG, "Could not rename local variable "
                             + localVariable.getSimpleName(), e);
                 }

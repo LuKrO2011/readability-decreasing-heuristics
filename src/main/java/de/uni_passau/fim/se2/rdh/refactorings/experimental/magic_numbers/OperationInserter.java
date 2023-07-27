@@ -6,7 +6,7 @@ import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
-import spoon.refactoring.RefactoringException;
+import spoon.SpoonException;
 import spoon.reflect.code.CtBinaryOperator;
 import spoon.reflect.visitor.filter.TypeFilter;
 
@@ -68,7 +68,7 @@ public class OperationInserter extends AbstractModification {
             try {
                 refactoring.setTarget(ctBinaryOperator);
                 refactoring.refactor();
-            } catch (RefactoringException e) {
+            } catch (SpoonException e) {
                 Logging.logRefactoringFailed(LOG, "Could not insert +0", e);
             }
         }

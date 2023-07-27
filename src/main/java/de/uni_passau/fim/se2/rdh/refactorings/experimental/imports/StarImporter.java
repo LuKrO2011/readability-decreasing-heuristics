@@ -6,7 +6,7 @@ import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
-import spoon.refactoring.RefactoringException;
+import spoon.SpoonException;
 import spoon.reflect.declaration.CtCompilationUnit;
 import spoon.reflect.declaration.CtImport;
 import spoon.reflect.declaration.CtType;
@@ -80,7 +80,7 @@ public class StarImporter extends AbstractModification {
             try {
                 refactoring.setTarget(ctMethod);
                 refactoring.refactor();
-            } catch (RefactoringException e) {
+            } catch (SpoonException e) {
                 LOG.error("Could not inline method", e);
             }
         }

@@ -7,7 +7,7 @@ import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
-import spoon.refactoring.RefactoringException;
+import spoon.SpoonException;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
@@ -70,7 +70,7 @@ public class MethodInliner extends AbstractModification {
             try {
                 refactoring.setTarget(ctMethod);
                 refactoring.refactor();
-            } catch (RefactoringException e) {
+            } catch (SpoonException e) {
                 Logging.logRefactoringFailed(LOG, "Could not inline method " + ctMethod.getSimpleName(), e);
             }
         }
