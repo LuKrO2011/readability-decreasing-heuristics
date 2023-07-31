@@ -20,16 +20,18 @@ import java.nio.file.Path;
  */
 public class ReadabilityDecreaser {
 
+    private static final Path DEFAULT_RESOURCES_PATH = Path.of("src/main/resources/");
+
     /**
      * The default probabilities file.
      * TODO: Rename files
      */
-    public static final Path DEFAULT_PROBABILITIES_FILE = Path.of("config.yaml");
+    public static final Path DEFAULT_PROBABILITIES_FILE = DEFAULT_RESOURCES_PATH.resolve("config.yaml");
 
     /**
      * The default config file.
      */
-    public static final Path DEFAULT_CONFIG_FILE = Path.of("modelConfig.yaml");
+    public static final Path DEFAULT_CONFIG_FILE = DEFAULT_RESOURCES_PATH.resolve("modelConfig.yaml");
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
     private final RdcProbabilities probabilities;

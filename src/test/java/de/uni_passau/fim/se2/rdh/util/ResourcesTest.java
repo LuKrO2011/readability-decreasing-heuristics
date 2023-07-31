@@ -42,6 +42,8 @@ public class ResourcesTest extends LoggerTest {
 
     protected final Path outputDir = Path.of(outputPath);
 
+    protected final static Path MAIN_RESOURCES = Path.of("src/main/resources");
+
     @BeforeEach
     void setupResourcesPath() {
         resourcesURL = Objects.requireNonNull(getClass().getClassLoader().getResource("code"));

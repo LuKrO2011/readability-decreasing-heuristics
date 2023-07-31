@@ -4,7 +4,6 @@ import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReadabilityDecreaserTest extends ResourcesTest {
 
-    private final static Path ALL_RENAME_REFACTORINGS_CONFIG = Path.of("config-rename.yaml");
+    private final static Path ALL_RENAME_REFACTORINGS_CONFIG = MAIN_RESOURCES.resolve("config-rename.yaml");
 
     @BeforeEach
     void setUp() {

@@ -15,7 +15,9 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -39,8 +41,7 @@ public class YamlLoaderSaver {
      * @throws IOException if the file could not be loaded
      */
     public Object load(@NotBlank final Path yamlPath, @NotNull final Class<?> clazz) throws IOException {
-        try (InputStream inputStream = YamlLoaderSaver.class.getClassLoader()
-                .getResourceAsStream(yamlPath.toString())) {
+        try (InputStream inputStream = new FileInputStream(yamlPath.toString())) {
             Yaml yaml = new Yaml();
             return yaml.loadAs(inputStream, clazz);
         } catch (IOException | YAMLException e) {
