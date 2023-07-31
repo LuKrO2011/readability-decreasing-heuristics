@@ -100,17 +100,6 @@ public final class Main implements Callable<Integer> {
     private String probabilitiesPath;
 
     /**
-     * If set, the log is additionally written to a file. Otherwise, the log is only written to the console.
-     */
-    @CommandLine.Option(
-            names = {"-l", "--log", "--logfile"},
-            description = "If set, the log is additionally written to a file. Otherwise, the log is only written to "
-                    + "the console."
-    )
-    private boolean logfile;
-
-
-    /**
      * The command line specification. This is used to print messages to the user.
      */
     @CommandLine.Spec
@@ -165,26 +154,18 @@ public final class Main implements Callable<Integer> {
         }
         Logger rootLogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
 
-        FileAppender<ILoggingEvent> fileAppender = new FileAppender<>();
-        fileAppender.setFile(logFilePath);
-        fileAppender.setAppend(false);
-        fileAppender.start();
-
-        // Add the appender to the logger
-        rootLogger.addAppender(fileAppender);
-
-        /*Appender<?> appender = rootLogger.getAppender("FILE");
+        Appender<?> appender = rootLogger.getAppender("FILE");
 
         // Check if the appender is a FileAppender
         if (appender instanceof FileAppender<?> fileAppender) {
-
             // Update the log file path for the appender
             fileAppender.setFile(logFilePath);
+            fileAppender.setAppend(false);
             fileAppender.start();
         }
 
-        // loggerContext.putProperty(LOG_FILE_PROP, getOutputPath() + "/" + LOG_FILENAME);*/
         StatusPrinter.printInCaseOfErrorsOrWarnings(loggerContext);
+
     }
 
     private ProcessingPath getInputPath() {
