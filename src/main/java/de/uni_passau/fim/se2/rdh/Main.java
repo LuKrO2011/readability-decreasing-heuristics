@@ -4,9 +4,18 @@
 
 package de.uni_passau.fim.se2.rdh;
 
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.Appender;
+import ch.qos.logback.core.FileAppender;
+import ch.qos.logback.core.read.ListAppender;
+import ch.qos.logback.core.util.StatusPrinter;
 import de.uni_passau.fim.se2.rdh.util.FileManager;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import de.uni_passau.fim.se2.rdh.util.Randomness;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -17,6 +26,7 @@ import java.util.concurrent.Callable;
 
 import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_CONFIG_FILE;
 import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_PROBABILITIES_FILE;
+
 
 /**
  * The main class of the tool.
@@ -38,6 +48,16 @@ public final class Main implements Callable<Integer> {
      * The default output directory.
      */
     private static final String DEFAULT_OUTPUT_DIR = "output";
+
+    /**
+     * The default log file name.
+     */
+    public static final String LOG_FILENAME = "rdh.log";
+
+    /**
+     * The property in the logback configuration file that is used to set the location of the log file.
+     */
+    private static final String LOG_FILE_PROP = "LOG_FILE";
 
     /**
      * The path to the input. Can be a file or a directory.
@@ -79,6 +99,16 @@ public final class Main implements Callable<Integer> {
     )
     private String probabilitiesPath;
 
+    /**
+     * If set, the log is additionally written to a file. Otherwise, the log is only written to the console.
+     */
+    @CommandLine.Option(
+            names = {"-l", "--log", "--logfile"},
+            description = "If set, the log is additionally written to a file. Otherwise, the log is only written to "
+                    + "the console."
+    )
+    private boolean logfile;
+
 
     /**
      * The command line specification. This is used to print messages to the user.
@@ -118,10 +148,43 @@ public final class Main implements Callable<Integer> {
      */
     @Override
     public Integer call() {
+        setupLogging();
         ReadabilityDecreaser readabilityDecreaser =
                 new ReadabilityDecreaser(getInputPath(), getOutputPath(), getProbabilitiesPath(), getConfigPath());
         readabilityDecreaser.process();
         return 0;
+    }
+
+    private void setupLogging() {
+        String logFilePath = getOutputPath().getAbsolutePath() + "/" + LOG_FILENAME;
+
+        ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+        if (!(loggerFactory instanceof LoggerContext loggerContext)) {
+            throw new IllegalStateException("This program is configured to use logback as logging framework. Code "
+                    + "changes are required to support a different logging framework.");
+        }
+        Logger rootLogger = loggerContext.getLogger(Logger.ROOT_LOGGER_NAME);
+
+        FileAppender<ILoggingEvent> fileAppender = new FileAppender<>();
+        fileAppender.setFile(logFilePath);
+        fileAppender.setAppend(false);
+        fileAppender.start();
+
+        // Add the appender to the logger
+        rootLogger.addAppender(fileAppender);
+
+        /*Appender<?> appender = rootLogger.getAppender("FILE");
+
+        // Check if the appender is a FileAppender
+        if (appender instanceof FileAppender<?> fileAppender) {
+
+            // Update the log file path for the appender
+            fileAppender.setFile(logFilePath);
+            fileAppender.start();
+        }
+
+        // loggerContext.putProperty(LOG_FILE_PROP, getOutputPath() + "/" + LOG_FILENAME);*/
+        StatusPrinter.printInCaseOfErrorsOrWarnings(loggerContext);
     }
 
     private ProcessingPath getInputPath() {

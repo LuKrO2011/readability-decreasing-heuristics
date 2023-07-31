@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <!-- Define the default application log file -->
+    <property name="LOG_FILE" value="rdh.log"/>
+
+    <!-- Hide logback own logs -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+
+    <!-- Console output -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- File output -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_FILE}</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Set the application log level to INFO -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- Set log level of Hibernate to WARN level -->
+    <logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger>
+
+</configuration>
