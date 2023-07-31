@@ -134,10 +134,10 @@ public final class Main implements Callable<Integer> {
     public Integer call() {
         setupLogging();
         AbstractReadabilityDecreaserFactory rdf = new ReadabilityDecreaserFactory();
-        ReadabilityDecreaser readabilityDecreaser =
+        DirectoryReadabilityDecreaser directoryReadabilityDecreaser =
                 rdf.createReadabilityDecreaser(getInputPath(), getOutputPath(), getProbabilitiesPath(),
                         getConfigPath());
-        readabilityDecreaser.process();
+        directoryReadabilityDecreaser.process();
         return 0;
     }
 

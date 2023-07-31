@@ -24,8 +24,8 @@ public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFac
      * @param outputPath the path to the output directory
      * @return the new ReadabilityDecreaser
      */
-    public ReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
-                                                           final ProcessingPath outputPath) {
+    public DirectoryReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
+                                                                    final ProcessingPath outputPath) {
         return createReadabilityDecreaser(inputPath, outputPath, DEFAULT_PROBABILITIES_FILE, DEFAULT_CONFIG_FILE);
     }
 
@@ -37,9 +37,9 @@ public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFac
      * @param probabilitiesPath the path to the probabilities file
      * @return the new ReadabilityDecreaser
      */
-    public ReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
-                                                           final ProcessingPath outputPath,
-                                                           final Path probabilitiesPath) {
+    public DirectoryReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
+                                                                    final ProcessingPath outputPath,
+                                                                    final Path probabilitiesPath) {
         return createReadabilityDecreaser(inputPath, outputPath, probabilitiesPath, DEFAULT_CONFIG_FILE);
     }
 
@@ -52,13 +52,13 @@ public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFac
      * @param configPath        the path to the config file
      * @return the new ReadabilityDecreaser
      */
-    public ReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
-                                                           final ProcessingPath outputPath,
-                                                           final Path probabilitiesPath,
-                                                           final Path configPath) {
+    public DirectoryReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
+                                                                    final ProcessingPath outputPath,
+                                                                    final Path probabilitiesPath,
+                                                                    final Path configPath) {
         Config config = loadConfig(configPath);
         RdcProbabilities probabilities = loadProbabilities(probabilitiesPath);
-        return new ReadabilityDecreaser(inputPath, outputPath, probabilities, config);
+        return new DirectoryReadabilityDecreaser(inputPath, outputPath, probabilities, config);
     }
 
     /**

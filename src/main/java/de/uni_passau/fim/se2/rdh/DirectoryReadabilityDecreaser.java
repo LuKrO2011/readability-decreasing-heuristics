@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * environment and calling the refactorings.
  * </p>
  */
-public class ReadabilityDecreaser extends AbstractReadabilityDecreaser {
+public class DirectoryReadabilityDecreaser extends AbstractReadabilityDecreaser {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ReadabilityDecreaser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DirectoryReadabilityDecreaser.class);
 
     /**
      * Creates a new ReadabilityDecreaser.
@@ -25,8 +25,8 @@ public class ReadabilityDecreaser extends AbstractReadabilityDecreaser {
      * @param probabilities the probabilities for the refactorings
      * @param config        the configuration for the tool
      */
-    public ReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
-                                final RdcProbabilities probabilities, final Config config) {
+    public DirectoryReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
+                                         final RdcProbabilities probabilities, final Config config) {
         super(inputDirPath, outputDirPath, probabilities, config);
     }
 
@@ -59,8 +59,8 @@ public class ReadabilityDecreaser extends AbstractReadabilityDecreaser {
      * TODO: Execute code2vec using modelConfig here.
      */
     private void preprocess() {
-        if (ReadabilityDecreaser.LOG.isErrorEnabled()) {
-            ReadabilityDecreaser.LOG.error("Preprocessing not implemented yet. Code2vec was not executed.");
+        if (DirectoryReadabilityDecreaser.LOG.isErrorEnabled()) {
+            DirectoryReadabilityDecreaser.LOG.error("Preprocessing not implemented yet. Code2vec was not executed.");
         }
     }
 

@@ -32,6 +32,6 @@ public abstract class AbstractReadabilityDecreaserFactory {
      * @param configPath        the path to the config file
      * @return the new ReadabilityDecreaser
      */
-    public abstract ReadabilityDecreaser createReadabilityDecreaser(ProcessingPath inputPath, ProcessingPath outputPath,
-                                                                    Path probabilitiesPath, Path configPath);
+    public abstract DirectoryReadabilityDecreaser createReadabilityDecreaser(ProcessingPath inputPath, ProcessingPath outputPath,
+                                                                             Path probabilitiesPath, Path configPath);
 }
