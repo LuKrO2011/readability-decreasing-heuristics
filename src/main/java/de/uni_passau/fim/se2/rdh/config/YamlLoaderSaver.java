@@ -17,7 +17,6 @@ import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -64,14 +63,14 @@ public class YamlLoaderSaver {
     }
 
     /**
-     * Loads a {@link ModelConfig} from the file with the given path.
+     * Loads a {@link Config} from the file with the given path.
      *
      * @param configPath the path to the config file
-     * @return the loaded {@link ModelConfig}
+     * @return the loaded {@link Config}
      * @throws IOException if the file could not be loaded
      */
-    public ModelConfig loadConfig(@NotBlank final Path configPath) throws IOException {
-        ModelConfig loadedData = (ModelConfig) load(configPath, ModelConfig.class);
+    public Config loadConfig(@NotBlank final Path configPath) throws IOException {
+        Config loadedData = (Config) load(configPath, Config.class);
 
         // TODO: Validate?
         return loadedData;

@@ -6,10 +6,8 @@ package de.uni_passau.fim.se2.rdh;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
-import ch.qos.logback.core.read.ListAppender;
 import ch.qos.logback.core.util.StatusPrinter;
 import de.uni_passau.fim.se2.rdh.util.FileManager;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
@@ -23,9 +21,6 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Properties;
 import java.util.concurrent.Callable;
-
-import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_CONFIG_FILE;
-import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_PROBABILITIES_FILE;
 
 
 /**
@@ -138,8 +133,10 @@ public final class Main implements Callable<Integer> {
     @Override
     public Integer call() {
         setupLogging();
+        AbstractReadabilityDecreaserFactory rdf = new ReadabilityDecreaserFactory();
         ReadabilityDecreaser readabilityDecreaser =
-                new ReadabilityDecreaser(getInputPath(), getOutputPath(), getProbabilitiesPath(), getConfigPath());
+                rdf.createReadabilityDecreaser(getInputPath(), getOutputPath(), getProbabilitiesPath(),
+                        getConfigPath());
         readabilityDecreaser.process();
         return 0;
     }
@@ -203,7 +200,7 @@ public final class Main implements Callable<Integer> {
      */
     private Path getProbabilitiesPath() {
         if (probabilitiesPath == null) {
-            return DEFAULT_PROBABILITIES_FILE;
+            return AbstractReadabilityDecreaserFactory.DEFAULT_PROBABILITIES_FILE;
         }
 
         // TODO: Check if the file exists...
@@ -219,7 +216,7 @@ public final class Main implements Callable<Integer> {
      */
     private Path getConfigPath() {
         if (configPath == null) {
-            return DEFAULT_CONFIG_FILE;
+            return AbstractReadabilityDecreaserFactory.DEFAULT_CONFIG_FILE;
         }
 
         // TODO: Check if the file exists...

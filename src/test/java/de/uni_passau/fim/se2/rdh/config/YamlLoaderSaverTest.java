@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.config;
 
+import de.uni_passau.fim.se2.rdh.AbstractReadabilityDecreaserFactory;
 import de.uni_passau.fim.se2.rdh.util.LoggerTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_CONFIG_FILE;
-import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_PROBABILITIES_FILE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class YamlLoaderSaverTest extends LoggerTest {
@@ -27,7 +26,7 @@ class YamlLoaderSaverTest extends LoggerTest {
     void testLoadRdcProbabilities() {
         Object result = null;
         try {
-            result = yaml.loadRdcProbabilities(DEFAULT_PROBABILITIES_FILE);
+            result = yaml.loadRdcProbabilities(AbstractReadabilityDecreaserFactory.DEFAULT_PROBABILITIES_FILE);
         } catch (IOException e) {
             fail(e);
         }
@@ -43,7 +42,7 @@ class YamlLoaderSaverTest extends LoggerTest {
     void testLoadModelConfig() {
         Object result = null;
         try {
-            result = yaml.loadConfig(DEFAULT_CONFIG_FILE);
+            result = yaml.loadConfig(AbstractReadabilityDecreaserFactory.DEFAULT_CONFIG_FILE);
         } catch (IOException e) {
             fail(e);
         }

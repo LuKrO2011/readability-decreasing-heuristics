@@ -1,6 +1,6 @@
 package de.uni_passau.fim.se2.rdh.models;
 
-import de.uni_passau.fim.se2.rdh.config.ModelConfig;
+import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 import org.slf4j.Logger;
 
@@ -12,14 +12,14 @@ import java.io.IOException;
  */
 public final class PythonRunner {
     private static final Logger LOG = org.slf4j.LoggerFactory.getLogger(PythonRunner.class);
-    private final ModelConfig config;
+    private final Config config;
 
     /**
      * Creates a new instance of this class.
-     * @param modelConfig The model config to use.
+     * @param config The model config to use.
      */
-    public PythonRunner(final ModelConfig modelConfig) {
-        this.config = new ModelConfig(modelConfig);
+    public PythonRunner(final Config config) {
+        this.config = new Config(config);
     }
 
     /**
