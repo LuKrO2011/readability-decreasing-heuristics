@@ -13,9 +13,9 @@ import java.nio.file.Path;
 /**
  * Builds a concrete ReadabilityDecreaser.
  */
-public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFactory {
+public class RDFactory extends AbstractRDFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ReadabilityDecreaserFactory.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RDFactory.class);
 
     /**
      * Creates a new concrete ReadabilityDecreaser with default config and probabilities.
@@ -24,9 +24,9 @@ public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFac
      * @param outputPath the path to the output directory
      * @return the new ReadabilityDecreaser
      */
-    public DirectoryReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
-                                                                    final ProcessingPath outputPath) {
-        return createReadabilityDecreaser(inputPath, outputPath, DEFAULT_PROBABILITIES_FILE, DEFAULT_CONFIG_FILE);
+    public DirectoryRD create(final ProcessingPath inputPath,
+                              final ProcessingPath outputPath) {
+        return create(inputPath, outputPath, DEFAULT_PROBABILITIES_FILE, DEFAULT_CONFIG_FILE);
     }
 
     /**
@@ -37,10 +37,10 @@ public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFac
      * @param probabilitiesPath the path to the probabilities file
      * @return the new ReadabilityDecreaser
      */
-    public DirectoryReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
-                                                                    final ProcessingPath outputPath,
-                                                                    final Path probabilitiesPath) {
-        return createReadabilityDecreaser(inputPath, outputPath, probabilitiesPath, DEFAULT_CONFIG_FILE);
+    public DirectoryRD create(final ProcessingPath inputPath,
+                              final ProcessingPath outputPath,
+                              final Path probabilitiesPath) {
+        return create(inputPath, outputPath, probabilitiesPath, DEFAULT_CONFIG_FILE);
     }
 
     /**
@@ -52,13 +52,13 @@ public class ReadabilityDecreaserFactory extends AbstractReadabilityDecreaserFac
      * @param configPath        the path to the config file
      * @return the new ReadabilityDecreaser
      */
-    public DirectoryReadabilityDecreaser createReadabilityDecreaser(final ProcessingPath inputPath,
-                                                                    final ProcessingPath outputPath,
-                                                                    final Path probabilitiesPath,
-                                                                    final Path configPath) {
+    public DirectoryRD create(final ProcessingPath inputPath,
+                              final ProcessingPath outputPath,
+                              final Path probabilitiesPath,
+                              final Path configPath) {
         Config config = loadConfig(configPath);
         RdcProbabilities probabilities = loadProbabilities(probabilitiesPath);
-        return new DirectoryReadabilityDecreaser(inputPath, outputPath, probabilities, config);
+        return new DirectoryRD(inputPath, outputPath, probabilities, config);
     }
 
     /**

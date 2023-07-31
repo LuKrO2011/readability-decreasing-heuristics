@@ -20,18 +20,18 @@ class DirectoryReadabilityDecreaserTest extends ResourcesTest {
 
     private final static Path ALL_RENAME_REFACTORINGS_CONFIG = MAIN_RESOURCES.resolve("probabilities-rename.yaml");
 
-    private ReadabilityDecreaserFactory rdf;
+    private RDFactory rdf;
 
     @BeforeEach
     void setUp() {
-        attachAppender(DirectoryReadabilityDecreaser.class);
-        rdf = new ReadabilityDecreaserFactory();
+        attachAppender(DirectoryRD.class);
+        rdf = new RDFactory();
     }
 
     @ParameterizedTest
     @ValueSource(strings = {helloWorld, heapUtils})
     void testProcess(String fileName, @TempDir Path outputDir) {
-        DirectoryReadabilityDecreaser directoryReadabilityDecreaser = rdf.createReadabilityDecreaser(
+        DirectoryRD directoryReadabilityDecreaser = rdf.create(
                 resourcesProcessingPath,
                 ProcessingPath.directory(outputDir),
                 ALL_RENAME_REFACTORINGS_CONFIG
@@ -53,7 +53,7 @@ class DirectoryReadabilityDecreaserTest extends ResourcesTest {
         File file1Modified = new File(outputDir.toString(), file1);
         File file2Modified = new File(outputDir.toString(), file2);
 
-        DirectoryReadabilityDecreaser directoryReadabilityDecreaser = rdf.createReadabilityDecreaser(
+        DirectoryRD directoryReadabilityDecreaser = rdf.create(
                 resourcesProcessingPath,
                 ProcessingPath.directory(outputDir)
         );

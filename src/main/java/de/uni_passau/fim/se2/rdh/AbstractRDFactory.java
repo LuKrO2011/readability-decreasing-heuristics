@@ -7,7 +7,7 @@ import java.nio.file.Path;
 /**
  * Superclass for ReadabilityDecreaserFactory-classes. Each factory class can build a specific ReadabilityDecreaser.
  */
-public abstract class AbstractReadabilityDecreaserFactory {
+public abstract class AbstractRDFactory {
 
     /**
      * The default resources path.
@@ -32,6 +32,6 @@ public abstract class AbstractReadabilityDecreaserFactory {
      * @param configPath        the path to the config file
      * @return the new ReadabilityDecreaser
      */
-    public abstract DirectoryReadabilityDecreaser createReadabilityDecreaser(ProcessingPath inputPath, ProcessingPath outputPath,
-                                                                             Path probabilitiesPath, Path configPath);
+    public abstract DirectoryRD create(ProcessingPath inputPath, ProcessingPath outputPath,
+                                       Path probabilitiesPath, Path configPath);
 }

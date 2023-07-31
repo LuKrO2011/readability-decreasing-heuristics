@@ -7,7 +7,7 @@ import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 /**
  * Superclass for ReadabilityDecreaser-classes.
  */
-public abstract class AbstractReadabilityDecreaser {
+public abstract class AbstractRD {
 
     private final ProcessingPath inputDir;
 
@@ -25,8 +25,8 @@ public abstract class AbstractReadabilityDecreaser {
      * @param probabilities the probabilities for the refactorings
      * @param config        the configuration for the tool
      */
-    public AbstractReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
-                                        final RdcProbabilities probabilities, final Config config) {
+    public AbstractRD(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
+                      final RdcProbabilities probabilities, final Config config) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
         this.probabilities = probabilities;

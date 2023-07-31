@@ -133,9 +133,9 @@ public final class Main implements Callable<Integer> {
     @Override
     public Integer call() {
         setupLogging();
-        AbstractReadabilityDecreaserFactory rdf = new ReadabilityDecreaserFactory();
-        DirectoryReadabilityDecreaser directoryReadabilityDecreaser =
-                rdf.createReadabilityDecreaser(getInputPath(), getOutputPath(), getProbabilitiesPath(),
+        AbstractRDFactory rdf = new RDFactory();
+        DirectoryRD directoryReadabilityDecreaser =
+                rdf.create(getInputPath(), getOutputPath(), getProbabilitiesPath(),
                         getConfigPath());
         directoryReadabilityDecreaser.process();
         return 0;
@@ -200,7 +200,7 @@ public final class Main implements Callable<Integer> {
      */
     private Path getProbabilitiesPath() {
         if (probabilitiesPath == null) {
-            return AbstractReadabilityDecreaserFactory.DEFAULT_PROBABILITIES_FILE;
+            return AbstractRDFactory.DEFAULT_PROBABILITIES_FILE;
         }
 
         // TODO: Check if the file exists...
@@ -216,7 +216,7 @@ public final class Main implements Callable<Integer> {
      */
     private Path getConfigPath() {
         if (configPath == null) {
-            return AbstractReadabilityDecreaserFactory.DEFAULT_CONFIG_FILE;
+            return AbstractRDFactory.DEFAULT_CONFIG_FILE;
         }
 
         // TODO: Check if the file exists...

@@ -15,9 +15,9 @@ import java.util.stream.Stream;
 /**
  * Decreases the readability of Java code. The scope of the applied refactorings is a file.
  */
-public class FileReadabilityDecreaser extends AbstractReadabilityDecreaser {
+public class FileRD extends AbstractRD {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FileReadabilityDecreaser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileRD.class);
 
     /**
      * Creates a new ReadabilityDecreaser.
@@ -27,8 +27,8 @@ public class FileReadabilityDecreaser extends AbstractReadabilityDecreaser {
      * @param probabilities the probabilities for the refactorings
      * @param config        the configuration for the tool
      */
-    public FileReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
-                                    final RdcProbabilities probabilities, final Config config) {
+    public FileRD(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
+                  final RdcProbabilities probabilities, final Config config) {
         super(inputDirPath, outputDirPath, probabilities, config);
     }
 
@@ -71,8 +71,8 @@ public class FileReadabilityDecreaser extends AbstractReadabilityDecreaser {
                     .filter(Files::isRegularFile)
                     .filter(path -> path.toString().endsWith(".java"));
         } catch (IOException e) {
-            if (FileReadabilityDecreaser.LOG.isErrorEnabled()) {
-                FileReadabilityDecreaser.LOG.error("Could not get Java files in input directory: {}", e.getMessage(),
+            if (FileRD.LOG.isErrorEnabled()) {
+                FileRD.LOG.error("Could not get Java files in input directory: {}", e.getMessage(),
                         e);
             }
         }
