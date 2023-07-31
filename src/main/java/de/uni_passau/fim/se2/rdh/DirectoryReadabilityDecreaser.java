@@ -7,11 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Decreases the readability of Java code.
- * <p>
- * This class is the main entry point for the Readability Decreaser. It is responsible for setting up the spoon
- * environment and calling the refactorings.
- * </p>
+ * Decreases the readability of Java code. The scope of the applied refactorings is a directory.
  */
 public class DirectoryReadabilityDecreaser extends AbstractReadabilityDecreaser {
 
