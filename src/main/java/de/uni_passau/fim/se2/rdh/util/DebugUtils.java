@@ -23,4 +23,14 @@ public final class DebugUtils {
     public static List<CtMethod<?>> getAllMethods(final SpoonAPI spoon) {
         return spoon.getModel().getElements(new TypeFilter<>(CtMethod.class));
     }
+
+    /**
+     * Converts the given arguments of a command line call to a string.
+     *
+     * @param args The arguments.
+     * @return The string representation of the arguments.
+     */
+    public static String argsToString(final String... args) {
+        return String.join(" ", List.of(args));
+    }
 }

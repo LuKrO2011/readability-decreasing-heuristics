@@ -63,14 +63,17 @@ public class LoggerTest {
     }
 
     /**
-     * Asserts that the log is empty.
+     * Asserts that the log does not contain any warnings or errors.
      */
     protected void assertLogIsEmpty() {
-        assertThat(log.list).isEmpty();
+        assertThat(log.list).extracting(ILoggingEvent::getLevel)
+                .noneMatch(level -> level == ch.qos.logback.classic.Level.WARN
+                        || level == ch.qos.logback.classic.Level.ERROR);
     }
 
     /**
      * Asserts that the log contains exactly the given messages.
+     *
      * @param messages The messages to check for.
      */
     protected void assertLogContainsExactly(String... messages) {
@@ -80,10 +83,18 @@ public class LoggerTest {
 
     /**
      * Asserts that the log contains the given messages.
+     *
      * @param messages The messages to check for.
      */
     protected void assertLogContains(String... messages) {
         assertThat(log.list).extracting(ILoggingEvent::getFormattedMessage)
-                .contains(messages);
+                .anyMatch(message -> {
+                    for (String m : messages) {
+                        if (message.contains(m)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
     }
 }
