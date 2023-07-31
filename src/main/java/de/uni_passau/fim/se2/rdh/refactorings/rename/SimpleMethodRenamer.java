@@ -2,6 +2,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.util.Logging;
+import de.uni_passau.fim.se2.rdh.util.NumberIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -26,6 +27,11 @@ public class SimpleMethodRenamer extends MethodRenamer {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleMethodRenamer.class);
 
     /**
+     * The number iterator provides a way to get a unique number for each method.
+     */
+    private final NumberIterator numberIterator = new NumberIterator();
+
+    /**
      * This constructor sets the spoon instance and the probabilities to be used.
      *
      * @param spoon         the spoon instance
@@ -33,6 +39,7 @@ public class SimpleMethodRenamer extends MethodRenamer {
      */
     public SimpleMethodRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         super(spoon, probabilities);
+
     }
 
     /**
@@ -59,15 +66,15 @@ public class SimpleMethodRenamer extends MethodRenamer {
         }
 
         // Rename all methods to m0 ... mN
-        for (int i = 0; i < methods.size(); i++) {
+        for (CtMethod<Integer> method : methods) {
             if (!probabilities.shouldRenameMethod()) {
                 continue;
             }
 
-            CtMethod<Integer> method = methods.get(i);
             try {
                 refactoring.setTarget(method);
-                refactoring.setNewName("m" + i);
+                String newName = "m" + numberIterator.getNext();
+                refactoring.setNewName(newName);
                 refactoring.refactor();
             } catch (SpoonException e) {
                 Logging.logRefactoringFailed(LOG, "Could not rename method " + method.getSimpleName(), e);
