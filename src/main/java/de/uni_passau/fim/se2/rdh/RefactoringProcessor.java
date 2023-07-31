@@ -61,11 +61,6 @@ public class RefactoringProcessor {
 
         // Setup spoon
         setupSpoon();
-
-        // Setup done
-        if (LOG.isInfoEnabled()) {
-            LOG.info("RefactoringProcessor initialized with output directory {}", outputDir.getAbsolutePath());
-        }
     }
 
     /**
