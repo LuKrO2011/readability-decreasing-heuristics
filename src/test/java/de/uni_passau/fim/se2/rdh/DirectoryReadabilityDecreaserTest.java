@@ -20,12 +20,12 @@ class DirectoryReadabilityDecreaserTest extends ResourcesTest {
 
     private final static Path ALL_RENAME_REFACTORINGS_CONFIG = MAIN_RESOURCES.resolve("probabilities-rename.yaml");
 
-    private RDFactory rdf;
+    private DirectoryRDFactory rdf;
 
     @BeforeEach
     void setUp() {
         attachAppender(DirectoryRD.class);
-        rdf = new RDFactory();
+        rdf = new DirectoryRDFactory();
     }
 
     @ParameterizedTest

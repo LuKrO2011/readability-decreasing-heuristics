@@ -1,7 +1,13 @@
 package de.uni_passau.fim.se2.rdh;
 
+import de.uni_passau.fim.se2.rdh.config.Config;
+import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 /**
@@ -22,6 +28,7 @@ public abstract class AbstractRDFactory {
      */
 
     public static final Path DEFAULT_PROBABILITIES_FILE = DEFAULT_RESOURCES_PATH.resolve("probabilities.yaml");
+    private static final Logger LOG = LoggerFactory.getLogger(DirectoryRDFactory.class);
 
     /**
      * Creates a new specific ReadabilityDecreaser.
@@ -32,6 +39,44 @@ public abstract class AbstractRDFactory {
      * @param configPath        the path to the config file
      * @return the new ReadabilityDecreaser
      */
-    public abstract DirectoryRD create(ProcessingPath inputPath, ProcessingPath outputPath,
+    public abstract AbstractRD create(ProcessingPath inputPath, ProcessingPath outputPath,
                                        Path probabilitiesPath, Path configPath);
+
+    /**
+     * Load the configuration for the tool.
+     *
+     * @param configFilePath the path to the config file
+     * @return the configuration
+     */
+    protected Config loadConfig(final Path configFilePath) {
+        YamlLoaderSaver yamlLoaderSaver = new YamlLoaderSaver();
+        Config config;
+        try {
+            config = yamlLoaderSaver.loadConfig(configFilePath);
+        } catch (IOException e) {
+            LOG.error("Could not load config file.", e);
+            LOG.warn("Using default config.");
+            config = new Config();
+        }
+        return config;
+    }
+
+    /**
+     * Load the probabilities for the refactorings.
+     *
+     * @param probabilitiesFilePath the path to the probabilities file
+     * @return the probabilities
+     */
+    protected RdcProbabilities loadProbabilities(final Path probabilitiesFilePath) {
+        YamlLoaderSaver yamlLoaderSaver = new YamlLoaderSaver();
+        RdcProbabilities probabilities;
+        try {
+            probabilities = yamlLoaderSaver.loadRdcProbabilities(probabilitiesFilePath);
+        } catch (IOException e) {
+            LOG.error("Could not load probabilities file.", e);
+            LOG.warn("Using default probabilities.");
+            probabilities = new RdcProbabilities();
+        }
+        return probabilities;
+    }
 }

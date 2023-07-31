@@ -133,8 +133,8 @@ public final class Main implements Callable<Integer> {
     @Override
     public Integer call() {
         setupLogging();
-        AbstractRDFactory rdf = new RDFactory();
-        DirectoryRD directoryReadabilityDecreaser =
+        AbstractRDFactory rdf = new DirectoryRDFactory();
+        AbstractRD directoryReadabilityDecreaser =
                 rdf.create(getInputPath(), getOutputPath(), getProbabilitiesPath(),
                         getConfigPath());
         directoryReadabilityDecreaser.process();
