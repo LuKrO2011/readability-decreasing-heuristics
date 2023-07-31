@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
+import de.uni_passau.fim.se2.rdh.util.NumberIterator;
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.declaration.CtField;

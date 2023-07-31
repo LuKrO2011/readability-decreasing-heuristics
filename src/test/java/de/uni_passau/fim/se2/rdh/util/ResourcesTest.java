@@ -44,6 +44,10 @@ public class ResourcesTest extends LoggerTest {
 
     protected final static Path MAIN_RESOURCES = Path.of("src/main/resources");
 
+    protected final static Path TEST_RESOURCES = Path.of("src/test/resources");
+
+    protected final static Path ALL_RENAME_REFACTORINGS_CONFIG = MAIN_RESOURCES.resolve("probabilities-rename.yaml");
+
     @BeforeEach
     void setupResourcesPath() {
         resourcesURL = Objects.requireNonNull(getClass().getClassLoader().getResource("code"));

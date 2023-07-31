@@ -3,6 +3,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.util.Logging;
+import de.uni_passau.fim.se2.rdh.util.NumberIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -25,6 +26,11 @@ public class FieldRenamer extends AbstractModification {
      * The (logger) of this class.
      */
     private static final Logger LOG = LoggerFactory.getLogger(FieldRenamer.class);
+
+    /**
+     * The number iterator provides a way to get a unique number for each method.
+     */
+    private final NumberIterator numberIterator = new NumberIterator();
 
     /**
      * This constructor sets the spoon instance and the probabilities to be used.
@@ -60,19 +66,18 @@ public class FieldRenamer extends AbstractModification {
         }
 
         // Rename all local variables to vl0 ... vlN
-        for (int i = 0; i < globalVariables.size(); i++) {
+        for (CtField<?> variable : globalVariables) {
             if (!probabilities.shouldRenameField()) {
                 continue;
             }
 
-            CtField<?> globalVariable = globalVariables.get(i);
             try {
-                refactoring.setTarget(globalVariable);
-                refactoring.setNewName("f" + i);
+                refactoring.setTarget(variable);
+                refactoring.setNewName("f" + numberIterator.getNext());
                 refactoring.refactor();
             } catch (SpoonException e) {
                 Logging.logRefactoringFailed(LOG, "Could not rename global variable "
-                        + globalVariable.getSimpleName(), e);
+                        + variable.getSimpleName(), e);
             }
         }
 

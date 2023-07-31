@@ -39,23 +39,10 @@ public class FileRD extends AbstractRD {
     public void process() {
         Stream<Path> javaFiles = getJavaFiles(getInputDir().getPath());
         javaFiles.forEach(file -> {
-            Path folder = file.getParent();
-            createSubdirectoryInOutput(folder);
             RefactoringProcessor refactoringProcessor =
-                    new RefactoringProcessor(ProcessingPath.directory(folder), getProbabilities());
+                    new RefactoringProcessor(ProcessingPath.directory(getOutputDir().getPath()), getProbabilities());
             refactoringProcessor.process(file.toString());
         });
-    }
-
-    /**
-     * Creates a subdirectory in the output directory if it does not exist yet.
-     *
-     * @param folder the folder to create
-     */
-    private void createSubdirectoryInOutput(final Path folder) {
-        String relativePath = getInputDir().getPath().relativize(folder).toString();
-        Path outputDir = getOutputDir().getPath().resolve(relativePath);
-        FileManager.createFolder(outputDir.toAbsolutePath().toString());
     }
 
     /**

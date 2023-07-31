@@ -16,9 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-class DirectoryReadabilityDecreaserTest extends ResourcesTest {
-
-    private final static Path ALL_RENAME_REFACTORINGS_CONFIG = MAIN_RESOURCES.resolve("probabilities-rename.yaml");
+class DirectoryRDTest extends ResourcesTest {
 
     private DirectoryRDFactory rdf;
 
