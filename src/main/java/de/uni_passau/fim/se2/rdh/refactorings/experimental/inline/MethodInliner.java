@@ -55,9 +55,7 @@ public class MethodInliner extends AbstractModification {
         List<CtMethod<?>> methods = spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
         if (methods.size() == 0) {
-            if (LOG.isWarnEnabled()) {
-                LOG.warn("No methods found");
-            }
+            LOG.info("No methods found");
             return;
         }
 

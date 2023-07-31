@@ -56,7 +56,7 @@ public class LocalVariableRenamer extends AbstractModification {
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtLocalVariable.class));
 
         if (localVariables.size() == 0) {
-            LOG.warn("No local variables found");
+            LOG.info("No local variables found");
             return;
         }
 

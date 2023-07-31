@@ -34,7 +34,7 @@ class DirectoryRDTest extends ResourcesTest {
                 ProcessingPath.directory(outputDir),
                 ALL_RENAME_REFACTORINGS_CONFIG
         );
-        directoryReadabilityDecreaser.process(fileName);
+        directoryReadabilityDecreaser.decreaseReadability(fileName);
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));
 
@@ -55,7 +55,7 @@ class DirectoryRDTest extends ResourcesTest {
                 resourcesProcessingPath,
                 ProcessingPath.directory(outputDir)
         );
-        directoryReadabilityDecreaser.process(file1, file2);
+        directoryReadabilityDecreaser.decreaseReadability(file1, file2);
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));
 

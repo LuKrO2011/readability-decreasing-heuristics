@@ -53,9 +53,7 @@ public class OperationInserter extends AbstractModification {
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtBinaryOperator.class));
 
         if (binaryOperations.size() == 0) {
-            if (LOG.isWarnEnabled()) {
-                LOG.warn("No binary operations found");
-            }
+            LOG.info("No binary operations found");
             return;
         }
 

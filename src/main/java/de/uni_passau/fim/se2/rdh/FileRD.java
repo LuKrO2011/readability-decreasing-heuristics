@@ -2,7 +2,6 @@ package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.util.FileManager;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +35,19 @@ public class FileRD extends AbstractRD {
      * Processes each file in the input directory one by one. In other words, for each file an own
      * {@link RefactoringProcessor} is used.
      */
-    public void process() {
+    public void decreaseReadability() {
         Stream<Path> javaFiles = getJavaFiles(getInputDir().getPath());
         javaFiles.forEach(file -> {
+            LOG.info("Processing file {} to {}.", file, getOutputDir().getPath());
             RefactoringProcessor refactoringProcessor =
                     new RefactoringProcessor(ProcessingPath.directory(getOutputDir().getPath()), getProbabilities());
             refactoringProcessor.process(file.toString());
         });
+
+        // Log success message
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Successfully processed directory {} file by file.", getInputDir().getPath());
+        }
     }
 
     /**

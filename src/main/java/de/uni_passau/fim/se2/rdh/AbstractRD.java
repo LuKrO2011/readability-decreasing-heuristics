@@ -3,11 +3,15 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Superclass for ReadabilityDecreaser-classes.
  */
 public abstract class AbstractRD {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractRD.class);
 
     private final ProcessingPath inputDir;
 
@@ -34,9 +38,33 @@ public abstract class AbstractRD {
     }
 
     /**
+     * Processes the input by performing the refactorings. Additionally, it performs pre- and post-processing.
+     */
+    public void process() {
+        preProcess();
+        decreaseReadability();
+        postProcess();
+    }
+
+    /**
+     * Performs pre-processing.
+     */
+    protected void preProcess() {
+        // TODO: Execute code2vec using modelConfig here.
+        LOG.info("Pre-processing not implemented.");
+    }
+
+    /**
+     * Performs post-processing.
+     */
+    protected void postProcess() {
+        LOG.info("Post-processing not implemented.");
+    }
+
+    /**
      * Processes the input.
      */
-    public abstract void process();
+    public abstract void decreaseReadability();
 
     /**
      * Gets input directory that contains the files to process.

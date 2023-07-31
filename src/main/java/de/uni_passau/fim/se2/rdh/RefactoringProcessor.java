@@ -10,7 +10,6 @@ import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.LocalVariableRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,16 +56,8 @@ public class RefactoringProcessor {
         // Create spoon launcher
         this.spoon = new Launcher();
 
-        MethodRenamer backupMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
-
         // Create the refactorings
-        modifications = List.of(
-                new LocalVariableRenamer(spoon, probabilities),
-                new FieldRenamer(spoon, probabilities),
-                new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer),
-                new MethodInliner(spoon, probabilities),
-                new OperationInserter(spoon, probabilities),
-                new StarImporter(spoon, probabilities));
+        modifications = defaultRefactorings();
 
         // Setup spoon
         setupSpoon();
@@ -75,6 +66,24 @@ public class RefactoringProcessor {
         if (LOG.isInfoEnabled()) {
             LOG.info("RefactoringProcessor initialized with output directory {}", outputDir.getAbsolutePath());
         }
+    }
+
+    /**
+     * Initializes the default refactorings.
+     * TODO: Use a map to register concrete refactorings of different types.
+     *
+     * @return the default refactorings
+     */
+    private List<AbstractModification> defaultRefactorings() {
+        MethodRenamer backupMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
+        return List.of(
+                new LocalVariableRenamer(spoon, probabilities),
+                new FieldRenamer(spoon, probabilities),
+                // new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer),
+                new SimpleMethodRenamer(spoon, probabilities),
+                new MethodInliner(spoon, probabilities),
+                new OperationInserter(spoon, probabilities),
+                new StarImporter(spoon, probabilities));
     }
 
     /**

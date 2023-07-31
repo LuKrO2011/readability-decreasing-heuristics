@@ -61,7 +61,7 @@ public class FieldRenamer extends AbstractModification {
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtField.class));
 
         if (globalVariables.size() == 0) {
-            LOG.warn("No global variables found");
+            LOG.info("No global variables found");
             return;
         }
 

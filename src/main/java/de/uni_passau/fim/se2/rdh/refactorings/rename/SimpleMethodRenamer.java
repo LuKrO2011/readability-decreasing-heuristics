@@ -61,7 +61,7 @@ public class SimpleMethodRenamer extends MethodRenamer {
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtMethod.class));
 
         if (methods.size() == 0) {
-            LOG.warn("No methods found");
+            LOG.info("No methods found");
             return;
         }
 

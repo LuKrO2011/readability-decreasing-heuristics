@@ -36,8 +36,7 @@ public class DirectoryRD extends AbstractRD {
      * @param fileNames the files or subdirectories to process
      */
     @Deprecated
-    public void process(final String... fileNames) {
-        // preprocess();
+    public void decreaseReadability(final String... fileNames) {
         for (String fileName : fileNames) {
             RefactoringProcessor refactoringProcessor = new RefactoringProcessor(getOutputDir(), getProbabilities());
             String fullyQualifiedClassName = getInputDir().getAbsolutePath() + "/" + fileName;
@@ -51,20 +50,9 @@ public class DirectoryRD extends AbstractRD {
     }
 
     /**
-     * Preprocesses the input directory.
-     * TODO: Execute code2vec using modelConfig here.
-     */
-    private void preprocess() {
-        if (DirectoryRD.LOG.isErrorEnabled()) {
-            DirectoryRD.LOG.error("Preprocessing not implemented yet. Code2vec was not executed.");
-        }
-    }
-
-    /**
      * Processes the whole input directory by a single {@link RefactoringProcessor}.
      */
-    public void process() {
-        // preprocess();
+    public void decreaseReadability() {
         RefactoringProcessor refactoringProcessor = new RefactoringProcessor(getOutputDir(), getProbabilities());
         String fullyQualifiedClassName = getInputDir().getAbsolutePath();
         refactoringProcessor.process(fullyQualifiedClassName);

@@ -32,7 +32,7 @@ class FileRDTest extends ResourcesTest {
                 ProcessingPath.directory(resourcesPath.resolve("project1")),
                 ProcessingPath.directory(outputDir)
         );
-        fileRD.process();
+        fileRD.decreaseReadability();
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));
 

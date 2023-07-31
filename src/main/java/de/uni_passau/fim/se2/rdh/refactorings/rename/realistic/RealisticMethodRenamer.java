@@ -82,9 +82,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
         if (methods.size() == 0) {
-            if (LOG.isWarnEnabled()) {
-                LOG.warn("No methods found");
-            }
+            LOG.info("No methods found");
             return;
         }
 

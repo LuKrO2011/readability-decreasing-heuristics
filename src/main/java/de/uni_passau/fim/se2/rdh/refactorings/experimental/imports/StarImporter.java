@@ -55,9 +55,7 @@ public class StarImporter extends AbstractModification {
         Collection<CtType<?>> types = spoon.getModel().getAllTypes();
 
         if (!types.iterator().hasNext()) {
-            if (LOG.isWarnEnabled()) {
-                LOG.warn("Compilation unit can not be created as there are no types");
-            }
+            LOG.warn("Compilation unit can not be created as there are no types");
             return;
         }
 
@@ -65,9 +63,7 @@ public class StarImporter extends AbstractModification {
         List<CtImport> imports = compilationUnit.getImports();
 
         if (imports.size() == 0) {
-            if (LOG.isWarnEnabled()) {
-                LOG.warn("No imports found");
-            }
+            LOG.info("No imports found");
             return;
         }
 
