@@ -1,22 +1,15 @@
 package de.uni_passau.fim.se2.rdh;
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.core.Appender;
-import ch.qos.logback.core.FileAppender;
-import ch.qos.logback.core.util.StatusPrinter;
 import de.uni_passau.fim.se2.rdh.config.ModelConfig;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
-
-import static de.uni_passau.fim.se2.rdh.Main.LOG_FILENAME;
 
 /**
  * Decreases the readability of Java code.
@@ -33,12 +26,12 @@ public class ReadabilityDecreaser {
      * The default probabilities file.
      * TODO: Rename files
      */
-    public static final Path DEFAULT_PROBABILITIES_FILE = DEFAULT_RESOURCES_PATH.resolve("config.yaml");
+    public static final Path DEFAULT_PROBABILITIES_FILE = DEFAULT_RESOURCES_PATH.resolve("probabilities.yaml");
 
     /**
      * The default config file.
      */
-    public static final Path DEFAULT_CONFIG_FILE = DEFAULT_RESOURCES_PATH.resolve("modelConfig.yaml");
+    public static final Path DEFAULT_CONFIG_FILE = DEFAULT_RESOURCES_PATH.resolve("config.yaml");
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
     private final RdcProbabilities probabilities;

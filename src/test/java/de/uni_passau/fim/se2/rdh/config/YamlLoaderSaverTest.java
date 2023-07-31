@@ -1,12 +1,9 @@
 package de.uni_passau.fim.se2.rdh.config;
 
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.FieldInliner;
 import de.uni_passau.fim.se2.rdh.util.LoggerTest;
-import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.yaml.snakeyaml.constructor.ConstructorException;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,12 +58,12 @@ class YamlLoaderSaverTest extends LoggerTest {
     @Test
     void testSave(@TempDir Path outputDir) {
         try {
-            yaml.save(outputDir.resolve("config.yaml"), new RdcProbabilities());
+            yaml.save(outputDir.resolve("probabilities.yaml"), new RdcProbabilities());
         } catch (IOException e) {
             fail(e);
         }
 
-        File file = new File(outputDir + "/config.yaml");
+        File file = new File(outputDir + "/probabilities.yaml");
         assertAll(
                 () -> assertTrue(file.exists()),
                 this::assertLogIsEmpty
@@ -75,7 +72,7 @@ class YamlLoaderSaverTest extends LoggerTest {
 
     @Test
     void testInvalidConfiguration() {
-        assertThrows(IOException.class, () -> yaml.loadRdcProbabilities(Path.of("config-invalid.yaml")));
+        assertThrows(IOException.class, () -> yaml.loadRdcProbabilities(Path.of("probabilities-invalid.yaml")));
     }
 
 }

@@ -80,14 +80,10 @@ class MainTest extends IOTest {
         );
     }
 
-
-    @Disabled
     @Test
     void testRunSpecificConfig(@TempDir Path tmpDir) {
-        tmpDir = Path.of("output");
-
-        String configPath = "src/main/resources/modelConfig.yaml";
-        String probabilitiesPath = "src/main/resources/config.yaml";
+        String configPath = "src/main/resources/config.yaml";
+        String probabilitiesPath = "src/main/resources/probabilities.yaml";
         execute(0, INPUT, "--seed", SEED, "-o", tmpDir.toString(), "-c", configPath, "-p", probabilitiesPath);
 
         // Assert that file exists
