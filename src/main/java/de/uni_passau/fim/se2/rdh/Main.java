@@ -15,6 +15,9 @@ import java.nio.file.Path;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
+import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_CONFIG_FILE;
+import static de.uni_passau.fim.se2.rdh.ReadabilityDecreaser.DEFAULT_PROBABILITIES_FILE;
+
 /**
  * The main class of the tool.
  * <p>
@@ -57,6 +60,27 @@ public final class Main implements Callable<Integer> {
     private String outputPath;
 
     /**
+     * The path to the configuration file of the tool.
+     */
+    @CommandLine.Option(
+            names = {"-c", "--config"},
+            description = "The path to the configuration file of the tool. If not specified, the default "
+                    + "configuration is used."
+    )
+    private String configPath;
+
+    /**
+     * The path to the configuration file for the probability distributions of the refactorings.
+     */
+    @CommandLine.Option(
+            names = {"-p", "--probs", "--probabilities"},
+            description = "The path to the configuration file for the probability distributions of the refactorings. "
+                    + "If not specified, the default configuration is used."
+    )
+    private String probabilitiesPath;
+
+
+    /**
      * The command line specification. This is used to print messages to the user.
      */
     @CommandLine.Spec
@@ -94,7 +118,8 @@ public final class Main implements Callable<Integer> {
      */
     @Override
     public Integer call() {
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(getInputPath(), getOutputPath());
+        ReadabilityDecreaser readabilityDecreaser =
+                new ReadabilityDecreaser(getInputPath(), getOutputPath(), getProbabilitiesPath(), getConfigPath());
         readabilityDecreaser.process();
         return 0;
     }
@@ -125,6 +150,39 @@ public final class Main implements Callable<Integer> {
         File outputDir = FileManager.createFolder(outputPath);
         return ProcessingPath.directory(outputDir.toPath());
     }
+
+    /**
+     * Returns the path to the configuration file for the probability distributions of the refactorings. If no path is
+     * specified, the default configuration is used.
+     *
+     * @return The path to the configuration file for the probability distributions of the refactorings.
+     */
+    private Path getProbabilitiesPath() {
+        if (probabilitiesPath == null) {
+            return DEFAULT_PROBABILITIES_FILE;
+        }
+
+        // TODO: Check if the file exists...
+
+        return Path.of(probabilitiesPath);
+    }
+
+    /**
+     * Returns the path to the configuration file of the tool. If no path is specified, the default configuration is
+     * used.
+     *
+     * @return The path to the configuration file of the tool.
+     */
+    private Path getConfigPath() {
+        if (configPath == null) {
+            return DEFAULT_CONFIG_FILE;
+        }
+
+        // TODO: Check if the file exists...
+
+        return Path.of(configPath);
+    }
+
 
     static class VersionProvider implements CommandLine.IVersionProvider {
 

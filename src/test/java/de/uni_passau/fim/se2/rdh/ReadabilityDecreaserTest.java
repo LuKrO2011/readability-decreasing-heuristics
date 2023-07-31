@@ -19,17 +19,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReadabilityDecreaserTest extends ResourcesTest {
 
-    private final static String ALL_RENAME_REFACTORINGS_CONFIG = "config-rename.yaml";
+    private final static Path ALL_RENAME_REFACTORINGS_CONFIG = Path.of("config-rename.yaml");
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         attachAppender(ReadabilityDecreaser.class);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {helloWorld, heapUtils})
     void testProcess(String fileName, @TempDir Path outputDir) {
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir), ALL_RENAME_REFACTORINGS_CONFIG);
+        ReadabilityDecreaser readabilityDecreaser =
+                new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir),
+                        ALL_RENAME_REFACTORINGS_CONFIG);
         readabilityDecreaser.process(fileName);
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));
@@ -47,7 +49,8 @@ class ReadabilityDecreaserTest extends ResourcesTest {
         File file1Modified = new File(outputDir.toString(), file1);
         File file2Modified = new File(outputDir.toString(), file2);
 
-        ReadabilityDecreaser readabilityDecreaser = new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
+        ReadabilityDecreaser readabilityDecreaser =
+                new ReadabilityDecreaser(resourcesProcessingPath, ProcessingPath.directory(outputDir));
         readabilityDecreaser.process(file1, file2);
 
         DirectoryFlattener.flatten(new File(outputDir.toString()));

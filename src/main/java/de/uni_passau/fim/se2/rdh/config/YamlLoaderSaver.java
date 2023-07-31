@@ -13,11 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
@@ -26,53 +28,50 @@ import java.util.Set;
  */
 public class YamlLoaderSaver {
 
-    private static final String DEFAULT_CONFIG_FILE = "config.yaml";
-
-    private static final String DEFAULT_CONFIG_FILE_PATH = "src/main/resources";
-
     private static final Logger LOG = LoggerFactory.getLogger(YamlLoaderSaver.class);
-
-    private String configFilePath = DEFAULT_CONFIG_FILE_PATH;
 
     /**
      * Loads the given YAML file. The file must be in the "resources" folder.
      *
-     * @param configFileName the name of the YAML file
-     * @param clazz          the class of the object to load
+     * @param yamlPath the name of the YAML file
+     * @param clazz    the class of the object to load
      * @return the loaded object
+     * @throws IOException if the file could not be loaded
      */
-    public Object load(@NotBlank final String configFileName, @NotNull final Class<?> clazz) {
-        try (InputStream inputStream = YamlLoaderSaver.class.getClassLoader().getResourceAsStream(configFileName)) {
+    public Object load(@NotBlank final Path yamlPath, @NotNull final Class<?> clazz) throws IOException {
+        try (InputStream inputStream = YamlLoaderSaver.class.getClassLoader()
+                .getResourceAsStream(yamlPath.toString())) {
             Yaml yaml = new Yaml();
             return yaml.loadAs(inputStream, clazz);
-        } catch (IOException e) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error("Could not load config file: {}", e.getMessage());
-            }
+        } catch (IOException | YAMLException e) {
+            throw new IOException("Could not load yaml file: " + yamlPath, e);
         }
-        return null;
     }
 
     /**
-     * Loads the given YAML file. The file must be in the "resources" folder.
+     * Loads a {@link RdcProbabilities} object from the file with the given path.
      *
-     * @param configFileName the name of the YAML file
-     * @return the loaded object
+     * @param configPath the path to the config file
+     * @return the loaded {@link RdcProbabilities}
+     * @throws IOException if the file could not be loaded
      */
-    public RdcProbabilities loadRdcProbabilities(@NotBlank final String configFileName) {
-        RdcProbabilities loadedData = (RdcProbabilities) load(configFileName, RdcProbabilities.class);
+    public RdcProbabilities loadRdcProbabilities(@NotBlank final Path configPath) throws IOException {
+        RdcProbabilities loadedData = (RdcProbabilities) load(configPath, RdcProbabilities.class);
+
         validate(loadedData);
         return loadedData;
     }
 
     /**
-     * Loads a {@link ModelConfig} from the file with the given name.
+     * Loads a {@link ModelConfig} from the file with the given path.
      *
-     * @param configFileName the name of the file to load
+     * @param configPath the path to the config file
      * @return the loaded {@link ModelConfig}
+     * @throws IOException if the file could not be loaded
      */
-    public ModelConfig loadConfig(@NotBlank final String configFileName) {
-        ModelConfig loadedData = (ModelConfig) load(configFileName, ModelConfig.class);
+    public ModelConfig loadConfig(@NotBlank final Path configPath) throws IOException {
+        ModelConfig loadedData = (ModelConfig) load(configPath, ModelConfig.class);
+
         // TODO: Validate?
         return loadedData;
     }
@@ -81,9 +80,10 @@ public class YamlLoaderSaver {
      * Validates the given object.
      *
      * @param data the object to validate
+     * @throws IOException if the object is invalid
      */
     @SuppressFBWarnings("RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE")
-    private void validate(@NotNull final RdcProbabilities data) {
+    private void validate(@NotNull final RdcProbabilities data) throws IOException {
         Configuration<? extends Configuration<?>> validatorConfig = Validation.byDefaultProvider()
                 .configure()
                 .messageInterpolator(new ParameterMessageInterpolator());
@@ -99,7 +99,7 @@ public class YamlLoaderSaver {
                         LOG.error("Invalid config file: {}", violation.getMessage());
                     }
                 }
-                throw new IllegalArgumentException("Invalid config file");
+                throw new IOException("Invalid config file");
             }
         }
 
@@ -114,23 +114,15 @@ public class YamlLoaderSaver {
     }
 
     /**
-     * Loads the default YAML file.
-     *
-     * @return the loaded object
-     */
-    public Object load() {
-        return load(DEFAULT_CONFIG_FILE, RdcProbabilities.class);
-    }
-
-    /**
      * Saves the given object to the given YAML file.
      *
-     * @param configFileName the name of the YAML file
-     * @param object         the object to save
+     * @param configPath the path to the config file
+     * @param object     the object to save
+     * @throws IOException if the file could not be saved
      */
-    public void save(@NotBlank final String configFileName, @NotNull final Object object) {
+    public void save(@NotBlank final Path configPath, @NotNull final Object object) throws IOException {
 
-        try (FileWriter fw = new FileWriter(configFilePath + "/" + configFileName, StandardCharsets.UTF_8)) {
+        try (FileWriter fw = new FileWriter(configPath.toString(), StandardCharsets.UTF_8)) {
 
             // Create DumperOptions to configure the output format
             DumperOptions options = new DumperOptions();
@@ -141,37 +133,8 @@ public class YamlLoaderSaver {
 
             // Convert the RdcProbabilities object to YAML and write it to the file
             yaml.dump(object, fw);
-        } catch (IOException e) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error("Could not save config file: {}", e.getMessage());
-            }
+        } catch (IOException | YAMLException e) {
+            throw new IOException("Could not save yaml file: " + configPath, e);
         }
-    }
-
-    /**
-     * Saves the given object to the default YAML file.
-     *
-     * @param object the object to save
-     */
-    public void save(@NotNull final Object object) {
-        save(DEFAULT_CONFIG_FILE, object);
-    }
-
-    /**
-     * Returns the path to the config file.
-     *
-     * @return the path to the config file
-     */
-    public String getConfigFilePath() {
-        return configFilePath;
-    }
-
-    /**
-     * Sets the path to the config file.
-     *
-     * @param configFilePath the path to the config file
-     */
-    public void setConfigFilePath(@NotNull final String configFilePath) {
-        this.configFilePath = configFilePath;
     }
 }

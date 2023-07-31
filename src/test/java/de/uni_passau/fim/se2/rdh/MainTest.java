@@ -26,15 +26,22 @@ class MainTest extends IOTest {
     private static final String INPUT = INPUT_PATH + INPUT_FILENAME;
 
     private static final String HELP_TEXT = """
-            Usage: readability-decreasing-heuristics [-hV] [-o=<outputPath>]
-                   [--seed=<seed>] <inputPath>
+            Usage: readability-decreasing-heuristics [-hV] [-c=<configPath>]
+                   [-o=<outputPath>] [-p=<probabilitiesPath>] [--seed=<seed>] <inputPath>
             Heuristics for decreasing the readability of Java source code.
                   <inputPath>     The path to the input. Can be a file or a directory.
+              -c, --config=<configPath>
+                                  The path to the configuration file of the tool. If not
+                                    specified, the default configuration is used.
               -h, --help          Show this help message and exit.
               -o, --output=<outputPath>
                                   The path to the output directory. If not specified, the
                                     output is written into the directory of the input
                                     (file).
+              -p, --probs, --probabilities=<probabilitiesPath>
+                                  The path to the configuration file for the probability
+                                    distributions of the refactorings. If not specified,
+                                    the default configuration is used.
                   --seed=<seed>   A number that is used as seed to initialize the random
                                     instance to allow for reproducible runs.
               -V, --version       Print version information and exit.
@@ -64,13 +71,27 @@ class MainTest extends IOTest {
 
     @Test
     void testRunInputDir(@TempDir Path tmpDir) {
-        execute(0, PROJECT_PATH,"--seed", SEED, "-o", tmpDir.toString());
+        execute(0, PROJECT_PATH, "--seed", SEED, "-o", tmpDir.toString());
 
         // Assert that the directory contains two files
         assertAll(
                 () -> assertThat(tmpDir.resolve("HelloWorld.java")).exists(),
                 () -> assertThat(tmpDir.resolve("org/apache/cassandra/utils/HeapUtils.java")).exists()
         );
+    }
+
+
+    @Disabled
+    @Test
+    void testRunSpecificConfig(@TempDir Path tmpDir) {
+        tmpDir = Path.of("output");
+
+        String configPath = "src/main/resources/modelConfig.yaml";
+        String probabilitiesPath = "src/main/resources/config.yaml";
+        execute(0, INPUT, "--seed", SEED, "-o", tmpDir.toString(), "-c", configPath, "-p", probabilitiesPath);
+
+        // Assert that file exists
+        assertThat(tmpDir.resolve(INPUT_FILENAME)).exists();
     }
 
     @Test

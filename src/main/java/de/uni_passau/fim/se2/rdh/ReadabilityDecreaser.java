@@ -8,6 +8,9 @@ import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 /**
  * Decreases the readability of Java code.
  * <p>
@@ -17,8 +20,16 @@ import org.slf4j.LoggerFactory;
  */
 public class ReadabilityDecreaser {
 
-    private static final String PROBABILITIES_CONFIG_NAME = "config.yaml";
-    private static final String CONFIG_NAME = "modelConfig.yaml";
+    /**
+     * The default probabilities file.
+     * TODO: Rename files
+     */
+    public static final Path DEFAULT_PROBABILITIES_FILE = Path.of("config.yaml");
+
+    /**
+     * The default config file.
+     */
+    public static final Path DEFAULT_CONFIG_FILE = Path.of("modelConfig.yaml");
     private final ProcessingPath inputDir;
     private final ProcessingPath outputDir;
     private final RdcProbabilities probabilities;
@@ -34,7 +45,7 @@ public class ReadabilityDecreaser {
      * @param outputDirPath the path to the output directory
      */
     public ReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath) {
-        this(inputDirPath, outputDirPath, PROBABILITIES_CONFIG_NAME, CONFIG_NAME);
+        this(inputDirPath, outputDirPath, DEFAULT_PROBABILITIES_FILE, DEFAULT_CONFIG_FILE);
     }
 
     /**
@@ -45,8 +56,8 @@ public class ReadabilityDecreaser {
      * @param probabilitiesFilePath the path to the probabilities file
      */
     public ReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
-                                final String probabilitiesFilePath) {
-        this(inputDirPath, outputDirPath, probabilitiesFilePath, CONFIG_NAME);
+                                final Path probabilitiesFilePath) {
+        this(inputDirPath, outputDirPath, probabilitiesFilePath, DEFAULT_CONFIG_FILE);
     }
 
     /**
@@ -58,16 +69,30 @@ public class ReadabilityDecreaser {
      * @param configFilePath        the path to the config file
      */
     public ReadabilityDecreaser(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
-                                final String probabilitiesFilePath, final String configFilePath) {
+                                final Path probabilitiesFilePath, final Path configFilePath) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
 
-        // Load the configurations
+        // Load the configuration
         YamlLoaderSaver yamlLoaderSaver = new YamlLoaderSaver();
-        modelConfig = yamlLoaderSaver.loadConfig(configFilePath);
+        ModelConfig loadedConfig;
+        try {
+            loadedConfig = yamlLoaderSaver.loadConfig(configFilePath);
+        } catch (IOException e) {
+            LOG.error("Could not load config file.", e);
+            loadedConfig = new ModelConfig();
+        }
+        modelConfig = loadedConfig;
 
-        YamlLoaderSaver yamlReaderWriter = new YamlLoaderSaver();
-        probabilities = yamlReaderWriter.loadRdcProbabilities(probabilitiesFilePath);
+        // Load the probabilities
+        RdcProbabilities loadedProbabilities;
+        try {
+            loadedProbabilities = yamlLoaderSaver.loadRdcProbabilities(probabilitiesFilePath);
+        } catch (IOException e) {
+            LOG.error("Could not load probabilities file.", e);
+            loadedProbabilities = new RdcProbabilities();
+        }
+        probabilities = loadedProbabilities;
     }
 
     /**
@@ -85,6 +110,11 @@ public class ReadabilityDecreaser {
             RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
             String fullyQualifiedClassName = inputDir.getAbsolutePath() + "/" + fileName;
             refactoringProcessor.process(fullyQualifiedClassName);
+        }
+
+        // Log success message
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Successfully processed {} files.", fileNames.length);
         }
     }
 
@@ -105,6 +135,11 @@ public class ReadabilityDecreaser {
         RefactoringProcessor refactoringProcessor = new RefactoringProcessor(outputDir, probabilities);
         String fullyQualifiedClassName = inputDir.getAbsolutePath();
         refactoringProcessor.process(fullyQualifiedClassName);
+
+        // Log success message
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Successfully processed directory {}.", fullyQualifiedClassName);
+        }
     }
 
 }
