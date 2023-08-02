@@ -70,4 +70,65 @@ class FieldRenamerTest extends SpoonTest {
         assertLogContainsExactly("Could not rename global variable f0");
     }
 
+    @Test
+    void testRenameSimpleEnum(@TempDir Path outputDir) {
+        String filename = "SimpleEnum.java";
+
+        File original = new File(resources, filename);
+        File modified = new File(outputDir.toString(), filename);
+        SpoonAPI spoon = setupSpoon(filename, outputDir);
+
+        // Set up the refactoring
+        RdcProbabilities rdcProbabilities = new RdcProbabilities();
+        rdcProbabilities.setRenameField(1.0);
+        AbstractModification renamer = new FieldRenamer(spoon, rdcProbabilities);
+
+        // Perform method renaming
+        renamer.apply();
+
+        // Create modified code file
+        spoon.prettyprint();
+
+        // Perform the refactoring
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(2),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameField),
+                this::assertLogIsEmpty
+        );
+    }
+
+
+    @Test
+    void testRenameComplexEnum(@TempDir Path outputDir) {
+        String filename = "ComplexEnumClass.java";
+
+        File original = new File(resources, filename);
+        File modified = new File(outputDir.toString(), filename);
+        SpoonAPI spoon = setupSpoon(filename, outputDir);
+
+        // Set up the refactoring
+        RdcProbabilities rdcProbabilities = new RdcProbabilities();
+        rdcProbabilities.setRenameField(1.0);
+        AbstractModification renamer = new FieldRenamer(spoon, rdcProbabilities);
+
+        // Perform method renaming
+        renamer.apply();
+
+        // Create modified code file
+        spoon.prettyprint();
+
+        // Perform the refactoring
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(7),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameField),
+                this::assertLogIsEmpty
+        );
+    }
+
 }

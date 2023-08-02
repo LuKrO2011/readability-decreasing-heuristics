@@ -1,13 +1,12 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
-import de.uni_passau.fim.se2.rdh.util.NumberIterator;
+import de.uni_passau.fim.se2.rdh.enums.MyVariableReferenceFunction;
 import spoon.refactoring.AbstractRenameRefactoring;
 import spoon.refactoring.RefactoringException;
 import spoon.reflect.declaration.CtField;
 import spoon.reflect.reference.CtReference;
 import spoon.reflect.visitor.chain.CtConsumer;
 import spoon.reflect.visitor.filter.NamedElementFilter;
-import spoon.reflect.visitor.filter.VariableReferenceFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,8 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
      */
     @Override
     protected void refactorNoCheck() {
-        getTarget().map(new VariableReferenceFunction()).forEach(
-                (CtConsumer<CtReference>) t -> t.setSimpleName(newName));
+        getTarget().map(new MyVariableReferenceFunction()).forEach(
+               (CtConsumer<CtReference>) t -> t.setSimpleName(newName));
         target.setSimpleName(newName);
     }
 
