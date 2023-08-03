@@ -33,8 +33,8 @@ public abstract class AbstractRD {
                       final RdcProbabilities probabilities, final Config config) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
-        this.probabilities = probabilities;
-        this.config = config;
+        this.probabilities = new RdcProbabilities(probabilities);
+        this.config = new Config(config);
     }
 
     /**
