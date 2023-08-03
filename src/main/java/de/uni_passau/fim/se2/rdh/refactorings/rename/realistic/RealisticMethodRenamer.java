@@ -14,6 +14,8 @@ import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,7 +87,13 @@ public class RealisticMethodRenamer extends MethodRenamer {
             return;
         }
 
-        List<MethodRenamingData> newNames = loadNewNames(clazz);
+        List<MethodRenamingData> newNames = new ArrayList<>();
+        try {
+            newNames = loadNewNames(clazz);
+        } catch (IOException e) {
+            LOG.warn(e.getMessage());
+        }
+
         if (methods.size() != newNames.size()) {
             if (LOG.isWarnEnabled()) {
                 LOG.warn("Number of methods and new names does not match. Using backup method renamer.");
@@ -142,9 +150,14 @@ public class RealisticMethodRenamer extends MethodRenamer {
      *
      * @param clazz the class
      * @return the new names
+     * @throws IOException if the json file could not be found
      */
-    private List<MethodRenamingData> loadNewNames(final CtClass<?> clazz) {
+    private List<MethodRenamingData> loadNewNames(final CtClass<?> clazz) throws IOException {
         String jsonPath = getPath(clazz);
+        File jsonFile = new File(jsonPath);
+        if (!jsonFile.exists()) {
+            throw new IOException("Could not find json file " + jsonPath + " for class " + clazz.getSimpleName() + ".");
+        }
 
         // Get the new names for the methods
         JsonLoader jsonLoader = new JsonLoader();
