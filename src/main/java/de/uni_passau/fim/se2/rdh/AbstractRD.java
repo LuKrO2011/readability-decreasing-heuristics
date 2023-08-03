@@ -2,6 +2,8 @@ package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.config.RenameMode;
+import de.uni_passau.fim.se2.rdh.models.PythonRunner;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,8 +55,13 @@ public abstract class AbstractRD {
      * Performs pre-processing.
      */
     protected void preProcess() {
-        // TODO: Execute code2vec using modelConfig here.
-        LOG.info("Pre-processing not implemented.");
+        if (config.getRenameMethodMode() == RenameMode.REALISTIC) {
+            LOG.info("Pre-processing started.");
+            PythonRunner pythonRunner = new PythonRunner(config);
+            pythonRunner.createMethodNamePredictions(inputDir.getPath());
+            LOG.info("Pre-processing finished.");
+        }
+        LOG.info("No Pre-processing needed.");
     }
 
     /**

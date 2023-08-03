@@ -106,4 +106,17 @@ class MainTest extends IOTest {
         int exitCode = commandLine.execute(args);
         assertThat(exitCode).isEqualTo(expectedExitCode);
     }
+
+    @Disabled("Takes a lot of time because a model (code2vec) is loaded.")
+    @Test
+    void testRunRealistic(@TempDir Path outputDir) {
+        String configPath = "src/main/resources/config-realistic.yaml";
+        execute(0, PROJECT_PATH, "--seed", SEED, "-o", outputDir.toString(), "-c", configPath);
+
+        // Assert that the directory contains two files
+        assertAll(
+                () -> assertThat(outputDir.resolve("HelloWorld.java")).exists(),
+                () -> assertThat(outputDir.resolve("org/apache/cassandra/utils/HeapUtils.java")).exists()
+        );
+    }
 }
