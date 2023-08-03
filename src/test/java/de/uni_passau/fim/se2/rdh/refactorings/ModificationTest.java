@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
+import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
 import gumtree.spoon.diff.operations.Operation;
 import spoon.SpoonAPI;
 
@@ -30,6 +31,9 @@ public abstract class ModificationTest extends SpoonTest {
 
         // Create modified code file
         spoon.prettyprint();
+
+        // Flatten the output dir
+        DirectoryFlattener.flatten(outputDir.toFile());
 
         // Perform the refactoring
         return getDiffOperations(original, modified);

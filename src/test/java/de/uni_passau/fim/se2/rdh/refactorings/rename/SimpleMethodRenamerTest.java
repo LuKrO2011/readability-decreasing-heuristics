@@ -42,6 +42,18 @@ class SimpleMethodRenamerTest extends ModificationTest {
     }
 
     @Test
+    void testRenameMethod2(@TempDir Path outputDir) {
+        List<Operation> diffOperations = applyModifications(outputDir, heapUtils);
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(11),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
+                this::assertLogIsEmpty
+        );
+    }
+
+    @Test
     void testRenameMethodEmpty() {
         // Set up spoon
         SpoonAPI spoon = new Launcher();

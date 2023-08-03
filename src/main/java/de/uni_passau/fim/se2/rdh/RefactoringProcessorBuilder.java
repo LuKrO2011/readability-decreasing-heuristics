@@ -86,7 +86,6 @@ public class RefactoringProcessorBuilder {
                 new LocalVariableRenamer(spoon, probabilities),
                 new FieldRenamer(spoon, probabilities),
                 methodRenamer,
-                new SimpleMethodRenamer(spoon, probabilities),
                 new MethodInliner(spoon, probabilities),
                 new OperationInserter(spoon, probabilities),
                 new StarImporter(spoon, probabilities));
