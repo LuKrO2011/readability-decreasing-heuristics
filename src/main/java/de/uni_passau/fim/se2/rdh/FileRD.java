@@ -39,8 +39,7 @@ public class FileRD extends AbstractRD {
         Stream<Path> javaFiles = getJavaFiles(getInputDir().getPath());
         javaFiles.forEach(file -> {
             LOG.info("Processing file {} to {}.", file, getOutputDir().getPath());
-            RefactoringProcessor refactoringProcessor =
-                    new RefactoringProcessor(ProcessingPath.directory(getOutputDir().getPath()), getProbabilities());
+            RefactoringProcessor refactoringProcessor = createRefactoringProcessor();
             refactoringProcessor.process(file.toString());
         });
 

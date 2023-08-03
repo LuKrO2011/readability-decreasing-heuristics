@@ -38,7 +38,7 @@ public class DirectoryRD extends AbstractRD {
     @Deprecated
     public void decreaseReadability(final String... fileNames) {
         for (String fileName : fileNames) {
-            RefactoringProcessor refactoringProcessor = new RefactoringProcessor(getOutputDir(), getProbabilities());
+            RefactoringProcessor refactoringProcessor = createRefactoringProcessor();
             String fullyQualifiedClassName = getInputDir().getAbsolutePath() + "/" + fileName;
             refactoringProcessor.process(fullyQualifiedClassName);
         }
@@ -53,7 +53,7 @@ public class DirectoryRD extends AbstractRD {
      * Processes the whole input directory by a single {@link RefactoringProcessor}.
      */
     public void decreaseReadability() {
-        RefactoringProcessor refactoringProcessor = new RefactoringProcessor(getOutputDir(), getProbabilities());
+        RefactoringProcessor refactoringProcessor = createRefactoringProcessor();
         String fullyQualifiedClassName = getInputDir().getAbsolutePath();
         refactoringProcessor.process(fullyQualifiedClassName);
 

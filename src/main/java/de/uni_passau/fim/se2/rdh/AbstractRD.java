@@ -21,6 +21,8 @@ public abstract class AbstractRD {
 
     private final Config config;
 
+    private final RefactoringProcessorBuilder rpBuilder;
+
     /**
      * Creates a new AbstractReadabilityDecreaser with default config.
      *
@@ -35,6 +37,7 @@ public abstract class AbstractRD {
         this.outputDir = outputDirPath;
         this.probabilities = new RdcProbabilities(probabilities);
         this.config = new Config(config);
+        this.rpBuilder = new RefactoringProcessorBuilder(config);
     }
 
     /**
@@ -100,5 +103,14 @@ public abstract class AbstractRD {
      */
     protected Config getConfig() {
         return config;
+    }
+
+    /**
+     * Creates a new {@link RefactoringProcessor} with the given parameters.
+     *
+     * @return the created {@link RefactoringProcessor}
+     */
+    protected RefactoringProcessor createRefactoringProcessor() {
+        return rpBuilder.create(outputDir, probabilities);
     }
 }

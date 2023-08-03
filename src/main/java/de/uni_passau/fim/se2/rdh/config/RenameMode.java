@@ -11,5 +11,5 @@ public enum RenameMode {
     /**
      * If the renaming is done using a machine learning model.
      */
-    REASONABLE
+    REALISTIC
 }

@@ -12,8 +12,8 @@ public final class Config {
     private String modelPath;
     private String pythonScriptPath;
     private String inputPath;
-    private Scope scope;
-    private RenameMode renameMethodMode;
+    private Scope scope = Scope.FILE;
+    private RenameMode renameMethodMode = RenameMode.ITERATIVE;
 
     /**
      * Creates a new {@link Config} all paths null.

@@ -3,17 +3,9 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.imports.StarImporter;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
-import de.uni_passau.fim.se2.rdh.refactorings.experimental.magic_numbers.OperationInserter;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.FieldRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.LocalVariableRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
-import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
@@ -21,6 +13,7 @@ import spoon.reflect.visitor.PrinterHelper;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.support.gui.SpoonModelTree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,55 +23,27 @@ public class RefactoringProcessor {
 
     private final ProcessingPath outputDir;
     private static final Logger LOG = LoggerFactory.getLogger(RefactoringProcessor.class);
-    private SpoonAPI spoon;
+    private final SpoonAPI spoon;
     private final RdcProbabilities probabilities;
-    private List<AbstractModification> modifications;
+    private final List<AbstractModification> modifications;
 
     private boolean used = false;
 
     /**
      * Creates a new RefactoringProcessor.
      *
+     * @param spoon         the spoon instance to use
      * @param outputDirPath the path to the output directory
      * @param probabilities the probabilities to use
      */
-    public RefactoringProcessor(final ProcessingPath outputDirPath, final RdcProbabilities probabilities) {
+    public RefactoringProcessor(final SpoonAPI spoon, final ProcessingPath outputDirPath,
+                                final RdcProbabilities probabilities) {
+        this.spoon = spoon;
         this.outputDir = outputDirPath;
         this.probabilities = new RdcProbabilities(probabilities);
+        this.modifications = new ArrayList<>();
 
-        setup();
-    }
-
-    /**
-     * Initializes the RefactoringProcessor.
-     */
-    private void setup() {
-        // Create spoon launcher
-        this.spoon = new Launcher();
-
-        // Create the refactorings
-        modifications = defaultRefactorings();
-
-        // Setup spoon
         setupSpoon();
-    }
-
-    /**
-     * Initializes the default refactorings.
-     * TODO: Use a map to register concrete refactorings of different types.
-     *
-     * @return the default refactorings
-     */
-    private List<AbstractModification> defaultRefactorings() {
-        MethodRenamer backupMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
-        return List.of(
-                new LocalVariableRenamer(spoon, probabilities),
-                new FieldRenamer(spoon, probabilities),
-                // new RealisticMethodRenamer(spoon, probabilities, backupMethodRenamer),
-                new SimpleMethodRenamer(spoon, probabilities),
-                new MethodInliner(spoon, probabilities),
-                new OperationInserter(spoon, probabilities),
-                new StarImporter(spoon, probabilities));
     }
 
     /**
@@ -146,5 +111,14 @@ public class RefactoringProcessor {
     public void display() {
         // Get a graphical overview, constructing is enough
         new SpoonModelTree(spoon.getFactory());
+    }
+
+    /**
+     * Adds a modification to the list of modifications.
+     *
+     * @param abstractModification the modification to add
+     */
+    public void addModification(final AbstractModification abstractModification) {
+        modifications.add(abstractModification);
     }
 }
