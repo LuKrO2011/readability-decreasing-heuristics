@@ -73,7 +73,7 @@ public class RefactoringProcessorBuilder {
      * @return the default refactorings
      */
     private List<AbstractModification> getRefactorings(final SpoonAPI spoon, final RdcProbabilities probabilities) {
-        MethodRenamer simpleMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
+        SimpleMethodRenamer simpleMethodRenamer = new SimpleMethodRenamer(spoon, probabilities);
         MethodRenamer methodRenamer;
 
         RenameMode renameMethodMode = config.getRenameMethodMode();

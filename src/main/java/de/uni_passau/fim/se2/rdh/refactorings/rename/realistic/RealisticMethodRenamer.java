@@ -3,6 +3,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename.realistic;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.CtRenameMethodRefactoring;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.MethodRenamer;
+import de.uni_passau.fim.se2.rdh.refactorings.rename.SimpleMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.Logging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      */
     public static final int PREDICTION_QUALITY_INDEX = 0;
 
-    private final MethodRenamer backup;
+    private final SimpleMethodRenamer backup;
 
     // TODO: Get this from config file
     private final NameSelectionMode nameSelectionMode = NameSelectionMode.LONGEST;
@@ -51,7 +52,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @param backup        the backup method renamer
      */
     public RealisticMethodRenamer(final SpoonAPI spoon, final RdcProbabilities probabilities,
-                                  final MethodRenamer backup) {
+                                  final SimpleMethodRenamer backup) {
         super(spoon, probabilities);
         this.backup = backup;
     }
@@ -68,7 +69,15 @@ public class RealisticMethodRenamer extends MethodRenamer {
         // Rename all methods for each class
         for (CtClass<?> ctClass : classes) {
             List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
-            rename(ctClass, methodsOfClass);
+
+            // TODO: Interfaces etc?
+            List<CtMethod<?>> methodsWithImpl = methodsOfClass.stream().filter(m -> !m.isAbstract()).toList();
+            List<CtMethod<?>> methodsWithoutImpl = methodsOfClass.stream().filter(CtMethod::isAbstract).toList();
+            for (CtMethod<?> ctMethod : methodsWithoutImpl) {
+                backup.rename(ctMethod);
+            }
+
+            rename(ctClass, methodsWithImpl);
         }
     }
 

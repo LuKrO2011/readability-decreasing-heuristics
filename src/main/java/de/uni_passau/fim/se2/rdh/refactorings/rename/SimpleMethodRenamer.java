@@ -54,7 +54,6 @@ public class SimpleMethodRenamer extends MethodRenamer {
      * Renames methods to m0 ... mN.
      */
     private void rename() {
-        CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
         // Get all local variables
         List<CtMethod<Integer>> methods =
@@ -71,14 +70,25 @@ public class SimpleMethodRenamer extends MethodRenamer {
                 continue;
             }
 
-            try {
-                refactoring.setTarget(method);
-                String newName = "m" + numberIterator.getNext();
-                refactoring.setNewName(newName);
-                refactoring.refactor();
-            } catch (SpoonException e) {
-                Logging.logRefactoringFailed(LOG, "Could not rename method " + method.getSimpleName(), e);
-            }
+            rename(method);
+        }
+    }
+
+    /**
+     * Renames the given method to the next unique name given by the number iterator.
+     *
+     * @param method the method to rename
+     */
+    public void rename(final CtMethod<?> method) {
+        CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
+
+        try {
+            refactoring.setTarget(method);
+            String newName = "m" + numberIterator.getNext();
+            refactoring.setNewName(newName);
+            refactoring.refactor();
+        } catch (SpoonException e) {
+            Logging.logRefactoringFailed(LOG, "Could not rename method " + method.getSimpleName(), e);
         }
     }
 

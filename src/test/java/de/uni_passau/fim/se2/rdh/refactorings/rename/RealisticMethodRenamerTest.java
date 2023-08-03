@@ -43,7 +43,7 @@ class RealisticMethodRenamerTest extends ModificationTest {
     protected AbstractModification createModification(SpoonAPI spoon) {
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
         rdcProbabilities.setRenameMethod(1.0);
-        MethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
+        SimpleMethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
         return new RealisticMethodRenamer(spoon, rdcProbabilities, backup);
     }
 }
