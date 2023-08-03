@@ -39,7 +39,7 @@ class FileManagerTest extends LoggerTest {
     void testCheckFileNull() {
         File file = null;
         FileManager.checkFile(file);
-        assertLogContainsExactly("Directory does not exist: null");
+        assertLogContainsExactly("File does not exist: null");
     }
 
     @Test
@@ -47,7 +47,7 @@ class FileManagerTest extends LoggerTest {
         File file = new File(tempDir, "test");
         file.delete();
         FileManager.checkFile(file);
-        assertLogContainsExactly("Directory does not exist: " + file);
+        assertLogContainsExactly("File does not exist: " + file);
     }
 
     @Test

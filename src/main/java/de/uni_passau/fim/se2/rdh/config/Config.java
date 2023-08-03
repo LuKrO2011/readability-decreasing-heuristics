@@ -11,7 +11,6 @@ public final class Config {
     private String condaPath;
     private String modelPath;
     private String pythonScriptPath;
-    private String inputPath;
     private Scope scope = Scope.FILE;
     private RenameMode renameMethodMode = RenameMode.ITERATIVE;
 
@@ -30,7 +29,6 @@ public final class Config {
         this.condaPath = config.getCondaPath();
         this.modelPath = config.getModelPath();
         this.pythonScriptPath = config.getPythonScriptPath();
-        this.inputPath = config.getInputPath();
         this.scope = config.getScope();
         this.renameMethodMode = config.getRenameMethodMode();
     }

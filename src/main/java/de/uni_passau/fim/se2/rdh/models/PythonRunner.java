@@ -1,11 +1,12 @@
 package de.uni_passau.fim.se2.rdh.models;
 
 import de.uni_passau.fim.se2.rdh.config.Config;
-import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
+import de.uni_passau.fim.se2.rdh.util.FileManager;
 import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * Runs python scripts.
@@ -16,6 +17,7 @@ public final class PythonRunner {
 
     /**
      * Creates a new instance of this class.
+     *
      * @param config The model config to use.
      */
     public PythonRunner(final Config config) {
@@ -23,24 +25,19 @@ public final class PythonRunner {
     }
 
     /**
-     * Starts code2vec.
+     * Executes the python script to create method name predictions using the code2vec model. The predictions are in the
+     * same directory as the input file.
+     *
+     * @param inputPath The input path.
      */
-    public void createMethodNamePredictions() {
+    public void createMethodNamePredictions(final Path inputPath) {
+        FileManager.checkDirectory(inputPath.toFile());
 
-        YamlLoaderSaver yamlLoaderSaver = new YamlLoaderSaver();
-
-        /*
-         C:\Users\lukas>conda run -p C:/Users/lukas/anaconda3/envs/code2vec python
-         C:/Users/lukas/PycharmProjects/code2vec/code2vec.py --load
-         C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_model_iter8.release --predict
-        -i test/resources/code
-         */
         try {
             ProcessBuilder processBuilder =
-                new ProcessBuilder("conda", "run", "-p", config.getCondaPath(), "python",
-                    config.getPythonScriptPath() + "/code2vec.py",
-                    "--load", config.getModelPath(), "--predict", "-i",
-                    config.getInputPath());
+                    new ProcessBuilder("conda", "run", "-p", config.getCondaPath(), "python",
+                            config.getPythonScriptPath() + "/code2vec.py",
+                            "--load", config.getModelPath(), "--predict", "-i", inputPath.toString());
 
             processBuilder.directory(new File(config.getPythonScriptPath()));
 
@@ -48,6 +45,16 @@ public final class PythonRunner {
 
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
+
+            if (exitCode != 0) {
+                LOG.error(
+                        "Could not create method name predictions: Python script exited with command {} exited "
+                                + "with code {}.",
+                        processBuilder.command(),
+                        exitCode);
+            } else {
+                LOG.info("Success: Created method name predictions.");
+            }
 
         } catch (IOException e) {
             if (LOG.isErrorEnabled()) {

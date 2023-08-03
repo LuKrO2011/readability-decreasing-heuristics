@@ -1,9 +1,13 @@
 package de.uni_passau.fim.se2.rdh.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.apache.commons.io.FileUtils.moveFile;
 
 /**
  * Utility class for file operations.
@@ -45,7 +49,20 @@ public final class FileManager {
     public static void checkFile(final File file) {
         if (file == null || !file.exists()) {
             if (LOG.isErrorEnabled()) {
-                LOG.error("Directory does not exist: " + file);
+                LOG.error("File does not exist: " + file);
+            }
+        }
+    }
+
+    /**
+     * Check if the given file is a directory.
+     *
+     * @param file the file to check
+     */
+    public static void checkDirectory(final File file) {
+        if (file == null || !file.isDirectory()) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("File is not a directory: " + file);
             }
         }
     }
@@ -70,4 +87,23 @@ public final class FileManager {
         return folder;
     }
 
+    /**
+     * Moves the given files to the given directory.
+     *
+     * @param inputDir  The directory to move the files from.
+     * @param outPutDir The directory to move the files to.
+     * @param files     The files to move.
+     */
+    public static void moveFiles(final Path inputDir, final Path outPutDir, final File... files) throws IOException {
+        if (files == null) {
+            LOG.error("Files are null");
+            return;
+        }
+
+        for (File file : files) {
+            File from = new File(inputDir.toString() + "/" + file.getName());
+            File to = new File(outPutDir.toString() + "/" + file.getName());
+            moveFile(from, to);
+        }
+    }
 }
