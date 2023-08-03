@@ -1,19 +1,9 @@
-/*
- * SPDX-License-Identifier: (MIT OR CECILL-C)
- *
- * Copyright (C) 2006-2019 INRIA and contributors
- *
- * Spoon is available either under the terms of the MIT License (see LICENSE-MIT.txt) of the Cecill-C License (see
- * LICENSE-CECILL-C.txt). You as the user are entitled to choose the terms under which to adopt Spoon.
- */
 package de.uni_passau.fim.se2.rdh.enums;
-
 
 import spoon.SpoonException;
 import spoon.reflect.code.CtCatchVariable;
 import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.declaration.CtElement;
-import spoon.reflect.declaration.CtEnum;
 import spoon.reflect.declaration.CtEnumValue;
 import spoon.reflect.declaration.CtField;
 import spoon.reflect.declaration.CtParameter;
@@ -28,14 +18,19 @@ import spoon.reflect.visitor.filter.LocalVariableReferenceFunction;
 import spoon.reflect.visitor.filter.ParameterReferenceFunction;
 
 /**
+ * This class is an adapted version of {@link spoon.reflect.visitor.filter.VariableReferenceFunction} to additionally
+ * support {@link CtEnumValue}.
+ * <p>
  * The mapping function, accepting {@link CtVariable}
  * <ul>
  * <li>CtLocalVariable - local variable declared in body
  * <li>CtField - member field of an type
  * <li>CtParameter - method parameter
  * <li>CtCatchVariable - try - catch variable
+ * <li>CtEnumValue - enum value
  * </ul>
  * and returning all the {@link CtVariableReference}, which refers this variable
+ * </p>
  */
 public class MyVariableReferenceFunction implements CtConsumableFunction<CtElement> {
 

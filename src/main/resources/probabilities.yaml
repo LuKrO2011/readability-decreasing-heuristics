@@ -26,9 +26,9 @@ renameVariable: 0.2
 renameField: 0.2
 renameMethod: 0.2
 inlineMethod: 0.0
-removeComment: 0.2
-add0: 0.2
+removeComment: 0.5
+add0: 0.0
 insertBraces: 0.2
 starImport: 0.0
 inlineField: 0.2
-partiallyEvaluate: 0.2
+partiallyEvaluate: 0.5

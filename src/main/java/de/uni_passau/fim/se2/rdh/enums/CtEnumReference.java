@@ -1,17 +1,8 @@
-/*
- * SPDX-License-Identifier: (MIT OR CECILL-C)
- *
- * Copyright (C) 2006-2019 INRIA and contributors
- *
- * Spoon is available either under the terms of the MIT License (see LICENSE-MIT.txt) of the Cecill-C License (see
- * LICENSE-CECILL-C.txt). You as the user are entitled to choose the terms under which to adopt Spoon.
- */
 package de.uni_passau.fim.se2.rdh.enums;
 
 import spoon.reflect.annotations.PropertyGetter;
 import spoon.reflect.annotations.PropertySetter;
 import spoon.reflect.declaration.CtEnum;
-import spoon.reflect.declaration.CtField;
 import spoon.reflect.path.CtRole;
 import spoon.reflect.reference.CtReference;
 import spoon.reflect.reference.CtTypeReference;
@@ -20,11 +11,16 @@ import spoon.support.DerivedProperty;
 import java.lang.reflect.Member;
 
 
-// TODO: CtFieldReference
+/**
+ * This interface defines a reference to a CtEnum. The interface is similar to
+ * {@link spoon.reflect.reference.CtFieldReference}.
+ *
+ * @param <T> the type of the enum
+ */
 public interface CtEnumReference<T> extends CtReference {
 
     /**
-     * Gets the runtime member that corresponds to a field reference if any.
+     * Gets the runtime member that corresponds to an enum reference if any.
      *
      * @return the member (null if not found)
      */
@@ -35,8 +31,8 @@ public interface CtEnumReference<T> extends CtReference {
     CtEnum<?> getDeclaration();
 
     /**
-     * Returns the {@link CtField} that corresponds to the reference even if its declaring type isn't in the Spoon
-     * source path  (in this case, the Spoon elements are built with runtime reflection)
+     * Returns the {@link CtEnum} that corresponds to the reference even if its declaring type isn't in the Spoon source
+     * path  (in this case, the Spoon elements are built with runtime reflection)
      *
      * @return the field declaration that corresponds to the reference.
      */
@@ -44,30 +40,30 @@ public interface CtEnumReference<T> extends CtReference {
     CtEnum<?> getEnumDeclaration();
 
     /**
-     * Gets the type in which the field is declared.
+     * Gets the type in which the enum is declared.
      */
     @PropertyGetter(role = CtRole.DECLARING_TYPE)
     CtTypeReference<?> getDeclaringType();
 
     /**
-     * Gets the qualified name of the field.
+     * Gets the qualified name of the enum.
      */
     String getQualifiedName();
 
     /**
-     * Tells if the referenced field is final.
+     * Tells if the referenced enum is final.
      */
     @PropertyGetter(role = CtRole.IS_FINAL)
     boolean isFinal();
 
     /**
-     * Tells if the referenced field is static.
+     * Tells if the referenced enum is static.
      */
     @PropertyGetter(role = CtRole.IS_STATIC)
     boolean isStatic();
 
     /**
-     * Sets the type in which the field is declared.
+     * Sets the type in which the enum is declared.
      */
     @PropertySetter(role = CtRole.DECLARING_TYPE)
     <C extends CtEnumReference<T>> C setDeclaringType(CtTypeReference<?> declaringType);
