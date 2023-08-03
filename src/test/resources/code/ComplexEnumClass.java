@@ -5,7 +5,7 @@ public class ComplexEnumClass {
 
         private String value;
 
-        private SimpleEnum(String value) {
+        ComplexEnum(String value) {
             this.value = value;
         }
 

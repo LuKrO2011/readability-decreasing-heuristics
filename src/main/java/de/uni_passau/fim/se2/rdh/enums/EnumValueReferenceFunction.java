@@ -20,16 +20,30 @@ import spoon.reflect.visitor.filter.DirectReferenceFilter;
 public class EnumValueReferenceFunction implements CtConsumableFunction<CtElement> {
     private final CtEnumValue<?> field;
 
+    /**
+     * Creates a new instance of FieldReferenceFunction.
+     */
     public EnumValueReferenceFunction() {
         this.field = null;
     }
 
-    public EnumValueReferenceFunction(CtEnumValue<?> field) {
+    /**
+     * Creates a new instance of FieldReferenceFunction.
+     *
+     * @param field The field to search for.
+     */
+    public EnumValueReferenceFunction(final CtEnumValue<?> field) {
         this.field = field;
     }
 
+    /**
+     * Applies the function to the given input element.
+     *
+     * @param enumOrScope    the input of the function
+     * @param outputConsumer the consumer which accepts the results of this function.
+     */
     @Override
-    public void apply(CtElement enumOrScope, CtConsumer<Object> outputConsumer) {
+    public void apply(final CtElement enumOrScope, final CtConsumer<Object> outputConsumer) {
         CtElement scope;
         CtEnumValue<?> ctEnum = this.field;
         if (ctEnum == null) {

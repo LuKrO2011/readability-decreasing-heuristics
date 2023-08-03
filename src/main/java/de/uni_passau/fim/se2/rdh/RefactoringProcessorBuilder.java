@@ -38,7 +38,7 @@ public class RefactoringProcessorBuilder {
      * @param config the config to use
      */
     public RefactoringProcessorBuilder(final Config config) {
-        this.config = config;
+        this.config = new Config(config);
     }
 
     /**

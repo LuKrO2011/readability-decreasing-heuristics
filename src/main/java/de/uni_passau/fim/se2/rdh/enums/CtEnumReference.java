@@ -32,7 +32,7 @@ public interface CtEnumReference<T> extends CtReference {
 
     /**
      * Returns the {@link CtEnum} that corresponds to the reference even if its declaring type isn't in the Spoon source
-     * path  (in this case, the Spoon elements are built with runtime reflection)
+     * path (in this case, the Spoon elements are built with runtime reflection).
      *
      * @return the field declaration that corresponds to the reference.
      */
@@ -41,41 +41,61 @@ public interface CtEnumReference<T> extends CtReference {
 
     /**
      * Gets the type in which the enum is declared.
+     *
+     * @return the declaring type
      */
     @PropertyGetter(role = CtRole.DECLARING_TYPE)
     CtTypeReference<?> getDeclaringType();
 
     /**
      * Gets the qualified name of the enum.
+     *
+     * @return the qualified name
      */
     String getQualifiedName();
 
     /**
      * Tells if the referenced enum is final.
+     *
+     * @return true if the referenced enum is final
      */
     @PropertyGetter(role = CtRole.IS_FINAL)
     boolean isFinal();
 
     /**
      * Tells if the referenced enum is static.
+     *
+     * @return true if the referenced enum is static
      */
     @PropertyGetter(role = CtRole.IS_STATIC)
     boolean isStatic();
 
     /**
      * Sets the type in which the enum is declared.
+     *
+     * @param <C>           the type of the enum
+     * @param declaringType the declaring type
+     * @return <code>this</code>
      */
     @PropertySetter(role = CtRole.DECLARING_TYPE)
     <C extends CtEnumReference<T>> C setDeclaringType(CtTypeReference<?> declaringType);
 
     /**
      * Forces a reference to a final element.
+     *
+     * @param <C> the type of the enum
+     * @param b   true if the referenced enum is final
+     * @return <code>this</code>
      */
     @PropertySetter(role = CtRole.IS_FINAL)
     <C extends CtEnumReference<T>> C setFinal(boolean b);
 
     /**
      * Forces a reference to a static element.
+     *
+     * @param <C> the type of the enum
+     * @param b   true if the referenced enum is static
+     * @return <code>this</code>
      */
     @PropertySetter(role = CtRole.IS_STATIC)
     <C extends CtEnumReference<T>> C setStatic(boolean b);
