@@ -3,3 +3,4 @@ modelPath: C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_mod
 pythonScriptPath: C:/Users/lukas/PycharmProjects/code2vec
 inputPath: C:/Users/lukas/IdeaProjects/spoon-examples/src/test/resources/code
 scope: FILE # FILE, DIRECTORY
+renameMethodMode: ITERATIVE # ITERATIVE, REASONABLE

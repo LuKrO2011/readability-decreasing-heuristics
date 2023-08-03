@@ -13,6 +13,7 @@ public final class Config {
     private String pythonScriptPath;
     private String inputPath;
     private Scope scope;
+    private RenameMode renameMethodMode;
 
     /**
      * Creates a new {@link Config} all paths null.
@@ -31,5 +32,6 @@ public final class Config {
         this.pythonScriptPath = config.getPythonScriptPath();
         this.inputPath = config.getInputPath();
         this.scope = config.getScope();
+        this.renameMethodMode = config.getRenameMethodMode();
     }
 }
