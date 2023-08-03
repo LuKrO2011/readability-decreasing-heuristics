@@ -1,6 +1,8 @@
 package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.refactorings.ModificationTest;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.optimization.PartiallyEvaluator;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer;
@@ -18,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class RealisticMethodRenamerTest extends SpoonTest {
+class RealisticMethodRenamerTest extends ModificationTest {
 
     @BeforeEach
     void setUp() {
@@ -27,25 +29,7 @@ class RealisticMethodRenamerTest extends SpoonTest {
 
     @Test
     void testRenameMethod(@TempDir Path outputDir) {
-        File original = new File(resources, helloWorld);
-        File modified = new File(outputDir.toString(), helloWorld);
-        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
-
-        // Set up the refactoring
-        RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setRenameMethod(1.0);
-
-        MethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
-        MethodRenamer renamer = new RealisticMethodRenamer(spoon, rdcProbabilities, backup);
-
-        // Perform method renaming
-        renamer.apply();
-
-        // Create modified code file
-        spoon.prettyprint();
-
-        // Perform the refactoring
-        List<Operation> diffOperations = getDiffOperations(original, modified);
+        List<Operation> diffOperations = applyModifications(outputDir, helloWorld);
 
         // Assert that only existing method was renamed
         assertAll(
@@ -55,4 +39,14 @@ class RealisticMethodRenamerTest extends SpoonTest {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected AbstractModification createModification(SpoonAPI spoon) {
+        RdcProbabilities rdcProbabilities = new RdcProbabilities();
+        rdcProbabilities.setRenameMethod(1.0);
+        MethodRenamer backup = new SimpleMethodRenamer(spoon, rdcProbabilities);
+        return new RealisticMethodRenamer(spoon, rdcProbabilities, backup);
+    }
 }

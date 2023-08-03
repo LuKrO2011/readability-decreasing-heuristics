@@ -2,6 +2,7 @@ package de.uni_passau.fim.se2.rdh.refactorings.rename;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
+import de.uni_passau.fim.se2.rdh.refactorings.ModificationTest;
 import de.uni_passau.fim.se2.rdh.refactorings.SpoonTest;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
@@ -17,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-class LocalVariableRenamerTest extends SpoonTest {
+class LocalVariableRenamerTest extends ModificationTest {
 
     @BeforeEach
     void setUp() {
@@ -26,23 +27,7 @@ class LocalVariableRenamerTest extends SpoonTest {
 
     @Test
     void testRenameVariable(@TempDir Path outputDir) {
-        File original = new File(resources, helloWorld);
-        File modified = new File(outputDir.toString(), helloWorld);
-        SpoonAPI spoon = setupSpoon(helloWorld, outputDir);
-
-        // Set up the refactoring
-        RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setRenameVariable(1.0);
-        AbstractModification renamer = new LocalVariableRenamer(spoon, rdcProbabilities);
-
-        // Perform method renaming
-        renamer.apply();
-
-        // Create modified code file
-        spoon.prettyprint();
-
-        // Perform the refactoring
-        List<Operation> diffOperations = getDiffOperations(original, modified);
+        List<Operation> diffOperations = applyModifications(outputDir, helloWorld);
 
         // Assert that only existing method was renamed
         assertAll(
@@ -52,4 +37,10 @@ class LocalVariableRenamerTest extends SpoonTest {
         );
     }
 
+    @Override
+    protected AbstractModification createModification(SpoonAPI spoon) {
+        RdcProbabilities rdcProbabilities = new RdcProbabilities();
+        rdcProbabilities.setRenameVariable(1.0);
+        return new LocalVariableRenamer(spoon, rdcProbabilities);
+    }
 }
