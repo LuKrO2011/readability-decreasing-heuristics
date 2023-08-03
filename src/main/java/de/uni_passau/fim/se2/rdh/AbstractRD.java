@@ -113,6 +113,15 @@ public abstract class AbstractRD {
     }
 
     /**
+     * Gets the {@link RefactoringProcessorBuilder} that is used to create a {@link RefactoringProcessor}.
+     *
+     * @return the {@link RefactoringProcessorBuilder}
+     */
+    public RefactoringProcessorBuilder getRpBuilder() {
+        return rpBuilder;
+    }
+
+    /**
      * Creates a new {@link RefactoringProcessor} with the given parameters.
      *
      * @return the created {@link RefactoringProcessor}

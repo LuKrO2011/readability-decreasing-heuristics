@@ -8,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.SpoonException;
+import spoon.reflect.cu.SourcePosition;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.visitor.filter.TypeFilter;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -35,9 +37,6 @@ public class RealisticMethodRenamer extends MethodRenamer {
     public static final int PREDICTION_QUALITY_INDEX = 0;
 
     private final MethodRenamer backup;
-
-    // TODO: Get this from config file
-    private static final String NEW_NAMES_PATH = "src/test/resources/predictions";
 
     // TODO: Get this from config file
     private final NameSelectionMode nameSelectionMode = NameSelectionMode.LONGEST;
@@ -145,12 +144,26 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @return the new names
      */
     private List<MethodRenamingData> loadNewNames(final CtClass<?> clazz) {
-        // Get the class name to find the corresponding new names
-        String className = clazz.getSimpleName();
+        String jsonPath = getPath(clazz);
 
         // Get the new names for the methods
         JsonLoader jsonLoader = new JsonLoader();
-        return jsonLoader.loadMethodRenamingData(NEW_NAMES_PATH + "/" + className + ".json");
+        return jsonLoader.loadMethodRenamingData(jsonPath);
+    }
+
+
+    /**
+     * Returns the path to the json file with the new names. The file has the same name as the the clazz file but with
+     * the extension .json.
+     *
+     * @param clazz the class
+     * @return the path to the json file
+     */
+    private static String getPath(final CtClass<?> clazz) {
+        SourcePosition position = clazz.getPosition();
+        File file = position.getFile();
+        String path = file.getAbsolutePath();
+        return path.substring(0, path.lastIndexOf('.')) + ".json";
     }
 
 }
