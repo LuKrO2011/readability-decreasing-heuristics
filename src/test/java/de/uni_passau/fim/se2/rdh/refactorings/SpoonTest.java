@@ -28,6 +28,7 @@ public class SpoonTest extends ResourcesTest {
 
         Environment env = spoon.getEnvironment();
         env.setAutoImports(true);
+        env.setCopyResources(false);
 
         return spoon;
     }

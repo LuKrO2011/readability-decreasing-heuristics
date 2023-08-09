@@ -55,6 +55,9 @@ public class RefactoringProcessor {
         // Imports and comment settings
         env.setAutoImports(true);
 
+        // Disable copying of resources
+        env.setCopyResources(false);
+
         // Writing comments is done probabilistic in RdcTokenWriter
         // env.setCommentEnabled(true);
 
