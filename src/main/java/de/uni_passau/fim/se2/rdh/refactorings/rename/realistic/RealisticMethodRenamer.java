@@ -19,7 +19,9 @@ import spoon.reflect.visitor.filter.TypeFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Renames methods to m0 ... mN.
@@ -64,33 +66,44 @@ public class RealisticMethodRenamer extends MethodRenamer {
      */
     @Override
     public void apply() {
-        // Get all class files
-        List<CtClass<?>> classes =
-                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtClass.class));
+        Map<File, CtType<?>> files = getAllFiles();
 
-        // Get all interfaces
-        List<CtInterface<?>> interfaces =
-                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtInterface.class));
+        // Rename methods of each file
+        for (Map.Entry<File, CtType<?>> entry : files.entrySet()) {
+            File file = entry.getKey();
+            CtType<?> ctClass = entry.getValue();
 
-        // TODO: Records, type parameters, annotations?
-
-        // Merge the lists to get all files
-        List<CtType<?>> files = new ArrayList<>(classes);
-        files.addAll(interfaces);
-
-        // Rename all methods for each class
-        for (CtType<?> ctClass : files) {
+            // Get all methods of the class
             List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
 
-            // TODO: Interfaces etc?
+            // Split methods into methods with and without implementation
             List<CtMethod<?>> methodsWithImpl = methodsOfClass.stream().filter(m -> !m.isAbstract()).toList();
             List<CtMethod<?>> methodsWithoutImpl = methodsOfClass.stream().filter(CtMethod::isAbstract).toList();
+
+            // Rename methods without implementation using the backup method renamer
             for (CtMethod<?> ctMethod : methodsWithoutImpl) {
                 backup.rename(ctMethod);
             }
 
+            // Rename methods with implementation with realistic names
             rename(ctClass, methodsWithImpl);
         }
+    }
+
+    /**
+     * Gets all files used by the spoon model together with the corresponding {@link CtType}.
+     *
+     * @return A map containing the files and the corresponding {@link CtType}
+     */
+    private Map<File, CtType<?>> getAllFiles() {
+        Map<File, CtType<?>> files = new HashMap<>();
+        spoon.getModel().getAllTypes().forEach(
+                t -> {
+                    File filename = t.getPosition().getFile();
+                    files.put(filename, t);
+                }
+        );
+        return files;
     }
 
     /**
@@ -187,8 +200,8 @@ public class RealisticMethodRenamer extends MethodRenamer {
 
 
     /**
-     * Returns the path to the json file with the new names. The file has the same name as the the clazz file but with
-     * the extension .json.
+     * Returns the path to the json file with the new names. The file has the same name as the clazz file but with the
+     * extension .json.
      *
      * @param clazz the class
      * @return the path to the json file

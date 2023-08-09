@@ -60,6 +60,18 @@ class RealisticMethodRenamerTest extends ModificationTest {
         );
     }
 
+    @Test
+    void testRenameAnalytics(@TempDir Path outputDir) {
+        List<Operation> diffOperations = applyModifications(outputDir, "Analytics.java");
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(18),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
+                this::assertLogIsEmpty
+        );
+    }
+
     /**
      * {@inheritDoc}
      */
