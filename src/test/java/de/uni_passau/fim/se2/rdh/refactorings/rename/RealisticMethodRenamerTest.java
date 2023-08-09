@@ -36,6 +36,30 @@ class RealisticMethodRenamerTest extends ModificationTest {
         );
     }
 
+    @Test
+    void testRenameAbstractClass(@TempDir Path outputDir) {
+        List<Operation> diffOperations = applyModifications(outputDir, "AbstractClass.java");
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(3),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod)
+                // this::assertLogIsEmpty TODO: Has warnings as the generation for the abstract class does not work yet
+        );
+    }
+
+    @Test
+    void testRenameInterface(@TempDir Path outputDir) {
+        List<Operation> diffOperations = applyModifications(outputDir, "Interface.java");
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(3),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
+                this::assertLogIsEmpty
+        );
+    }
+
     /**
      * {@inheritDoc}
      */

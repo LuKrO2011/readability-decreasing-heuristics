@@ -1,0 +1,89 @@
+[
+{
+	"originalName": "defaultMethod",
+	"predictions": [
+		{
+			"name": "method",
+			"probability": 0.8428168296813965
+		},
+		{
+			"name": "getHttpMethod",
+			"probability": 0.04470976069569588
+		},
+		{
+			"name": "n",
+			"probability": 0.03354087844491005
+		},
+		{
+			"name": "beginTransaction",
+			"probability": 0.02963005192577839
+		},
+		{
+			"name": "clear",
+			"probability": 0.019861457869410515
+		},
+		{
+			"name": "x",
+			"probability": 0.011308981105685234
+		},
+		{
+			"name": "setMethod",
+			"probability": 0.009190007112920284
+		},
+		{
+			"name": "defaultMethod",
+			"probability": 0.004529499914497137
+		},
+		{
+			"name": "user",
+			"probability": 0.0024300566874444485
+		},
+		{
+			"name": "remove",
+			"probability": 0.001982520567253232
+		}	]
+},
+{
+	"originalName": "staticMethod",
+	"predictions": [
+		{
+			"name": "staticMethod",
+			"probability": 0.9989774227142334
+		},
+		{
+			"name": "test",
+			"probability": 0.0005865757702849805
+		},
+		{
+			"name": "testStaticMethod",
+			"probability": 0.00015444746532011777
+		},
+		{
+			"name": "valueChanged",
+			"probability": 0.00012121425970690325
+		},
+		{
+			"name": "startup",
+			"probability": 3.547122105374001e-05
+		},
+		{
+			"name": "show",
+			"probability": 3.136653685942292e-05
+		},
+		{
+			"name": "ref",
+			"probability": 2.8897035008412786e-05
+		},
+		{
+			"name": "method",
+			"probability": 2.5189063308062032e-05
+		},
+		{
+			"name": "profile",
+			"probability": 2.2145690309116617e-05
+		},
+		{
+			"name": "start",
+			"probability": 1.73132630152395e-05
+		}	]
+}]

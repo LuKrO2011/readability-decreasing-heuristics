@@ -11,7 +11,9 @@ import spoon.SpoonAPI;
 import spoon.SpoonException;
 import spoon.reflect.cu.SourcePosition;
 import spoon.reflect.declaration.CtClass;
+import spoon.reflect.declaration.CtInterface;
 import spoon.reflect.declaration.CtMethod;
+import spoon.reflect.declaration.CtType;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.io.File;
@@ -66,8 +68,18 @@ public class RealisticMethodRenamer extends MethodRenamer {
         List<CtClass<?>> classes =
                 spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtClass.class));
 
+        // Get all interfaces
+        List<CtInterface<?>> interfaces =
+                spoon.getModel().getRootPackage().getElements(new TypeFilter<>(CtInterface.class));
+
+        // TODO: Records, type parameters, annotations?
+
+        // Merge the lists to get all files
+        List<CtType<?>> files = new ArrayList<>(classes);
+        files.addAll(interfaces);
+
         // Rename all methods for each class
-        for (CtClass<?> ctClass : classes) {
+        for (CtType<?> ctClass : files) {
             List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
 
             // TODO: Interfaces etc?
@@ -88,7 +100,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @param clazz   the class containing the methods
      * @param methods the methods to be renamed
      */
-    private void rename(final CtClass<?> clazz, final List<CtMethod<?>> methods) {
+    private void rename(final CtType<?> clazz, final List<CtMethod<?>> methods) {
         CtRenameMethodRefactoring refactoring = new CtRenameMethodRefactoring();
 
         if (methods.size() == 0) {
@@ -161,7 +173,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @return the new names
      * @throws IOException if the json file could not be found
      */
-    private List<MethodRenamingData> loadNewNames(final CtClass<?> clazz) throws IOException {
+    private List<MethodRenamingData> loadNewNames(final CtType<?> clazz) throws IOException {
         String jsonPath = getPath(clazz);
         File jsonFile = new File(jsonPath);
         if (!jsonFile.exists()) {
@@ -181,7 +193,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
      * @param clazz the class
      * @return the path to the json file
      */
-    private static String getPath(final CtClass<?> clazz) {
+    private static String getPath(final CtType<?> clazz) {
         SourcePosition position = clazz.getPosition();
         File file = position.getFile();
         String path = file.getAbsolutePath();
