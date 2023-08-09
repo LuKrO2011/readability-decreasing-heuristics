@@ -59,4 +59,22 @@ class PythonRunnerTest extends ResourcesTest {
         );
     }
 
+    @Disabled("Can be used to generate test resources renaming data files.")
+    @Test
+    void createMethodNamePredictions() {
+        Path inputPath = resourcesPath.resolve("project2");
+
+        // Load config
+        Config config = null;
+        try {
+            config = new YamlLoaderSaver().loadConfig(AbstractRDFactory.DEFAULT_CONFIG_FILE);
+        } catch (IOException e) {
+            fail(e);
+        }
+
+        // Create predictions
+        PythonRunner pythonRunner = new PythonRunner(config);
+        pythonRunner.createMethodNamePredictions(inputPath);
+    }
+
 }
