@@ -1,0 +1,21 @@
+incTab:
+decTab:
+  - 0.2  # Probability for no tab
+  - 0.6  # Probability for one tab
+space:
+  - 0.2  # Probability for no space
+  - 0.6  # Probability for one space
+newLineInsteadOfSpace: 1.1
+spaceInsteadOfNewline: -0.1
+incTabInsteadOfDecTab: 0.1
+decTabInsteadOfIncTab: 0.1
+renameVariable: 0.2
+renameField: 0.2
+renameMethod: 0.2
+inlineMethod: 0.2
+removeComment: 0.2
+add0: 0.2
+insertBraces: 0.2
+starImport: 0.2
+inlineField: 0.2
+partiallyEvaluate: 0

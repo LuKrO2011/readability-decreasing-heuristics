@@ -1,0 +1,705 @@
+[
+{
+	"originalName": "getRegionManager",
+	"predictions": [
+		{
+			"name": "get",
+			"probability": 0.9133639931678772
+		},
+		{
+			"name": "load",
+			"probability": 0.06676590442657471
+		},
+		{
+			"name": "getLoaded",
+			"probability": 0.01156638003885746
+		},
+		{
+			"name": "getRegions",
+			"probability": 0.004819203168153763
+		},
+		{
+			"name": "getRegionManager",
+			"probability": 0.0011888694716617465
+		},
+		{
+			"name": "getWorld",
+			"probability": 0.0006265373667702079
+		},
+		{
+			"name": "getGraph",
+			"probability": 0.000566865608561784
+		},
+		{
+			"name": "getNext",
+			"probability": 0.00040123178041540086
+		},
+		{
+			"name": "getNotification",
+			"probability": 0.0003835246025118977
+		},
+		{
+			"name": "getTick",
+			"probability": 0.0003174304438289255
+		}	]
+},
+{
+	"originalName": "getApplicableRegionsSet",
+	"predictions": [
+		{
+			"name": "getRegions",
+			"probability": 0.3537312150001526
+		},
+		{
+			"name": "toLocation",
+			"probability": 0.27690958976745605
+		},
+		{
+			"name": "apply",
+			"probability": 0.12438420206308365
+		},
+		{
+			"name": "to",
+			"probability": 0.06042521446943283
+		},
+		{
+			"name": "createLocation",
+			"probability": 0.03571223467588425
+		},
+		{
+			"name": "onLocationChanged",
+			"probability": 0.033798348158597946
+		},
+		{
+			"name": "removeMarker",
+			"probability": 0.0336613804101944
+		},
+		{
+			"name": "getLocations",
+			"probability": 0.03261350467801094
+		},
+		{
+			"name": "fromLocation",
+			"probability": 0.025520192459225655
+		},
+		{
+			"name": "locationToString",
+			"probability": 0.023244177922606468
+		}	]
+},
+{
+	"originalName": "buildDomain",
+	"predictions": [
+		{
+			"name": "addTo",
+			"probability": 0.73710036277771
+		},
+		{
+			"name": "setOwners",
+			"probability": 0.06265196949243546
+		},
+		{
+			"name": "join",
+			"probability": 0.05037151649594307
+		},
+		{
+			"name": "mute",
+			"probability": 0.04072531685233116
+		},
+		{
+			"name": "apply",
+			"probability": 0.0314609669148922
+		},
+		{
+			"name": "addAll",
+			"probability": 0.020938362926244736
+		},
+		{
+			"name": "getPlayerNames",
+			"probability": 0.019708996638655663
+		},
+		{
+			"name": "getOwners",
+			"probability": 0.01704276353120804
+		},
+		{
+			"name": "registerReceiver",
+			"probability": 0.01063210517168045
+		},
+		{
+			"name": "addOwner",
+			"probability": 0.009367743507027626
+		}	]
+},
+{
+	"originalName": "setOwners",
+	"predictions": [
+		{
+			"name": "setOwner",
+			"probability": 0.9352604150772095
+		},
+		{
+			"name": "copyFrom",
+			"probability": 0.06106572970747948
+		},
+		{
+			"name": "copyTo",
+			"probability": 0.001285798498429358
+		},
+		{
+			"name": "applyStyle",
+			"probability": 0.0006790728657506406
+		},
+		{
+			"name": "bindValues",
+			"probability": 0.0003446628979872912
+		},
+		{
+			"name": "put",
+			"probability": 0.0002934011572506279
+		},
+		{
+			"name": "dismiss",
+			"probability": 0.0002701123885344714
+		},
+		{
+			"name": "testCreateGroup",
+			"probability": 0.00026839657220989466
+		},
+		{
+			"name": "merge",
+			"probability": 0.00026816889294423163
+		},
+		{
+			"name": "getEntityById",
+			"probability": 0.0002642919425852597
+		}	]
+},
+{
+	"originalName": "setMembers",
+	"predictions": [
+		{
+			"name": "merge",
+			"probability": 0.5987947583198547
+		},
+		{
+			"name": "copyFrom",
+			"probability": 0.17050015926361084
+		},
+		{
+			"name": "apply",
+			"probability": 0.07054762542247772
+		},
+		{
+			"name": "addToCache",
+			"probability": 0.04582415893673897
+		},
+		{
+			"name": "deepCopy",
+			"probability": 0.04034657031297684
+		},
+		{
+			"name": "wrapDetails",
+			"probability": 0.022764919325709343
+		},
+		{
+			"name": "toUserFriendlyString",
+			"probability": 0.014547321014106274
+		},
+		{
+			"name": "applyStyle",
+			"probability": 0.013321696780622005
+		},
+		{
+			"name": "addNews",
+			"probability": 0.012428098358213902
+		},
+		{
+			"name": "copyState",
+			"probability": 0.010924728587269783
+		}	]
+},
+{
+	"originalName": "containsMember",
+	"predictions": [
+		{
+			"name": "contains",
+			"probability": 0.7262320518493652
+		},
+		{
+			"name": "apply",
+			"probability": 0.15922407805919647
+		},
+		{
+			"name": "accept",
+			"probability": 0.08126663416624069
+		},
+		{
+			"name": "get",
+			"probability": 0.009786071255803108
+		},
+		{
+			"name": "includes",
+			"probability": 0.007607399486005306
+		},
+		{
+			"name": "isAllowed",
+			"probability": 0.0074207354336977005
+		},
+		{
+			"name": "matches",
+			"probability": 0.004208956845104694
+		},
+		{
+			"name": "merge",
+			"probability": 0.002143650548532605
+		},
+		{
+			"name": "compare",
+			"probability": 0.0011345628881826997
+		},
+		{
+			"name": "evaluate",
+			"probability": 0.0009757866500876844
+		}	]
+},
+{
+	"originalName": "containsOwner",
+	"predictions": [
+		{
+			"name": "apply",
+			"probability": 0.9822759628295898
+		},
+		{
+			"name": "contains",
+			"probability": 0.010739256627857685
+		},
+		{
+			"name": "accept",
+			"probability": 0.00254063424654305
+		},
+		{
+			"name": "get",
+			"probability": 0.0016507975524291396
+		},
+		{
+			"name": "isOwner",
+			"probability": 0.0013777969870716333
+		},
+		{
+			"name": "includes",
+			"probability": 0.0008778296760283411
+		},
+		{
+			"name": "evaluate",
+			"probability": 0.00019898285972885787
+		},
+		{
+			"name": "matches",
+			"probability": 0.00015699942014180124
+		},
+		{
+			"name": "belongsTo",
+			"probability": 0.0001082790331565775
+		},
+		{
+			"name": "isAllowed",
+			"probability": 7.346011261688545e-05
+		}	]
+},
+{
+	"originalName": "getMembers",
+	"predictions": [
+		{
+			"name": "getRegions",
+			"probability": 0.4975648522377014
+		},
+		{
+			"name": "merge",
+			"probability": 0.2253991812467575
+		},
+		{
+			"name": "addAll",
+			"probability": 0.09334186464548111
+		},
+		{
+			"name": "union",
+			"probability": 0.0841255784034729
+		},
+		{
+			"name": "desc",
+			"probability": 0.029113030061125755
+		},
+		{
+			"name": "sort",
+			"probability": 0.019683856517076492
+		},
+		{
+			"name": "getMembers",
+			"probability": 0.015876328572630882
+		},
+		{
+			"name": "add",
+			"probability": 0.01492373552173376
+		},
+		{
+			"name": "snapshot",
+			"probability": 0.011668985709547997
+		},
+		{
+			"name": "drainTo",
+			"probability": 0.008302610367536545
+		}	]
+},
+{
+	"originalName": "getOwners",
+	"predictions": [
+		{
+			"name": "getRegions",
+			"probability": 0.5857653617858887
+		},
+		{
+			"name": "merge",
+			"probability": 0.1890249103307724
+		},
+		{
+			"name": "union",
+			"probability": 0.08219834417104721
+		},
+		{
+			"name": "addAll",
+			"probability": 0.07990257441997528
+		},
+		{
+			"name": "onRightClick",
+			"probability": 0.014806365594267845
+		},
+		{
+			"name": "sort",
+			"probability": 0.011728269048035145
+		},
+		{
+			"name": "addChildren",
+			"probability": 0.01003545057028532
+		},
+		{
+			"name": "perform",
+			"probability": 0.009313113987445831
+		},
+		{
+			"name": "drainTo",
+			"probability": 0.00881133507937193
+		},
+		{
+			"name": "desc",
+			"probability": 0.008414356037974358
+		}	]
+},
+{
+	"originalName": "fuzzyMatchFlag",
+	"predictions": [
+		{
+			"name": "getFlag",
+			"probability": 0.9770371913909912
+		},
+		{
+			"name": "hasFlag",
+			"probability": 0.01686982624232769
+		},
+		{
+			"name": "flag",
+			"probability": 0.00225387723185122
+		},
+		{
+			"name": "getFlags",
+			"probability": 0.0015604323707520962
+		},
+		{
+			"name": "addFlag",
+			"probability": 0.0011851483723148704
+		},
+		{
+			"name": "isSet",
+			"probability": 0.0004363764892332256
+		},
+		{
+			"name": "removeFlag",
+			"probability": 0.00020138693798799068
+		},
+		{
+			"name": "valueOf",
+			"probability": 0.000186426768777892
+		},
+		{
+			"name": "getFlagName",
+			"probability": 0.00014470952737610787
+		},
+		{
+			"name": "isFlagSet",
+			"probability": 0.00012455863179638982
+		}	]
+},
+{
+	"originalName": "parseFlagInput",
+	"predictions": [
+		{
+			"name": "setFlag",
+			"probability": 0.983567476272583
+		},
+		{
+			"name": "parseInput",
+			"probability": 0.00780632346868515
+		},
+		{
+			"name": "createSearchScope",
+			"probability": 0.0037528446409851313
+		},
+		{
+			"name": "loadSound",
+			"probability": 0.0012212832225486636
+		},
+		{
+			"name": "parseCommandLine",
+			"probability": 0.0010953504825010896
+		},
+		{
+			"name": "convertString",
+			"probability": 0.0009991693077608943
+		},
+		{
+			"name": "addScope",
+			"probability": 0.0004723721940536052
+		},
+		{
+			"name": "testOption",
+			"probability": 0.00039122989983297884
+		},
+		{
+			"name": "loadObject",
+			"probability": 0.00037290537147782743
+		},
+		{
+			"name": "parseUrl",
+			"probability": 0.0003211228467989713
+		}	]
+},
+{
+	"originalName": "parseFlagGroupInput",
+	"predictions": [
+		{
+			"name": "setFlag",
+			"probability": 0.7104805707931519
+		},
+		{
+			"name": "isMember",
+			"probability": 0.2286086082458496
+		},
+		{
+			"name": "parseInput",
+			"probability": 0.053782589733600616
+		},
+		{
+			"name": "symbol",
+			"probability": 0.0027924710884690285
+		},
+		{
+			"name": "registerCommand",
+			"probability": 0.002504148054867983
+		},
+		{
+			"name": "parseClass",
+			"probability": 0.0005216283025220037
+		},
+		{
+			"name": "convertString",
+			"probability": 0.00038135310751385987
+		},
+		{
+			"name": "addToList",
+			"probability": 0.0003354042419232428
+		},
+		{
+			"name": "checkString",
+			"probability": 0.00030836209771223366
+		},
+		{
+			"name": "has",
+			"probability": 0.0002848347066901624
+		}	]
+},
+{
+	"originalName": "getMinimumPoint",
+	"predictions": [
+		{
+			"name": "apply",
+			"probability": 0.9615085124969482
+		},
+		{
+			"name": "min",
+			"probability": 0.011198309250175953
+		},
+		{
+			"name": "get",
+			"probability": 0.010508647188544273
+		},
+		{
+			"name": "normalize",
+			"probability": 0.008729031309485435
+		},
+		{
+			"name": "getMin",
+			"probability": 0.0030591562390327454
+		},
+		{
+			"name": "getMinimumPoint",
+			"probability": 0.0019455177243798971
+		},
+		{
+			"name": "getMinimum",
+			"probability": 0.0016053132712841034
+		},
+		{
+			"name": "project",
+			"probability": 0.0005208588554523885
+		},
+		{
+			"name": "subtract",
+			"probability": 0.000506470852997154
+		},
+		{
+			"name": "to",
+			"probability": 0.0004181161057204008
+		}	]
+},
+{
+	"originalName": "getMaximumPoint",
+	"predictions": [
+		{
+			"name": "apply",
+			"probability": 0.8250240087509155
+		},
+		{
+			"name": "convert",
+			"probability": 0.04617932811379433
+		},
+		{
+			"name": "normalize",
+			"probability": 0.0394258089363575
+		},
+		{
+			"name": "toVector",
+			"probability": 0.03402602672576904
+		},
+		{
+			"name": "extract",
+			"probability": 0.027468428015708923
+		},
+		{
+			"name": "get",
+			"probability": 0.012284921482205391
+		},
+		{
+			"name": "getVector",
+			"probability": 0.004998642951250076
+		},
+		{
+			"name": "min",
+			"probability": 0.003851513611152768
+		},
+		{
+			"name": "truncate",
+			"probability": 0.0035274145193398
+		},
+		{
+			"name": "project",
+			"probability": 0.0032139290124177933
+		}	]
+},
+{
+	"originalName": "getRegionPoints",
+	"predictions": [
+		{
+			"name": "convert",
+			"probability": 0.326903760433197
+		},
+		{
+			"name": "getPoints",
+			"probability": 0.28790557384490967
+		},
+		{
+			"name": "apply",
+			"probability": 0.1275225132703781
+		},
+		{
+			"name": "getRegions",
+			"probability": 0.10095559805631638
+		},
+		{
+			"name": "getLocations",
+			"probability": 0.06842655688524246
+		},
+		{
+			"name": "toVector",
+			"probability": 0.03512680158019066
+		},
+		{
+			"name": "extract",
+			"probability": 0.016693927347660065
+		},
+		{
+			"name": "get",
+			"probability": 0.014903583563864231
+		},
+		{
+			"name": "split",
+			"probability": 0.01107195857912302
+		},
+		{
+			"name": "normalize",
+			"probability": 0.010489700362086296
+		}	]
+},
+{
+	"originalName": "createCuboidRegion",
+	"predictions": [
+		{
+			"name": "corner",
+			"probability": 0.38367554545402527
+		},
+		{
+			"name": "cons",
+			"probability": 0.19724100828170776
+		},
+		{
+			"name": "getCorner",
+			"probability": 0.12321668863296509
+		},
+		{
+			"name": "union",
+			"probability": 0.0821986049413681
+		},
+		{
+			"name": "toRegion",
+			"probability": 0.07204459607601166
+		},
+		{
+			"name": "override",
+			"probability": 0.049130141735076904
+		},
+		{
+			"name": "getSquare",
+			"probability": 0.031756702810525894
+		},
+		{
+			"name": "stretch",
+			"probability": 0.028316684067249298
+		},
+		{
+			"name": "addDescriptor",
+			"probability": 0.017729660496115685
+		},
+		{
+			"name": "addFace",
+			"probability": 0.014690306037664413
+		}	]
+}]

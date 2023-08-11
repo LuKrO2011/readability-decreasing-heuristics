@@ -1,0 +1,529 @@
+[
+{
+	"originalName": "start",
+	"predictions": [
+		{
+			"name": "prepareTestData",
+			"probability": 0.38768643140792847
+		},
+		{
+			"name": "metrics",
+			"probability": 0.23034262657165527
+		},
+		{
+			"name": "testSplit",
+			"probability": 0.0971640795469284
+		},
+		{
+			"name": "getAsHtml",
+			"probability": 0.05289308354258537
+		},
+		{
+			"name": "testCtor",
+			"probability": 0.047500401735305786
+		},
+		{
+			"name": "testSize",
+			"probability": 0.04279574379324913
+		},
+		{
+			"name": "testCompact",
+			"probability": 0.03646416589617729
+		},
+		{
+			"name": "updateMetrics",
+			"probability": 0.03586164861917496
+		},
+		{
+			"name": "basic",
+			"probability": 0.03564819321036339
+		},
+		{
+			"name": "testFind",
+			"probability": 0.03364362567663193
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getRowCount",
+			"probability": 0.4398517608642578
+		},
+		{
+			"name": "getTargetSize",
+			"probability": 0.15881334245204926
+		},
+		{
+			"name": "screenWidth",
+			"probability": 0.09450044482946396
+		},
+		{
+			"name": "getResultCount",
+			"probability": 0.07053753733634949
+		},
+		{
+			"name": "getGroupCount",
+			"probability": 0.057998642325401306
+		},
+		{
+			"name": "exitValue",
+			"probability": 0.05190359428524971
+		},
+		{
+			"name": "getDependencies",
+			"probability": 0.03261779621243477
+		},
+		{
+			"name": "getValid",
+			"probability": 0.03212064877152443
+		},
+		{
+			"name": "getTotalCount",
+			"probability": 0.030835941433906555
+		},
+		{
+			"name": "getExitCode",
+			"probability": 0.030820271000266075
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getGroupCount",
+			"probability": 0.40327244997024536
+		},
+		{
+			"name": "getRowCount",
+			"probability": 0.3592188060283661
+		},
+		{
+			"name": "screenWidth",
+			"probability": 0.04017498344182968
+		},
+		{
+			"name": "getResultCount",
+			"probability": 0.038935884833335876
+		},
+		{
+			"name": "getChildrenCount",
+			"probability": 0.03242392838001251
+		},
+		{
+			"name": "getPreferredInnerHeight",
+			"probability": 0.03239453583955765
+		},
+		{
+			"name": "getItemsCount",
+			"probability": 0.0319732204079628
+		},
+		{
+			"name": "getEventTypes",
+			"probability": 0.021800804883241653
+		},
+		{
+			"name": "getAdventuresUsed",
+			"probability": 0.021661164239048958
+		},
+		{
+			"name": "getChannelMax",
+			"probability": 0.018144257366657257
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getGroupCount",
+			"probability": 0.40327244997024536
+		},
+		{
+			"name": "getRowCount",
+			"probability": 0.3592188060283661
+		},
+		{
+			"name": "screenWidth",
+			"probability": 0.04017498344182968
+		},
+		{
+			"name": "getResultCount",
+			"probability": 0.038935884833335876
+		},
+		{
+			"name": "getChildrenCount",
+			"probability": 0.03242392838001251
+		},
+		{
+			"name": "getPreferredInnerHeight",
+			"probability": 0.03239453583955765
+		},
+		{
+			"name": "getItemsCount",
+			"probability": 0.0319732204079628
+		},
+		{
+			"name": "getEventTypes",
+			"probability": 0.021800804883241653
+		},
+		{
+			"name": "getAdventuresUsed",
+			"probability": 0.021661164239048958
+		},
+		{
+			"name": "getChannelMax",
+			"probability": 0.018144257366657257
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getLanguage",
+			"probability": 0.8718639612197876
+		},
+		{
+			"name": "language",
+			"probability": 0.0852503776550293
+		},
+		{
+			"name": "setLanguage",
+			"probability": 0.013491746969521046
+		},
+		{
+			"name": "getName",
+			"probability": 0.006486802827566862
+		},
+		{
+			"name": "getLabel",
+			"probability": 0.006100445054471493
+		},
+		{
+			"name": "getId",
+			"probability": 0.005477563943713903
+		},
+		{
+			"name": "toString",
+			"probability": 0.004721923265606165
+		},
+		{
+			"name": "getLanguageCode",
+			"probability": 0.0028138139750808477
+		},
+		{
+			"name": "getDescription",
+			"probability": 0.0020205406472086906
+		},
+		{
+			"name": "getMnemonic",
+			"probability": 0.001772838644683361
+		}	]
+},
+{
+	"originalName": "getValues",
+	"predictions": [
+		{
+			"name": "save",
+			"probability": 0.9999561309814453
+		},
+		{
+			"name": "store",
+			"probability": 1.8002099750447087e-05
+		},
+		{
+			"name": "write",
+			"probability": 1.039899234456243e-05
+		},
+		{
+			"name": "execute",
+			"probability": 7.555860065622255e-06
+		},
+		{
+			"name": "toString",
+			"probability": 2.87063380710606e-06
+		},
+		{
+			"name": "getDisplayString",
+			"probability": 1.7999396959567093e-06
+		},
+		{
+			"name": "getText",
+			"probability": 1.0381052106822608e-06
+		},
+		{
+			"name": "export",
+			"probability": 9.99772851173475e-07
+		},
+		{
+			"name": "getToolTipText",
+			"probability": 6.494352078334487e-07
+		},
+		{
+			"name": "load",
+			"probability": 5.570977350544126e-07
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getSearchScopeType",
+			"probability": 0.2965395152568817
+		},
+		{
+			"name": "getMaxLineLength",
+			"probability": 0.1353204995393753
+		},
+		{
+			"name": "getNumOfKeyFields",
+			"probability": 0.11655858904123306
+		},
+		{
+			"name": "updateEnabledState",
+			"probability": 0.10117624700069427
+		},
+		{
+			"name": "getWidthInPixels",
+			"probability": 0.09496837109327316
+		},
+		{
+			"name": "getLeftOffset",
+			"probability": 0.07645491510629654
+		},
+		{
+			"name": "getBenchmarkId",
+			"probability": 0.06907106190919876
+		},
+		{
+			"name": "getLoaderId",
+			"probability": 0.04160981997847557
+		},
+		{
+			"name": "codeSize",
+			"probability": 0.03526449203491211
+		},
+		{
+			"name": "getViewId",
+			"probability": 0.0330364927649498
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "save",
+			"probability": 0.733412504196167
+		},
+		{
+			"name": "getToolTipText",
+			"probability": 0.09988568723201752
+		},
+		{
+			"name": "getExecutionMode",
+			"probability": 0.032139744609594345
+		},
+		{
+			"name": "getLabel",
+			"probability": 0.02856908179819584
+		},
+		{
+			"name": "getInternalState",
+			"probability": 0.023624323308467865
+		},
+		{
+			"name": "isSave",
+			"probability": 0.018024945631623268
+		},
+		{
+			"name": "getDisplayString",
+			"probability": 0.017589354887604713
+		},
+		{
+			"name": "getDescription",
+			"probability": 0.016133513301610947
+		},
+		{
+			"name": "isDirty",
+			"probability": 0.015664495527744293
+		},
+		{
+			"name": "getModelName",
+			"probability": 0.014956334605813026
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getDefaultMaxTextMessageBufferSize",
+			"probability": 0.17993506789207458
+		},
+		{
+			"name": "getPriority",
+			"probability": 0.15435169637203217
+		},
+		{
+			"name": "getBatchSize",
+			"probability": 0.1252957135438919
+		},
+		{
+			"name": "getDatabaseMinorVersion",
+			"probability": 0.11978374421596527
+		},
+		{
+			"name": "getNumOfKeyFields",
+			"probability": 0.09268069267272949
+		},
+		{
+			"name": "getDefaultMaxBinaryMessageBufferSize",
+			"probability": 0.08793621510267258
+		},
+		{
+			"name": "getMaxLineLength",
+			"probability": 0.0820445567369461
+		},
+		{
+			"name": "getLeading",
+			"probability": 0.05865366756916046
+		},
+		{
+			"name": "getRowCount",
+			"probability": 0.05436291918158531
+		},
+		{
+			"name": "getPreferredInnerHeight",
+			"probability": 0.044955719262361526
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "minor",
+			"probability": 0.48108991980552673
+		},
+		{
+			"name": "getPermutation",
+			"probability": 0.21294188499450684
+		},
+		{
+			"name": "getRuleClassBuilder",
+			"probability": 0.067909836769104
+		},
+		{
+			"name": "getAvailable",
+			"probability": 0.05865487456321716
+		},
+		{
+			"name": "getMeasuredBandwidth",
+			"probability": 0.03303779289126396
+		},
+		{
+			"name": "getNextOccurenceActionName",
+			"probability": 0.030609065666794777
+		},
+		{
+			"name": "getSelectedCount",
+			"probability": 0.030368665233254433
+		},
+		{
+			"name": "getDisplayTitle",
+			"probability": 0.029651373624801636
+		},
+		{
+			"name": "getMaxDuration",
+			"probability": 0.029078833758831024
+		},
+		{
+			"name": "getDeleteCount",
+			"probability": 0.02665765956044197
+		}	]
+},
+{
+	"originalName": "getValue",
+	"predictions": [
+		{
+			"name": "getSearchScopeType",
+			"probability": 0.2965395152568817
+		},
+		{
+			"name": "getMaxLineLength",
+			"probability": 0.1353204995393753
+		},
+		{
+			"name": "getNumOfKeyFields",
+			"probability": 0.11655858904123306
+		},
+		{
+			"name": "updateEnabledState",
+			"probability": 0.10117624700069427
+		},
+		{
+			"name": "getWidthInPixels",
+			"probability": 0.09496837109327316
+		},
+		{
+			"name": "getLeftOffset",
+			"probability": 0.07645491510629654
+		},
+		{
+			"name": "getBenchmarkId",
+			"probability": 0.06907106190919876
+		},
+		{
+			"name": "getLoaderId",
+			"probability": 0.04160981997847557
+		},
+		{
+			"name": "codeSize",
+			"probability": 0.03526449203491211
+		},
+		{
+			"name": "getViewId",
+			"probability": 0.0330364927649498
+		}	]
+},
+{
+	"originalName": "getStateStats",
+	"predictions": [
+		{
+			"name": "save",
+			"probability": 0.9928061366081238
+		},
+		{
+			"name": "update",
+			"probability": 0.003695941995829344
+		},
+		{
+			"name": "prepare",
+			"probability": 0.0015504407929256558
+		},
+		{
+			"name": "write",
+			"probability": 0.0013978322967886925
+		},
+		{
+			"name": "build",
+			"probability": 0.00032125163124874234
+		},
+		{
+			"name": "load",
+			"probability": 6.633549492107704e-05
+		},
+		{
+			"name": "merge",
+			"probability": 6.420254794647917e-05
+		},
+		{
+			"name": "perform",
+			"probability": 3.9924147131387144e-05
+		},
+		{
+			"name": "apply",
+			"probability": 3.0308743589557707e-05
+		},
+		{
+			"name": "store",
+			"probability": 2.765786848613061e-05
+		}	]
+}]

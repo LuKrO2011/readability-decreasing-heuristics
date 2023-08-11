@@ -24,3 +24,6 @@ cd spoon-examples
 mvn test
 ```
 
+## Hints
+One can remove "@TempDir Path outputDir" from the test methods to see the output in a "output" folder.
+

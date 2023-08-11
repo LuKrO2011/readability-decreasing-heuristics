@@ -1,0 +1,45 @@
+[
+{
+	"originalName": "method",
+	"predictions": [
+		{
+			"name": "getPath",
+			"probability": 0.8675330877304077
+		},
+		{
+			"name": "getColumn",
+			"probability": 0.048041243106126785
+		},
+		{
+			"name": "getName",
+			"probability": 0.01385548710823059
+		},
+		{
+			"name": "getWorkingDirectory",
+			"probability": 0.01325873751193285
+		},
+		{
+			"name": "getExpression",
+			"probability": 0.011812342330813408
+		},
+		{
+			"name": "getLocation",
+			"probability": 0.01097001414746046
+		},
+		{
+			"name": "getParent",
+			"probability": 0.010012716986238956
+		},
+		{
+			"name": "getField",
+			"probability": 0.00934803020209074
+		},
+		{
+			"name": "getValue",
+			"probability": 0.008298839442431927
+		},
+		{
+			"name": "path",
+			"probability": 0.006869384553283453
+		}	]
+}]
