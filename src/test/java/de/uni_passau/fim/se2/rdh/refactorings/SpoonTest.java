@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
+import de.uni_passau.fim.se2.rdh.util.DirectoryFlattener;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
 import org.junit.jupiter.api.Disabled;
@@ -49,5 +50,26 @@ public class SpoonTest extends ResourcesTest {
         assertThat(diffOperations).isEmpty();
     }
 
+    @Disabled("Spoon error: Spoon changes the Vector import to com.sk89q.worldedit.Vector.")
+    @Test
+    void testNoRefactoringWrongImport(@TempDir Path outputDir) {
+        String fileName = "WrongImport.java";
+
+        File original = new File(resources, fileName);
+        File modified = new File(outputDir.toString(), fileName);
+        SpoonAPI spoon = setupSpoon(fileName, outputDir);
+
+        // Create modified code file
+        spoon.prettyprint();
+
+        // Use the directory flattener to flatten the output dir
+        DirectoryFlattener.flatten(outputDir.toFile());
+
+        // Perform the refactoring
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert that no refactoring was performed
+        assertThat(diffOperations).isEmpty();
+    }
 
 }
