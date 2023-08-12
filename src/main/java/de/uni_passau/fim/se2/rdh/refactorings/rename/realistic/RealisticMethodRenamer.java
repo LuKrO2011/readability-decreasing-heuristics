@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.SpoonException;
+import spoon.reflect.code.CtComment;
 import spoon.reflect.cu.SourcePosition;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtType;
@@ -71,21 +72,57 @@ public class RealisticMethodRenamer extends MethodRenamer {
             File file = entry.getKey();
             CtType<?> ctClass = entry.getValue();
 
-            // Get all methods of the class
-            List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
-
             // Split methods into methods with and without implementation
-            List<CtMethod<?>> methodsWithImpl = methodsOfClass.stream().filter(m -> !m.isAbstract()).toList();
-            List<CtMethod<?>> methodsWithoutImpl = methodsOfClass.stream().filter(CtMethod::isAbstract).toList();
+            SplitMethods splitMethods = splitMethods(ctClass);
 
             // Rename methods without implementation using the backup method renamer
-            for (CtMethod<?> ctMethod : methodsWithoutImpl) {
+            for (CtMethod<?> ctMethod : splitMethods.methodsWithoutImpl()) {
                 backup.rename(ctMethod);
             }
 
             // Rename methods with implementation with realistic names
-            rename(ctClass, methodsWithImpl);
+            rename(ctClass, splitMethods.methodsWithBody());
         }
+    }
+
+    /**
+     * Splits the methods of the given class into methods with and without implementation.
+     * <p>
+     * A method is considered to have an implementation if it has a body and the body contains at least one statement
+     * that is not a comment.
+     *
+     * @param ctClass the class
+     * @return the split methods
+     */
+    private static SplitMethods splitMethods(final CtType<?> ctClass) {
+        // Get all methods of the class
+        List<CtMethod<?>> methodsOfClass = ctClass.getElements(new TypeFilter<>(CtMethod.class));
+
+        // Split methods into methods with and without implementation
+        List<CtMethod<?>> methodsWithImpl = methodsOfClass.stream().filter(m -> !m.isAbstract()).toList();
+        List<CtMethod<?>> methodsWithoutImpl =
+                new ArrayList<>(methodsOfClass.stream().filter(CtMethod::isAbstract).toList());
+
+        // Split methods with and without empty body
+        List<CtMethod<?>> methodsWithoutBody = new ArrayList<>();
+        List<CtMethod<?>> methodsWithBody = new ArrayList<>();
+        for (CtMethod<?> ctMethod : methodsWithImpl) {
+            boolean hasBody = ctMethod.getBody() != null && ctMethod.getBody().getStatements().size() > 0;
+            boolean hasNotOnlyComments =
+                    hasBody && ctMethod.getBody().getStatements().stream().anyMatch(s -> !(s instanceof CtComment));
+            if (hasNotOnlyComments) {
+                methodsWithBody.add(ctMethod);
+            } else {
+                methodsWithoutBody.add(ctMethod);
+            }
+        }
+
+        // Add methods without body to methods without implementation
+        methodsWithoutImpl.addAll(methodsWithoutBody);
+        return new SplitMethods(methodsWithoutImpl, methodsWithBody);
+    }
+
+    private record SplitMethods(List<CtMethod<?>> methodsWithoutImpl, List<CtMethod<?>> methodsWithBody) {
     }
 
     /**

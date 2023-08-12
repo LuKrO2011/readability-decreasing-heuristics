@@ -1,0 +1,617 @@
+[
+{
+	"originalName": "buyingRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.9029524326324463
+		},
+		{
+			"name": "handle",
+			"probability": 0.03597848489880562
+		},
+		{
+			"name": "receive",
+			"probability": 0.01331186294555664
+		},
+		{
+			"name": "buttonClick",
+			"probability": 0.0104000773280859
+		},
+		{
+			"name": "onDragEnd",
+			"probability": 0.008392509073019028
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.0066108545288443565
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.006336127873510122
+		},
+		{
+			"name": "onTabSelected",
+			"probability": 0.006275815423578024
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.005822186823934317
+		},
+		{
+			"name": "primitivesAdded",
+			"probability": 0.0039196009747684
+		}	]
+},
+{
+	"originalName": "boughtRegion",
+	"predictions": [
+		{
+			"name": "buy",
+			"probability": 0.9999998807907104
+		},
+		{
+			"name": "onClick",
+			"probability": 7.321084893874286e-08
+		},
+		{
+			"name": "sell",
+			"probability": 1.2803590188070757e-08
+		},
+		{
+			"name": "assertState",
+			"probability": 1.1122021525977743e-08
+		},
+		{
+			"name": "format",
+			"probability": 9.838466041856009e-09
+		},
+		{
+			"name": "run",
+			"probability": 6.372322669534469e-09
+		},
+		{
+			"name": "showHeader",
+			"probability": 5.264554570061364e-09
+		},
+		{
+			"name": "redefine",
+			"probability": 5.11034370376251e-09
+		},
+		{
+			"name": "takeScreenshot",
+			"probability": 4.825086996618211e-09
+		},
+		{
+			"name": "onMouseClicked",
+			"probability": 4.466214065246277e-09
+		}	]
+},
+{
+	"originalName": "sellingRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.9083636999130249
+		},
+		{
+			"name": "handle",
+			"probability": 0.025657014921307564
+		},
+		{
+			"name": "buttonClick",
+			"probability": 0.012834020890295506
+		},
+		{
+			"name": "receive",
+			"probability": 0.012631361372768879
+		},
+		{
+			"name": "onDragEnd",
+			"probability": 0.01035932544618845
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.00701949093490839
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.0069289966486394405
+		},
+		{
+			"name": "onTabSelected",
+			"probability": 0.006743037607520819
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.005400184541940689
+		},
+		{
+			"name": "primitivesAdded",
+			"probability": 0.004062876105308533
+		}	]
+},
+{
+	"originalName": "soldRegion",
+	"predictions": [
+		{
+			"name": "assertCalled",
+			"probability": 0.5979787707328796
+		},
+		{
+			"name": "match",
+			"probability": 0.11770857125520706
+		},
+		{
+			"name": "compare",
+			"probability": 0.11639871448278427
+		},
+		{
+			"name": "checkDecoding",
+			"probability": 0.03720475360751152
+		},
+		{
+			"name": "visit",
+			"probability": 0.028966112062335014
+		},
+		{
+			"name": "getLastMessage",
+			"probability": 0.023478196933865547
+		},
+		{
+			"name": "modelChanged",
+			"probability": 0.022564811632037163
+		},
+		{
+			"name": "fireDocumentChanged",
+			"probability": 0.021048832684755325
+		},
+		{
+			"name": "onValueChange",
+			"probability": 0.018176591023802757
+		},
+		{
+			"name": "sessionEvent",
+			"probability": 0.016474639996886253
+		}	]
+},
+{
+	"originalName": "resellingRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.9083636999130249
+		},
+		{
+			"name": "handle",
+			"probability": 0.025657014921307564
+		},
+		{
+			"name": "buttonClick",
+			"probability": 0.012834020890295506
+		},
+		{
+			"name": "receive",
+			"probability": 0.012631361372768879
+		},
+		{
+			"name": "onDragEnd",
+			"probability": 0.01035932544618845
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.00701949093490839
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.0069289966486394405
+		},
+		{
+			"name": "onTabSelected",
+			"probability": 0.006743037607520819
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.005400184541940689
+		},
+		{
+			"name": "primitivesAdded",
+			"probability": 0.004062876105308533
+		}	]
+},
+{
+	"originalName": "resoldRegion",
+	"predictions": [
+		{
+			"name": "testNextDouble",
+			"probability": 0.9769073724746704
+		},
+		{
+			"name": "aggregate",
+			"probability": 0.00787090789526701
+		},
+		{
+			"name": "onBeforeSelection",
+			"probability": 0.0045268964022397995
+		},
+		{
+			"name": "op",
+			"probability": 0.0030917213298380375
+		},
+		{
+			"name": "onEvent",
+			"probability": 0.0018139377934858203
+		},
+		{
+			"name": "onTabSelected",
+			"probability": 0.0014223335310816765
+		},
+		{
+			"name": "callback",
+			"probability": 0.0014203409664332867
+		},
+		{
+			"name": "assertEquals",
+			"probability": 0.0010815878631547093
+		},
+		{
+			"name": "compare",
+			"probability": 0.0009385803714394569
+		},
+		{
+			"name": "onRequest",
+			"probability": 0.0009263662504963577
+		}	]
+},
+{
+	"originalName": "rentingRegion",
+	"predictions": [
+		{
+			"name": "handleEvent",
+			"probability": 0.6127428412437439
+		},
+		{
+			"name": "primitivesAdded",
+			"probability": 0.12079598754644394
+		},
+		{
+			"name": "onEvent",
+			"probability": 0.11180489510297775
+		},
+		{
+			"name": "runWithEvent",
+			"probability": 0.05918984115123749
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.02247227169573307
+		},
+		{
+			"name": "handle",
+			"probability": 0.02222050540149212
+		},
+		{
+			"name": "commandReceived",
+			"probability": 0.016264064237475395
+		},
+		{
+			"name": "sendKeyEvent",
+			"probability": 0.013712052255868912
+		},
+		{
+			"name": "modelChanged",
+			"probability": 0.012093493714928627
+		},
+		{
+			"name": "greetMeOneWay",
+			"probability": 0.008704139851033688
+		}	]
+},
+{
+	"originalName": "rentedRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.8941584229469299
+		},
+		{
+			"name": "save",
+			"probability": 0.07875444740056992
+		},
+		{
+			"name": "onClick",
+			"probability": 0.015562144108116627
+		},
+		{
+			"name": "onCommand",
+			"probability": 0.00732471002265811
+		},
+		{
+			"name": "onItemClick",
+			"probability": 0.0013199544046074152
+		},
+		{
+			"name": "addToList",
+			"probability": 0.0006326763541437685
+		},
+		{
+			"name": "notify",
+			"probability": 0.0006299520027823746
+		},
+		{
+			"name": "doUpdate",
+			"probability": 0.0006054376717656851
+		},
+		{
+			"name": "getToolTipText",
+			"probability": 0.0005185229820199311
+		},
+		{
+			"name": "widgetSelected",
+			"probability": 0.000493684085085988
+		}	]
+},
+{
+	"originalName": "unrentingRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.8756862878799438
+		},
+		{
+			"name": "buttonClick",
+			"probability": 0.034826330840587616
+		},
+		{
+			"name": "receive",
+			"probability": 0.01971905305981636
+		},
+		{
+			"name": "handle",
+			"probability": 0.01575123332440853
+		},
+		{
+			"name": "onDragEnd",
+			"probability": 0.014741896651685238
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.012341043911874294
+		},
+		{
+			"name": "accept",
+			"probability": 0.009200992994010448
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.006349590141326189
+		},
+		{
+			"name": "clicked",
+			"probability": 0.005734538659453392
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.005649101454764605
+		}	]
+},
+{
+	"originalName": "unrentedRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.8628946542739868
+		},
+		{
+			"name": "handle",
+			"probability": 0.081871896982193
+		},
+		{
+			"name": "buttonClick",
+			"probability": 0.030760137364268303
+		},
+		{
+			"name": "receive",
+			"probability": 0.005170334130525589
+		},
+		{
+			"name": "onBrowserEvent",
+			"probability": 0.004233851097524166
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.0032803236972540617
+		},
+		{
+			"name": "raiseEvent",
+			"probability": 0.0032533621415495872
+		},
+		{
+			"name": "receiveEvent",
+			"probability": 0.00305263907648623
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.0029866632539778948
+		},
+		{
+			"name": "onSelection",
+			"probability": 0.002496164757758379
+		}	]
+},
+{
+	"originalName": "addedRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.4814434349536896
+		},
+		{
+			"name": "handle",
+			"probability": 0.46541234850883484
+		},
+		{
+			"name": "receive",
+			"probability": 0.027734024450182915
+		},
+		{
+			"name": "process",
+			"probability": 0.006372951436787844
+		},
+		{
+			"name": "onClose",
+			"probability": 0.0035158179234713316
+		},
+		{
+			"name": "notify",
+			"probability": 0.003510778769850731
+		},
+		{
+			"name": "fire",
+			"probability": 0.003143810899928212
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.003039673203602433
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.0029223947785794735
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.0029047366697341204
+		}	]
+},
+{
+	"originalName": "removedRegion",
+	"predictions": [
+		{
+			"name": "onEvent",
+			"probability": 0.4814434349536896
+		},
+		{
+			"name": "handle",
+			"probability": 0.46541234850883484
+		},
+		{
+			"name": "receive",
+			"probability": 0.027734024450182915
+		},
+		{
+			"name": "process",
+			"probability": 0.006372951436787844
+		},
+		{
+			"name": "onClose",
+			"probability": 0.0035158179234713316
+		},
+		{
+			"name": "notify",
+			"probability": 0.003510778769850731
+		},
+		{
+			"name": "fire",
+			"probability": 0.003143810899928212
+		},
+		{
+			"name": "handleEvent",
+			"probability": 0.003039673203602433
+		},
+		{
+			"name": "valueChange",
+			"probability": 0.0029223947785794735
+		},
+		{
+			"name": "onApplicationEvent",
+			"probability": 0.0029047366697341204
+		}	]
+},
+{
+	"originalName": "addedFriend",
+	"predictions": [
+		{
+			"name": "pumpStream",
+			"probability": 0.1606408804655075
+		},
+		{
+			"name": "getDescriptions",
+			"probability": 0.15941934287548065
+		},
+		{
+			"name": "afterEach",
+			"probability": 0.11703502386808395
+		},
+		{
+			"name": "shouldRun",
+			"probability": 0.09161792695522308
+		},
+		{
+			"name": "execCommand",
+			"probability": 0.09113375842571259
+		},
+		{
+			"name": "shouldSkip",
+			"probability": 0.09098612517118454
+		},
+		{
+			"name": "processJson",
+			"probability": 0.0797576978802681
+		},
+		{
+			"name": "isAnswered",
+			"probability": 0.07960806041955948
+		},
+		{
+			"name": "onEditorAction",
+			"probability": 0.0720832571387291
+		},
+		{
+			"name": "hasPermissions",
+			"probability": 0.057717882096767426
+		}	]
+},
+{
+	"originalName": "deleteFriend",
+	"predictions": [
+		{
+			"name": "pumpStream",
+			"probability": 0.1606408804655075
+		},
+		{
+			"name": "getDescriptions",
+			"probability": 0.15941934287548065
+		},
+		{
+			"name": "afterEach",
+			"probability": 0.11703502386808395
+		},
+		{
+			"name": "shouldRun",
+			"probability": 0.09161792695522308
+		},
+		{
+			"name": "execCommand",
+			"probability": 0.09113375842571259
+		},
+		{
+			"name": "shouldSkip",
+			"probability": 0.09098612517118454
+		},
+		{
+			"name": "processJson",
+			"probability": 0.0797576978802681
+		},
+		{
+			"name": "isAnswered",
+			"probability": 0.07960806041955948
+		},
+		{
+			"name": "onEditorAction",
+			"probability": 0.0720832571387291
+		},
+		{
+			"name": "hasPermissions",
+			"probability": 0.057717882096767426
+		}	]
+}]

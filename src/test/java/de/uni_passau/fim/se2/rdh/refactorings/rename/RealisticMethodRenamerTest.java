@@ -74,8 +74,6 @@ class RealisticMethodRenamerTest extends ModificationTest {
 
     @Test
     void testRenameFastAsyncWorldEditWorldGuardHandler(@TempDir Path outputDir) {
-        outputDir = Path.of("output");
-
         List<Operation> diffOperations = applyModifications(outputDir, "FastAsyncWorldEditWorldGuardHandler.java");
 
         // Assert that only existing method was renamed
@@ -83,6 +81,19 @@ class RealisticMethodRenamerTest extends ModificationTest {
                 () -> assertThat(diffOperations).hasSize(22),
                 // See SpoonTest.testNoRefactoringWrongImport
                 // () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
+                this::assertLogIsEmpty
+        );
+    }
+
+    @Test
+    void testRenameDebugFeature(@TempDir Path outputDir) {
+        outputDir = Path.of("output");
+        List<Operation> diffOperations = applyModifications(outputDir, "DebugFeature.java");
+
+        // Assert that only existing method was renamed
+        assertAll(
+                () -> assertThat(diffOperations).hasSize(15),
+                () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
                 this::assertLogIsEmpty
         );
     }
