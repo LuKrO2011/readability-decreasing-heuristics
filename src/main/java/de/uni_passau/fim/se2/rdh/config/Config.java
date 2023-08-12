@@ -32,4 +32,10 @@ public final class Config {
         this.scope = config.getScope();
         this.renameMethodMode = config.getRenameMethodMode();
     }
+
+    @Override
+    public String toString() {
+        return "Config{condaPath='%s', modelPath='%s', pythonScriptPath='%s', scope=%s, renameMethodMode=%s}".formatted(
+                condaPath, modelPath, pythonScriptPath, scope, renameMethodMode);
+    }
 }

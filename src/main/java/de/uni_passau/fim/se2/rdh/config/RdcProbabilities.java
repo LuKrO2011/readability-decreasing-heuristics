@@ -405,4 +405,15 @@ public final class RdcProbabilities {
     public void setPartiallyEvaluate(final double partiallyEvaluate) {
         this.partiallyEvaluate = partiallyEvaluate;
     }
+
+    @Override
+    public String toString() {
+        return ("RdcProbabilities{newline=%s, incTab=%s, decTab=%s, space=%s, newLineInsteadOfSpace=%s, "
+                + "spaceInsteadOfNewline=%s, incTabInsteadOfDecTab=%s, decTabInsteadOfIncTab=%s, renameVariable=%s, "
+                + "renameField=%s, renameMethod=%s, inlineMethod=%s, removeComment=%s, add0=%s, insertBraces=%s, "
+                + "starImport=%s, inlineField=%s, partiallyEvaluate=%s}").formatted(
+                newline, incTab, decTab, space, newLineInsteadOfSpace, spaceInsteadOfNewline, incTabInsteadOfDecTab,
+                decTabInsteadOfIncTab, renameVariable, renameField, renameMethod, inlineMethod, removeComment, add0,
+                insertBraces, starImport, inlineField, partiallyEvaluate);
+    }
 }
