@@ -70,19 +70,23 @@ class SimpleMethodRenamerTest extends ModificationTest {
 
     @Test
     void testRenameMethodNameAlreadyExists(@TempDir Path outputDir) {
-        // Setup spoon
-        SpoonAPI spoon = setupSpoon(nameConflicts, outputDir);
-
-        // Set up the refactoring
-        RdcProbabilities rdcProbabilities = new RdcProbabilities();
-        rdcProbabilities.setRenameMethod(1.0);
-        AbstractModification renamer = new SimpleMethodRenamer(spoon, rdcProbabilities);
-
-        // Perform method renaming
-        renamer.apply();
+        String fileName = "NameConflicts.java";
+        applyModifications(outputDir, fileName);
 
         // Assert that the logger logged an error
-        assertLogContainsExactly("Could not rename method m0");
+        assertLogContainsExactly("Could not rename method method");
+    }
+
+    @Test
+    void testRenameMethodToOwnName(@TempDir Path outputDir) {
+        String fileName = "NoNameConflicts.java";
+        List<Operation> modifications = applyModifications(outputDir, fileName);
+
+        // Assert that there is no diff or error
+        assertAll(
+                () -> assertThat(modifications).isEmpty(),
+                this::assertLogIsEmpty
+        );
     }
 
     @Override

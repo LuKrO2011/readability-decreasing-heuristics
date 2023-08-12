@@ -37,17 +37,23 @@ class FieldRenamerTest extends ModificationTest {
 
     @Test
     void testRenameFieldNameAlreadyExists() {
-        // Setup spoon
-        SpoonAPI spoon = setupSpoon(nameConflicts, outputDir);
-
-        // Set up the refactoring
-        AbstractModification renamer = createModification(spoon);
-
-        // Perform method renaming
-        renamer.apply();
+        String fileName = "NameConflicts.java";
+        List<Operation> modifications = applyModifications(outputDir, fileName);
 
         // Assert that the logger logged an error
-        assertLogContainsExactly("Could not rename global variable f0");
+        assertLogContainsExactly("Could not rename global variable field");
+    }
+
+    @Test
+    void testRenameFieldToOwnName() {
+        String fileName = "NoNameConflicts.java";
+        List<Operation> modifications = applyModifications(outputDir, fileName);
+
+        // Assert that there is no diff or error
+        assertAll(
+                () -> assertThat(modifications).isEmpty(),
+                this::assertLogIsEmpty
+        );
     }
 
     @Test

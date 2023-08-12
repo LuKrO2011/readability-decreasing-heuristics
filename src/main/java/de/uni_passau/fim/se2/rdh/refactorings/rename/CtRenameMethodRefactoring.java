@@ -64,6 +64,12 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
      */
     @Override
     protected void detectNameConflicts() {
+        // TODO: Abstract this part into superclass?
+        // Check if the target already has the new name
+        if (target.getSimpleName().equals(newName)) {
+            return;
+        }
+
         // Create a method with the new name as the target
         CtMethod<?> newMethod = target.clone(); // TODO: Try copy method
         newMethod.setSimpleName(newName);

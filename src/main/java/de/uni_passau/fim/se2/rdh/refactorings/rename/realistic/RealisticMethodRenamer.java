@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.SpoonException;
 import spoon.reflect.cu.SourcePosition;
-import spoon.reflect.declaration.CtClass;
-import spoon.reflect.declaration.CtInterface;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtType;
 import spoon.reflect.visitor.filter.TypeFilter;
