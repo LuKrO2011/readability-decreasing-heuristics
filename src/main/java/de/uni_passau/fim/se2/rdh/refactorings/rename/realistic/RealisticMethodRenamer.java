@@ -200,6 +200,7 @@ public class RealisticMethodRenamer extends MethodRenamer {
                                 + "backup method renamer.");
                     }
                     backup.rename(method);
+                    continue;
                 }
 
                 refactoring.setNewName(newName);

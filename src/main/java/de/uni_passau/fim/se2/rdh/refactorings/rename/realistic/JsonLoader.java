@@ -11,11 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer.PREDICTION_QUALITY_INDEX;
 
 /**
  * Loads the JSON data from a json file.
@@ -57,7 +53,6 @@ public class JsonLoader {
         Object loadedData = load(type, fileName);
 
         List<MethodRenamingData> data = castLoadedData(loadedData);
-        validate(data);
         return data;
     }
 
@@ -80,27 +75,5 @@ public class JsonLoader {
         }
 
         return List.of();
-    }
-
-    /**
-     * Validates the loaded data.
-     * <p>
-     * If a method name is used twice, it is renamed.
-     *
-     * @param data the loaded data
-     */
-    public void validate(final List<MethodRenamingData> data) {
-        Set<String> usedMethodNames = new HashSet<>();
-        for (MethodRenamingData methodRenamingData : data) {
-            String name = methodRenamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
-            if (usedMethodNames.contains(name)) {
-                String newName = name + "1";
-                if (LOG.isInfoEnabled()) {
-                    LOG.info("Method name " + name + " is used twice. Renaming to " + newName);
-                }
-                methodRenamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).setName(newName);
-            }
-            usedMethodNames.add(name);
-        }
     }
 }
