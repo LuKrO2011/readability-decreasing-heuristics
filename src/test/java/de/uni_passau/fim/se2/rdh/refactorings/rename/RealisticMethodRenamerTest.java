@@ -6,10 +6,12 @@ import de.uni_passau.fim.se2.rdh.refactorings.ModificationTest;
 import de.uni_passau.fim.se2.rdh.refactorings.rename.realistic.RealisticMethodRenamer;
 import de.uni_passau.fim.se2.rdh.util.ResourcesTest;
 import gumtree.spoon.diff.operations.Operation;
+import gumtree.spoon.diff.operations.UpdateOperation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import spoon.SpoonAPI;
+import spoon.reflect.declaration.CtMethod;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -32,6 +34,7 @@ class RealisticMethodRenamerTest extends ModificationTest {
         assertAll(
                 () -> assertThat(diffOperations).hasSize(1),
                 () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
+                () -> assertThat(diffOperations.get(0)).matches(o -> ResourcesTest.hasNewName(o, "getWorkingDirectory")),
                 this::assertLogIsEmpty
         );
     }
@@ -78,7 +81,7 @@ class RealisticMethodRenamerTest extends ModificationTest {
 
         // Assert that only existing method was renamed
         assertAll(
-                () -> assertThat(diffOperations).hasSize(22),
+                () -> assertThat(diffOperations).hasSize(25),
                 // See SpoonTest.testNoRefactoringWrongImport
                 // () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod),
                 this::assertLogIsEmpty

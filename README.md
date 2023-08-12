@@ -29,3 +29,4 @@ One can remove "@TempDir Path outputDir" from the test methods to see the output
 
 # TODOs
 - File output name = class name. Change to original file name?
+- Upper/Lowercase (e.g. in athenz/ZTSTest/testZTSBinder) -> Fix in code2vec

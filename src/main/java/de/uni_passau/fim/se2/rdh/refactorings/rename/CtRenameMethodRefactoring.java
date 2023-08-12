@@ -61,6 +61,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
     /**
      * {@inheritDoc} There is a name conflict if there is a method with the same name and signature
      * TODO: Check for super/subclass conflicts
+     * TODO: Create class for detecting conflicts and use it in RealisticMethodRenamer (and others?)
      */
     @Override
     protected void detectNameConflicts() {
@@ -70,13 +71,43 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
             return;
         }
 
+        // Find all executables with same name and signature
+        final List<CtMethod<?>> methods = methodsWithSameName(newName);
+
+        // If the list is not empty, there is a name conflict
+        if (!methods.isEmpty()) {
+            createNameConflictIssue(methods.get(0));
+        }
+    }
+
+    /**
+     * This method checks if the name is already used, i.e. if there is a name conflict for the given name.
+     *
+     * @param name The name to check for conflicts
+     * @return True if there is a conflict (the name is already used), false otherwise
+     */
+    public boolean isUsed(final String name) {
+        // Find all executables with same name and signature
+        final List<CtMethod<?>> methods = methodsWithSameName(name);
+
+        // If the list is not empty, there is a name conflict
+        return !methods.isEmpty();
+    }
+
+    /**
+     * This method returns all existing methods with the given name.
+     *
+     * @param name The name of the methods
+     * @return A list of methods with the given name
+     */
+    private List<CtMethod<?>> methodsWithSameName(final String name) {
         // Create a method with the new name as the target
         CtMethod<?> newMethod = target.clone(); // TODO: Try copy method
-        newMethod.setSimpleName(newName);
+        newMethod.setSimpleName(name);
 
         // Find all executables with same name and signature
         final List<CtMethod<?>> methods = new ArrayList<>();
-        NamedElementFilter<?> namedElementFilter = new NamedElementFilter<>(CtMethod.class, newName);
+        NamedElementFilter<?> namedElementFilter = new NamedElementFilter<>(CtMethod.class, name);
         getTarget().getParent().filterChildren(namedElementFilter).forEach(
                 (CtConsumer<CtMethod<?>>) t -> {
                     if (t.getSignature().equals(newMethod.getSignature())) {
@@ -84,11 +115,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
                     }
                 });
 
-
-        // If the list is not empty, there is a name conflict
-        if (!methods.isEmpty()) {
-            createNameConflictIssue(methods.get(0));
-        }
+        return methods;
     }
 
     /**

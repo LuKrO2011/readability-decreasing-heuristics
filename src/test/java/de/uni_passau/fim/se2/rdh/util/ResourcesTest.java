@@ -180,4 +180,23 @@ public class ResourcesTest extends LoggerTest {
     protected static void assertDifferentContent(List<Operation> diffOperations) {
         assertThat(diffOperations.size()).isGreaterThan(0);
     }
+
+    /**
+     * Check if the new name of the operation is the given name.
+     *
+     * @param o       The operation.
+     * @param newName The new name.
+     * @return True if the new name of the operation is the given name, false otherwise.
+     */
+    protected static boolean hasNewName(Operation<?> o, String newName) {
+        CtElement destNode = o.getDstNode();
+
+        // Get the simple name of the dest node
+        if (destNode instanceof CtNamedElement namedElement) {
+            String simpleName = namedElement.getSimpleName();
+            return simpleName.equals(newName);
+        }
+
+        return false;
+    }
 }

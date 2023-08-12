@@ -44,7 +44,34 @@ public final class MethodRenamingData {
         return Collections.unmodifiableList(predictions);
     }
 
+    /**
+     * Returns the predictions sorted by the given name selection mode.
+     *
+     * @param mode the name selection mode
+     * @return the sorted predictions
+     */
+    public List<PredictionData> getPredictions(final NameSelectionMode mode) {
+        sortPredictions(mode);
+        return Collections.unmodifiableList(predictions);
+    }
+
     public void setPredictions(final List<PredictionData> predictions) {
         this.predictions = new ArrayList<>(predictions);
+    }
+
+    /**
+     * Sorts the predictions by the given name selection mode.
+     *
+     * @param mode the name selection mode
+     */
+    private void sortPredictions(final NameSelectionMode mode) {
+        switch (mode) {
+            case LONGEST -> {
+                predictions.sort(Comparator.comparingInt(p -> p.getName().length()));
+                Collections.reverse(predictions);
+            }
+            case QUALITY -> predictions.sort(Comparator.comparingDouble(PredictionData::getProbability).reversed());
+            default -> throw new IllegalArgumentException("Unknown name selection mode: " + mode);
+        }
     }
 }

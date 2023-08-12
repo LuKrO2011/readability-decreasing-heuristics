@@ -192,7 +192,16 @@ public class RealisticMethodRenamer extends MethodRenamer {
 
             try {
                 refactoring.setTarget(method);
-                String newName = getNewName(renamingData);
+                String newName = getNotUsedName(renamingData, refactoring);
+
+                if (newName == null) {
+                    if (LOG.isWarnEnabled()) {
+                        LOG.warn("Could not find a not used name for method " + method.getSimpleName() + ". Using "
+                                + "backup method renamer.");
+                    }
+                    backup.rename(method);
+                }
+
                 refactoring.setNewName(newName);
                 refactoring.refactor();
             } catch (SpoonException e) {
@@ -202,16 +211,35 @@ public class RealisticMethodRenamer extends MethodRenamer {
     }
 
     /**
-     * Returns the new name for the given renaming data depending on the name selection mode.
+     * Returns a name that is not yet used in the given class. Returns null if no not used name could be found.
+     *
+     * @param renamingData the renaming data
+     * @param refactoring  the refactoring
+     * @return the new name. Null if no not used name could be found.
+     */
+    private String getNotUsedName(final MethodRenamingData renamingData, final CtRenameMethodRefactoring refactoring) {
+        List<String> newNames = getNewNames(renamingData);
+        for (String newName : newNames) {
+            refactoring.setNewName(newName);
+            if (!refactoring.isUsed(newName)) {
+                return newName;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the preferred new names for the given renaming data depending on the name selection mode in descending
+     * order. The first name is the most preferred one.
      *
      * @param renamingData the renaming data
      * @return the new name
      */
-    private String getNewName(final MethodRenamingData renamingData) {
-        return switch (nameSelectionMode) {
-            case QUALITY -> renamingData.getPredictions().get(PREDICTION_QUALITY_INDEX).getName();
-            case LONGEST -> renamingData.getLongestPrediction().getName();
-        };
+    private List<String> getNewNames(final MethodRenamingData renamingData) {
+        return renamingData.getPredictions(nameSelectionMode).stream()
+                .map(PredictionData::getName)
+                .toList();
     }
 
     /**
