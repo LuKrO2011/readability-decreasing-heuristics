@@ -4,11 +4,14 @@ import java.util.Random;
 
 /**
  * Wrapper for {@link Random} to allow for reproducible runs using the same seed.
+ *
  * @author Benedikt Fein - preprocessing toolbox. Limited tests.
  */
 public final class Randomness {
 
     private static final Random RANDOM = new Random();
+
+    private static int currentSeed = 0;
 
     private Randomness() {
         throw new IllegalCallerException("utility class");
@@ -20,7 +23,17 @@ public final class Randomness {
      * @param seed The given seed.
      */
     public static void setSeed(int seed) {
+        currentSeed = seed;
         RANDOM.setSeed(seed);
+    }
+
+    /**
+     * Get the seed of the random parameter.
+     *
+     * @return The seed.
+     */
+    public static long getSeed() {
+        return currentSeed;
     }
 
     /**
@@ -53,8 +66,8 @@ public final class Randomness {
         final int upperBound = 'z';
 
         return RANDOM.ints(lowerBound, upperBound + 1)
-            .limit(limit)
-            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-            .toString();
+                .limit(limit)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }

@@ -4,6 +4,7 @@ import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.YamlLoaderSaver;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
+import de.uni_passau.fim.se2.rdh.util.Randomness;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public abstract class AbstractRDFactory {
      * @return the new ReadabilityDecreaser
      */
     public abstract AbstractRD create(ProcessingPath inputPath, ProcessingPath outputPath,
-                                       Path probabilitiesPath, Path configPath);
+                                      Path probabilitiesPath, Path configPath);
 
     /**
      * Load the configuration for the tool.
@@ -58,6 +59,10 @@ public abstract class AbstractRDFactory {
             LOG.warn("Using default config.");
             config = new Config();
         }
+
+        // Log the loaded config
+        LOG.info("Loaded config: {}", config);
+
         return config;
     }
 
@@ -77,6 +82,17 @@ public abstract class AbstractRDFactory {
             LOG.warn("Using default probabilities.");
             probabilities = new RdcProbabilities();
         }
+
+        // Log the loaded probabilities
+        LOG.info("Loaded probabilities: {}", probabilities);
+
         return probabilities;
+    }
+
+    /**
+     * Logs the seed that is used for the random instance.
+     */
+    protected void logSeed() {
+        LOG.info("Using seed: {}", Randomness.getSeed());
     }
 }

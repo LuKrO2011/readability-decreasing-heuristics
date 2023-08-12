@@ -87,7 +87,6 @@ class RealisticMethodRenamerTest extends ModificationTest {
 
     @Test
     void testRenameDebugFeature(@TempDir Path outputDir) {
-        outputDir = Path.of("output");
         List<Operation> diffOperations = applyModifications(outputDir, "DebugFeature.java");
 
         // Assert that only existing method was renamed

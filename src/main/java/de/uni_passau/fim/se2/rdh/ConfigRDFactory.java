@@ -61,6 +61,7 @@ public class ConfigRDFactory extends AbstractRDFactory {
                              final ProcessingPath outputPath,
                              final Path probabilitiesPath,
                              final Path configPath) {
+        logSeed();
         Config config = loadConfig(configPath);
         RdcProbabilities probabilities = loadProbabilities(probabilitiesPath);
 

@@ -54,6 +54,7 @@ public class FileRDFactory extends AbstractRDFactory {
                          final ProcessingPath outputPath,
                          final Path probabilitiesPath,
                          final Path configPath) {
+        logSeed();
         Config config = loadConfig(configPath);
         RdcProbabilities probabilities = loadProbabilities(probabilitiesPath);
         return new FileRD(inputPath, outputPath, probabilities, config);

@@ -50,6 +50,7 @@ public class DirectoryRDFactory extends AbstractRDFactory {
                               final ProcessingPath outputPath,
                               final Path probabilitiesPath,
                               final Path configPath) {
+        logSeed();
         Config config = loadConfig(configPath);
         RdcProbabilities probabilities = loadProbabilities(probabilitiesPath);
         return new DirectoryRD(inputPath, outputPath, probabilities, config);
