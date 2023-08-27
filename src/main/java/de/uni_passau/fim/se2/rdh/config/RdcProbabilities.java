@@ -163,10 +163,10 @@ public final class RdcProbabilities {
     // TODO: How can this be done more elegant using a enum constructor?
     private double getSwapProbabilityFor(final CharacterType characterType) {
         return switch (characterType) {
-            case NEWLINE -> newLineInsteadOfSpace;
-            case SPACE -> spaceInsteadOfNewline;
-            case INC_TAB -> incTabInsteadOfDecTab;
-            case DEC_TAB -> decTabInsteadOfIncTab;
+            case NEWLINE -> spaceInsteadOfNewline;
+            case SPACE -> newLineInsteadOfSpace;
+            case INC_TAB -> decTabInsteadOfIncTab;
+            case DEC_TAB -> incTabInsteadOfDecTab;
         };
     }
 
