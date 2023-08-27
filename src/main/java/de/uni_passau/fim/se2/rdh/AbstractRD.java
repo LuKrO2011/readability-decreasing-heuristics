@@ -5,6 +5,7 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.RenameMode;
 import de.uni_passau.fim.se2.rdh.models.PythonRunner;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +34,12 @@ public abstract class AbstractRD {
      * @param probabilities the probabilities for the refactorings
      * @param config        the configuration for the tool
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public AbstractRD(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
                       final RdcProbabilities probabilities, final Config config) {
         this.inputDir = inputDirPath;
         this.outputDir = outputDirPath;
-        this.probabilities = new RdcProbabilities(probabilities);
+        this.probabilities = probabilities;
         this.config = new Config(config);
         this.rpBuilder = new RefactoringProcessorBuilder(config);
     }

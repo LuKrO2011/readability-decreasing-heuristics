@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.refactorings;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.SpoonAPI;
 
 /**
@@ -35,9 +36,10 @@ public abstract class AbstractModification {
      * @param spoon         The {@link SpoonAPI}
      * @param probabilities The {@link RdcProbabilities}
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public AbstractModification(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         this.spoon = spoon;
-        this.probabilities = new RdcProbabilities(probabilities);
+        this.probabilities = probabilities;
     }
 
     /**

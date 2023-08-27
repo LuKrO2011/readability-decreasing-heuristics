@@ -1,6 +1,7 @@
 package spoon.reflect.visitor;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.compiler.Environment;
 import spoon.reflect.code.CtBinaryOperator;
 import spoon.reflect.code.CtBlock;
@@ -36,9 +37,10 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * @param env           The environment to use.
      * @param probabilities The probabilities to use.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public RdcJavaPrettyPrinter(final Environment env, final RdcProbabilities probabilities) {
         super(env);
-        this.probabilities = new RdcProbabilities(probabilities);
+        this.probabilities = probabilities;
     }
 
     /**

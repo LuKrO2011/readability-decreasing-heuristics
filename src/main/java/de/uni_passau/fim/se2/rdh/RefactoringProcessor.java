@@ -4,6 +4,7 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -36,11 +37,12 @@ public class RefactoringProcessor {
      * @param outputDirPath the path to the output directory
      * @param probabilities the probabilities to use
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public RefactoringProcessor(final SpoonAPI spoon, final ProcessingPath outputDirPath,
                                 final RdcProbabilities probabilities) {
         this.spoon = spoon;
         this.outputDir = outputDirPath;
-        this.probabilities = new RdcProbabilities(probabilities);
+        this.probabilities = probabilities;
         this.modifications = new ArrayList<>();
 
         setupSpoon();

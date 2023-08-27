@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.printer;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.reflect.code.CtComment;
 import spoon.reflect.visitor.PrinterHelper;
 import spoon.reflect.visitor.TokenWriter;
@@ -26,9 +27,10 @@ public class RdcTokenWriter implements TokenWriter {
      * @param printerHelper The {@link PrinterHelper} to use.
      * @param probabilities The {@link RdcProbabilities} to use.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public RdcTokenWriter(final PrinterHelper printerHelper, final RdcProbabilities probabilities) {
         this.printerHelper = printerHelper;
-        this.probabilities = new RdcProbabilities(probabilities);
+        this.probabilities = probabilities;
     }
 
     /**
@@ -105,6 +107,7 @@ public class RdcTokenWriter implements TokenWriter {
     @Override
     public RdcTokenWriter writeln() {
 
+        // TODO: This leads to problems with comments
         // Write spaces instead of a newline
         if (probabilities.shouldSwap(CharacterType.NEWLINE)) {
             printerHelper.writeSpace();
