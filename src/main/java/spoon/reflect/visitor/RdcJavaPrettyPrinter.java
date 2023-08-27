@@ -1,7 +1,10 @@
 package spoon.reflect.visitor;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spoon.compiler.Environment;
 import spoon.reflect.code.CtBinaryOperator;
 import spoon.reflect.code.CtBlock;
@@ -23,9 +26,14 @@ import spoon.reflect.visitor.printer.CommentOffset;
  */
 public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
 
+    /**
+     * The (logger) of this class.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(RdcJavaPrettyPrinter.class);
+
     private TokenWriter printer;
 
-    private ElementPrinterHelper elementPrinterHelper;
+    private RdcElementPrinterHelper elementPrinterHelper;
 
     private final RdcProbabilities probabilities;
 
@@ -49,7 +57,17 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
     @Override
     public DefaultJavaPrettyPrinter setPrinterTokenWriter(final TokenWriter tokenWriter) {
         this.printer = tokenWriter;
-        elementPrinterHelper = new ElementPrinterHelper(tokenWriter, this, env);
+
+        RdcTokenWriter rdcTokenWriter;
+        if (tokenWriter instanceof RdcTokenWriter) {
+            rdcTokenWriter = (RdcTokenWriter) tokenWriter;
+        } else {
+            LOG.warn("The token writer is not an instance of RdcTokenWriter. A new instance will be created instead of "
+                    + "using the given one.");
+            rdcTokenWriter = new RdcTokenWriter(tokenWriter.getPrinterHelper(), probabilities);
+        }
+
+        elementPrinterHelper = new RdcElementPrinterHelper(rdcTokenWriter, this, env);
         return super.setPrinterTokenWriter(tokenWriter);
     }
 

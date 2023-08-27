@@ -88,8 +88,7 @@ public class RdcTokenWriter implements TokenWriter {
     }
 
     /**
-     * With a certain probability, this method will remove the given comment.
-     * {@inheritDoc}
+     * With a certain probability, this method will remove the given comment. {@inheritDoc}
      */
     @Override
     public RdcTokenWriter writeComment(final CtComment comment) {
@@ -101,31 +100,47 @@ public class RdcTokenWriter implements TokenWriter {
     }
 
     /**
-     * With a certain probability, this method will write none or multiple newlines instead of one.
-     * {@inheritDoc}
+     * With a certain probability, this method will write none or multiple newlines instead of one. {@inheritDoc}
      */
     @Override
     public RdcTokenWriter writeln() {
 
-        // TODO: This leads to problems with comments
         // Write spaces instead of a newline
         if (probabilities.shouldSwap(CharacterType.NEWLINE)) {
             printerHelper.writeSpace();
             return this;
         }
 
-        // Write newlines
-        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
-        for (int i = 0; i < numberOfNewLines; i++) {
-            printerHelper.writeln();
-        }
-
+        writeNewLines();
         return this;
     }
 
     /**
-     * With a certain probability, this method will increase none or multiple tabs instead of one.
-     * {@inheritDoc}
+     * Writes a single or multiple newline(s) after a comment. This comment must not be replaced by a space, otherwise
+     * some code will be commented out.
+     *
+     * @return This {@link RdcTokenWriter}.
+     */
+    public RdcTokenWriter writelnAfterComment() {
+        writeNewLines();
+        return this;
+    }
+
+    /**
+     * Writes a random number of newlines depending on the probability.
+     *
+     * @return This {@link RdcTokenWriter}.
+     */
+    private RdcTokenWriter writeNewLines() {
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
+        for (int i = 0; i < numberOfNewLines; i++) {
+            printerHelper.writeln();
+        }
+        return this;
+    }
+
+    /**
+     * With a certain probability, this method will increase none or multiple tabs instead of one. {@inheritDoc}
      */
     @Override
     public RdcTokenWriter incTab() {
@@ -146,8 +161,7 @@ public class RdcTokenWriter implements TokenWriter {
     }
 
     /**
-     * With a certain probability, this method will decrease none or multiple tabs instead of one.
-     * {@inheritDoc}
+     * With a certain probability, this method will decrease none or multiple tabs instead of one. {@inheritDoc}
      */
     @Override
     public RdcTokenWriter decTab() {
@@ -175,8 +189,7 @@ public class RdcTokenWriter implements TokenWriter {
     }
 
     /**
-     * With a certain probability, this method will write none or multiple spaces instead of one.
-     * {@inheritDoc}
+     * With a certain probability, this method will write none or multiple spaces instead of one. {@inheritDoc}
      */
     @Override
     public TokenWriter writeSpace() {

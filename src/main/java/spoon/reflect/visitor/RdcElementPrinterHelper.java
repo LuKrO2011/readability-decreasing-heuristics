@@ -1,0 +1,83 @@
+package spoon.reflect.visitor;
+
+import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
+import spoon.compiler.Environment;
+import spoon.reflect.code.CtComment;
+import spoon.reflect.declaration.CtElement;
+import spoon.reflect.visitor.printer.CommentOffset;
+
+import java.util.List;
+
+/**
+ * This class is a modified version of {@link spoon.reflect.visitor.ElementPrinterHelper}.
+ * TODO: This fix does not work, as still all methods of the ElementPrinterHelper are called.
+ */
+public class RdcElementPrinterHelper extends ElementPrinterHelper {
+
+    private final DefaultJavaPrettyPrinter prettyPrinter;
+    private final Environment env;
+    private RdcTokenWriter printer;
+
+    /**
+     * Creates a new element printer helper.
+     *
+     * @param printerTokenWriter The token writer to use.
+     * @param prettyPrinter      The pretty printer to use.
+     * @param env                The environment to use.
+     */
+    public RdcElementPrinterHelper(final RdcTokenWriter printerTokenWriter, final DefaultJavaPrettyPrinter prettyPrinter,
+                                   final Environment env) {
+        super(printerTokenWriter, prettyPrinter, env);
+        this.printer = printerTokenWriter;
+        this.prettyPrinter = prettyPrinter;
+        this.env = env;
+    }
+
+    /**
+     * Makes sure a newline is written after the given element.
+     * {@inheritDoc}
+     * @param comment The comment to write.
+     */
+    @Override
+    public void writeComment(final CtComment comment) {
+        if (!env.isCommentsEnabled() || comment == null) {
+            return;
+        }
+        prettyPrinter.scan(comment);
+        printer.writelnAfterComment();
+    }
+
+    /**
+     * @see spoon.reflect.visitor.ElementPrinterHelper#writeComment(java.util.List)
+     * @param comments The comments to write.
+     */
+    private void writeComment(final List<CtComment> comments) {
+        if (!env.isCommentsEnabled() || comments == null) {
+            return;
+        }
+        for (CtComment comment : comments) {
+            writeComment(comment);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param element The element to write.
+     */
+    public void writeComment(final CtElement element) {
+        if (element == null) {
+            return;
+        }
+        writeComment(element.getComments());
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param element The element to write.
+     */
+    public void writeComment(final CtElement element, final CommentOffset offset) {
+        writeComment(getComments(element, offset));
+    }
+
+
+}

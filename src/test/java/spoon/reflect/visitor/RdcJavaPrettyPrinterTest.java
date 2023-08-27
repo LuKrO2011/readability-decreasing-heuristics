@@ -80,4 +80,27 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         );
     }
 
+    @Test
+    void testNewlineAfterLineComment(@TempDir Path outputDir) {
+        outputDir = Path.of("output");
+
+        File original = new File(resources, helloWorld);
+        File modified = new File(outputDir.toString(), helloWorld);
+
+        probabilities.setSpaceInsteadOfNewline(1.0);
+
+        spoon.setSourceOutputDirectory(outputDir.toString());
+        spoon.buildModel();
+
+        spoon.prettyprint();
+
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert no change in the semantics of the code
+        assertAll(
+                () -> assertThat(diffOperations).isEmpty(),
+                this::assertLogIsEmpty
+        );
+    }
+
 }
