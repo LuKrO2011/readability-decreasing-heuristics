@@ -134,13 +134,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static spoon.reflect.visitor.RdcElementPrinterHelperNew.PrintTypeArguments.ALSO_PRINT_DIAMOND_OPERATOR;
-import static spoon.reflect.visitor.RdcElementPrinterHelperNew.PrintTypeArguments.ONLY_PRINT_EXPLICIT_TYPES;
+import static spoon.reflect.visitor.ElementPrinterHelperC.PrintTypeArguments.ALSO_PRINT_DIAMOND_OPERATOR;
+import static spoon.reflect.visitor.ElementPrinterHelperC.PrintTypeArguments.ONLY_PRINT_EXPLICIT_TYPES;
 
 /**
  * A visitor for generating Java code from the program compile-time model.
  */
-public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
+public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
 
     /**
      * Java file extension (.java).
@@ -237,7 +237,7 @@ public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
     /**
      * Creates a new code generator visitor.
      */
-    public RdcJavaPrettyPrinterNew(Environment env, RdcProbabilities probabilities) {
+    public JavaPrettyPrinterC(Environment env, RdcProbabilities probabilities) {
         this.env = env;
         PrinterHelper printerHelper = new PrinterHelper(env);
         RdcTokenWriter tokenWriter = new RdcTokenWriter(printerHelper, probabilities);
@@ -256,7 +256,7 @@ public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
      * @param lineSeparator characters which will be printed as End of line.
      * By default there is System.getProperty("line.separator")
      */
-    public RdcJavaPrettyPrinterNew setLineSeparator(String lineSeparator) {
+    public JavaPrettyPrinterC setLineSeparator(String lineSeparator) {
         getPrinterHelper().setLineSeparator(lineSeparator);
         return this;
     }
@@ -406,7 +406,7 @@ public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
     /**
      * The generic scan method for an element.
      */
-    public RdcJavaPrettyPrinterNew scan(CtElement e) {
+    public JavaPrettyPrinterC scan(CtElement e) {
         if (e != null) {
             enter(e);
             context.elementStack.push(e);
@@ -2111,7 +2111,7 @@ public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
         exitCtStatement(statement);
     }
 
-    public RdcElementPrinterHelperNew getElementPrinterHelper() {
+    public ElementPrinterHelperC getElementPrinterHelper() {
         return elementPrinterHelper;
     }
 
@@ -2210,7 +2210,7 @@ public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
     }
 
     /**
-     * @return current {@link TokenWriter}, so the subclasses of {@link RdcJavaPrettyPrinterNew} can print tokens too
+     * @return current {@link TokenWriter}, so the subclasses of {@link JavaPrettyPrinterC} can print tokens too
      */
     protected TokenWriter getPrinterTokenWriter() {
         return printer;
@@ -2219,7 +2219,7 @@ public class RdcJavaPrettyPrinterNew implements CtVisitor, PrettyPrinter {
     /**
      * Set {@link TokenWriter}, which has to be used to print tokens
      */
-    public RdcJavaPrettyPrinterNew setPrinterTokenWriter(RdcTokenWriter tokenWriter) {
+    public JavaPrettyPrinterC setPrinterTokenWriter(RdcTokenWriter tokenWriter) {
         elementPrinterHelper = new RdcElementPrinterHelper(tokenWriter, this, env);
         printer = tokenWriter;
         return this;

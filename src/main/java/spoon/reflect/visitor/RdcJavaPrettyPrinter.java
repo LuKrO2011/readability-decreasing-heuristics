@@ -23,7 +23,7 @@ import spoon.reflect.visitor.printer.CommentOffset;
 /**
  * This class is a modified version of {@link spoon.reflect.visitor.DefaultJavaPrettyPrinter}.
  */
-public class RdcJavaPrettyPrinter extends RdcJavaPrettyPrinterNew {
+public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
 
     /**
      * The (logger) of this class.
@@ -54,7 +54,7 @@ public class RdcJavaPrettyPrinter extends RdcJavaPrettyPrinterNew {
      * {@inheritDoc}
      */
     @Override
-    public RdcJavaPrettyPrinterNew setPrinterTokenWriter(final RdcTokenWriter tokenWriter) {
+    public JavaPrettyPrinterC setPrinterTokenWriter(final RdcTokenWriter tokenWriter) {
         this.printer = tokenWriter;
 
         RdcTokenWriter rdcTokenWriter;

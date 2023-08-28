@@ -11,7 +11,7 @@ import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.visitor.PrinterHelper;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
-import spoon.reflect.visitor.RdcJavaPrettyPrinterNew;
+import spoon.reflect.visitor.JavaPrettyPrinterC;
 import spoon.support.gui.SpoonModelTree;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class RefactoringProcessor {
         // env.setOutputType(OutputType.CLASSES);
 
         // Adjust the pretty printer with own token writer (RdcTokenWriter)
-        RdcJavaPrettyPrinterNew prettyPrinter = new RdcJavaPrettyPrinter(env, probabilities);
+        JavaPrettyPrinterC prettyPrinter = new RdcJavaPrettyPrinter(env, probabilities);
         PrinterHelper printerHelper = new PrinterHelper(env);
         prettyPrinter.setPrinterTokenWriter(new RdcTokenWriter(printerHelper, probabilities));
         prettyPrinter.setIgnoreImplicit(false);

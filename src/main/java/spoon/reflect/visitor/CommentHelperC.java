@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  */
 @SuppressFBWarnings("SF_SWITCH_NO_DEFAULT")
 @Internal
-public class RdcCommentHelper {
+public class CommentHelperC {
 
 
     /** returns a pretty-printed version of a comment, with prefix, suffix, and intermediate prefix for block and Javadoc */

@@ -52,12 +52,12 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.function.Consumer;
 
-public class RdcElementPrinterHelperNew {
-    private final RdcJavaPrettyPrinterNew prettyPrinter;
+public class ElementPrinterHelperC {
+    private final JavaPrettyPrinterC prettyPrinter;
     private final Environment env;
     private TokenWriter printer;
 
-    public RdcElementPrinterHelperNew(TokenWriter printerTokenWriter, RdcJavaPrettyPrinterNew prettyPrinter, Environment env) {
+    public ElementPrinterHelperC(TokenWriter printerTokenWriter, JavaPrettyPrinterC prettyPrinter, Environment env) {
         this.printer = printerTokenWriter;
         this.prettyPrinter = prettyPrinter;
         this.env = env;
