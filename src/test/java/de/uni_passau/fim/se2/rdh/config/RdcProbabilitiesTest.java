@@ -1,6 +1,6 @@
 package de.uni_passau.fim.se2.rdh.config;
 
-import de.uni_passau.fim.se2.rdh.printer.CharacterType;
+import spoon.reflect.visitor.CharacterType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;

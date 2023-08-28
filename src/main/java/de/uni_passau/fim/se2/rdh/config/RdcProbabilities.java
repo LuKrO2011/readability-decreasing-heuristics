@@ -2,7 +2,7 @@ package de.uni_passau.fim.se2.rdh.config;
 
 import de.uni_passau.fim.se2.rdh.util.Randomness;
 import de.uni_passau.fim.se2.rdh.validators.Probability;
-import de.uni_passau.fim.se2.rdh.printer.CharacterType;
+import spoon.reflect.visitor.CharacterType;
 import de.uni_passau.fim.se2.rdh.validators.ProbabilityList;
 
 import java.util.ArrayList;

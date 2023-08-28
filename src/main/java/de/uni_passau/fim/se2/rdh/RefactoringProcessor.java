@@ -1,7 +1,7 @@
 package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
+import spoon.reflect.visitor.RdcTokenWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
-import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
 import spoon.reflect.visitor.PrinterHelper;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.reflect.visitor.RdcJavaPrettyPrinterNew;

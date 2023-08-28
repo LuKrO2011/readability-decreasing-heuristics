@@ -5,19 +5,17 @@
  *
  * Spoon is available either under the terms of the MIT License (see LICENSE-MIT.txt) of the Cecill-C License (see LICENSE-CECILL-C.txt). You as the user are entitled to choose the terms under which to adopt Spoon.
  */
-package de.uni_passau.fim.se2.rdh.printer;
-
-import java.util.Collection;
-import java.util.function.Function;
-import java.util.stream.Stream;
+package spoon.reflect.visitor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.reflect.code.CtComment;
 import spoon.reflect.code.CtJavaDoc;
 import spoon.reflect.code.CtJavaDocTag;
-import spoon.reflect.visitor.DefaultJavaPrettyPrinter;
-import spoon.reflect.visitor.PrinterHelper;
 import spoon.support.Internal;
+
+import java.util.Collection;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Duplicate of CommentHelper with public printComment(PrinterHelper printer, CtComment comment) method.

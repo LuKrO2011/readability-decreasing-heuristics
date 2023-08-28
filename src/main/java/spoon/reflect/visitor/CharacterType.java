@@ -1,4 +1,4 @@
-package de.uni_passau.fim.se2.rdh.printer;
+package spoon.reflect.visitor;
 
 /**
  * This enum represents the different types of characters that can be printed by the {@link RdcTokenWriter}.

@@ -1,10 +1,8 @@
-package de.uni_passau.fim.se2.rdh.printer;
+package spoon.reflect.visitor;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.reflect.code.CtComment;
-import spoon.reflect.visitor.PrinterHelper;
-import spoon.reflect.visitor.TokenWriter;
 
 /**
  * This class writes certain tokens to the output.

@@ -1,6 +1,5 @@
 package spoon.reflect.visitor;
 
-import de.uni_passau.fim.se2.rdh.printer.RdcTokenWriter;
 import spoon.compiler.Environment;
 import spoon.reflect.code.CtComment;
 import spoon.reflect.declaration.CtElement;
