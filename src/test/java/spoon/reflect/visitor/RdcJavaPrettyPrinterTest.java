@@ -96,6 +96,8 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         // Assert no change in the semantics of the code
         assertAll(
                 () -> assertThat(diffOperations).isEmpty(),
+                // Assert that the new file has 4 lines (3 of the block comment and 1 newline after the line comment)
+                () -> assertThat(getContent(modified).split("\n")).hasSize(4),
                 this::assertLogIsEmpty
         );
     }

@@ -43,7 +43,13 @@ public class RdcElementPrinterHelper extends ElementPrinterHelperC {
             return;
         }
         prettyPrinter.scan(comment);
-        printer.writelnAfterComment();
+
+        // If the comment is inline, a forced newline is needed to separate the comment from the next element.
+        if(comment.getCommentType() == CtComment.CommentType.INLINE) {
+            printer.writelnAfterComment();
+        } else {
+            printer.writeln();
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ import spoon.reflect.code.*;
 import spoon.reflect.declaration.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -198,5 +199,20 @@ public class ResourcesTest extends LoggerTest {
         }
 
         return false;
+    }
+
+    /**
+     * Get the content of the given file.
+     *
+     * @param file The file to get the content of.
+     * @return The content of the given file.
+     */
+    protected static String getContent(File file) {
+        try {
+            return new String(java.nio.file.Files.readAllBytes(file.toPath()));
+        } catch (IOException e) {
+            fail(e);
+        }
+        return "";
     }
 }
