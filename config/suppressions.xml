@@ -13,4 +13,7 @@
     <suppress checks=".*" files="Randomness.java"/>
     <suppress checks=".*" files="RdcCommentHelper.java"/>
     <suppress checks=".*" files="MyVariableReferenceFunction.java"/>
+
+    <!-- Suppresses all checks in the spoon folder -->
+    <suppress checks=".*" files="spoon[\\/].*"/>
 </suppressions>
