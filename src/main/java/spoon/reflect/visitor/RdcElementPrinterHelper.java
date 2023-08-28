@@ -8,8 +8,8 @@ import spoon.reflect.visitor.printer.CommentOffset;
 import java.util.List;
 
 /**
- * This class is a modified version of {@link spoon.reflect.visitor.ElementPrinterHelper}.
- * TODO: This fix does not work, as still all methods of the ElementPrinterHelper are called.
+ * This class is a modified version of {@link ElementPrinterHelperC}, which is a copy of {@link ElementPrinterHelper}.
+ * The purpose of this class is to make sure that a newline is written after each comment.
  */
 public class RdcElementPrinterHelper extends ElementPrinterHelperC {
 

@@ -21,7 +21,7 @@ import spoon.reflect.declaration.CtClass;
 import spoon.reflect.visitor.printer.CommentOffset;
 
 /**
- * This class is a modified version of {@link spoon.reflect.visitor.DefaultJavaPrettyPrinter}.
+ * This class is a modified version of {@link JavaPrettyPrinterC}, which is a copy of {@link DefaultJavaPrettyPrinter}.
  */
 public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
 

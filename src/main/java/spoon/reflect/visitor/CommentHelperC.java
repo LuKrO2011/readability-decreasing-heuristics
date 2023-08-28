@@ -17,8 +17,10 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+
 /**
- * Duplicate of CommentHelper with public printComment(PrinterHelper printer, CtComment comment) method.
+ * This is a modified version of {@link spoon.reflect.visitor.CommentHelper}.
+ * Required to make {@link #printComment(CtComment)} and {@link #printComment(PrinterHelper, CtComment)} public.
  */
 @SuppressFBWarnings("SF_SWITCH_NO_DEFAULT")
 @Internal

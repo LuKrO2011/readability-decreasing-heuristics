@@ -52,6 +52,10 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.function.Consumer;
 
+/**
+ * This is a modified version of {@link ElementPrinterHelper}.
+ * Required to change the signature of the constructor.
+ */
 public class ElementPrinterHelperC {
     private final JavaPrettyPrinterC prettyPrinter;
     private final Environment env;

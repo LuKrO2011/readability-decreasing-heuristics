@@ -138,7 +138,8 @@ import static spoon.reflect.visitor.ElementPrinterHelperC.PrintTypeArguments.ALS
 import static spoon.reflect.visitor.ElementPrinterHelperC.PrintTypeArguments.ONLY_PRINT_EXPLICIT_TYPES;
 
 /**
- * A visitor for generating Java code from the program compile-time model.
+ * This is a modified version of {@link DefaultJavaPrettyPrinter}. All changes are marked with "RDC".
+ * Required to change the signature of {@link #setPrinterTokenWriter(RdcTokenWriter)}.
  */
 public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
 
