@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.refactorings.experimental.inline;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.refactoring.CtRefactoring;
 import spoon.reflect.code.CtExpression;
 import spoon.reflect.declaration.CtField;
@@ -90,6 +91,7 @@ public class CtInlineFieldRefactoring implements CtRefactoring {
      *
      * @return The target of the refactoring.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP") // The target can be changed by the user at runtime
     public CtField<?> getTarget() {
         return target;
     }
@@ -99,6 +101,7 @@ public class CtInlineFieldRefactoring implements CtRefactoring {
      *
      * @param target The target of the refactoring.
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The target can be changed by the user at runtime
     public void setTarget(final CtField<?> target) {
         this.target = target;
     }

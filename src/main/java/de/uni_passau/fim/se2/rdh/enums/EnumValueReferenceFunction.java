@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.enums;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.SpoonException;
 import spoon.reflect.declaration.CtElement;
 
@@ -32,6 +33,8 @@ public class EnumValueReferenceFunction implements CtConsumableFunction<CtElemen
      *
      * @param field The field to search for.
      */
+
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The field can be changed by the user at runtime
     public EnumValueReferenceFunction(final CtEnumValue<?> field) {
         this.field = field;
     }

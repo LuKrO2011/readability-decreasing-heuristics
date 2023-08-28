@@ -1,5 +1,6 @@
 package de.uni_passau.fim.se2.rdh.enums;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import spoon.SpoonException;
 import spoon.reflect.code.CtCatchVariable;
 import spoon.reflect.code.CtLocalVariable;
@@ -47,6 +48,7 @@ public class MyVariableReferenceFunction implements CtConsumableFunction<CtEleme
         this.variable = variable;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The scope can be changed by the user
     @Override
     public void apply(CtElement variableOrScope, CtConsumer<Object> outputConsumer) {
         scope = variableOrScope;
