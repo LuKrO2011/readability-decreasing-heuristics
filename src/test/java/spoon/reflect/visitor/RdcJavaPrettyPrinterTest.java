@@ -37,8 +37,6 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         prettyPrinter.setPrinterTokenWriter(new RdcTokenWriter(printerHelper, probabilities));
         prettyPrinter.setIgnoreImplicit(false);
         env.setPrettyPrinterCreator(() -> prettyPrinter);
-
-        spoon.addInputResource(resources + "/" + helloWorld);
     }
 
     private void setUpLogger() {
@@ -48,6 +46,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
     @Test
     void testWriteFile(@TempDir Path outputDir) {
         spoon.setSourceOutputDirectory(outputDir.toString());
+        spoon.addInputResource(resources + "/" + helloWorld);
         spoon.buildModel();
 
         spoon.prettyprint();
@@ -66,6 +65,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         probabilities.setInsertBraces(1.0);
 
         spoon.setSourceOutputDirectory(outputDir.toString());
+        spoon.addInputResource(resources + "/" + helloWorld);
         spoon.buildModel();
 
         spoon.prettyprint();
@@ -87,6 +87,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         probabilities.setSpaceInsteadOfNewline(1.0);
 
         spoon.setSourceOutputDirectory(outputDir.toString());
+        spoon.addInputResource(resources + "/" + helloWorld);
         spoon.buildModel();
 
         spoon.prettyprint();
@@ -101,5 +102,33 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
                 this::assertLogIsEmpty
         );
     }
+
+    @Test
+    void testNewlineAfterLineComment2(@TempDir Path outputDir) {
+        String file = "LineComment.java";
+        File original = new File(resources, file);
+        File modified = new File(outputDir.toString(), file);
+
+        // TODO: When space instead of newline is written, the tab is also written
+        probabilities.setSpaceInsteadOfNewline(1.0);
+
+        spoon.setSourceOutputDirectory(outputDir.toString());
+        spoon.addInputResource(resources + "/" + file);
+        spoon.buildModel();
+
+        spoon.prettyprint();
+
+        List<Operation> diffOperations = getDiffOperations(original, modified);
+
+        // Assert no change in the semantics of the code
+        assertAll(
+                () -> assertThat(diffOperations).isEmpty(),
+                // Assert that the comment is exactly once in the output
+                () -> assertThat(getContent(modified)).containsOnlyOnce(
+                        "Make sure it actually implements WorldEditInterface"),
+                this::assertLogIsEmpty
+        );
+    }
+
 
 }

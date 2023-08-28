@@ -77,20 +77,6 @@ public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
      */
     @Override
     protected void enterCtStatement(final CtStatement s) {
-        elementPrinterHelper.writeComment(s, CommentOffset.BEFORE);
-        getPrinterHelper().mapLine(s, sourceCompilationUnit);
-        if (!context.isNextForVariable()) {
-            //TODO AnnotationLoopTest#testAnnotationDeclaredInForInit expects that annotations of next for variables
-            // are not printed
-            //but may be correct is that the next variables are not annotated, because they might have different
-            // annotation then first param!
-            elementPrinterHelper.writeAnnotations(s);
-        }
-        if (!context.isFirstForVariable() && !context.isNextForVariable()) {
-            if (s.getLabel() != null) {
-                printer.writeIdentifier(s.getLabel()).writeSpace().writeSeparator(":").writeSpace();
-            }
-        }
         super.enterCtStatement(s);
     }
 
@@ -101,15 +87,6 @@ public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
      */
     @Override
     protected void exitCtStatement(final CtStatement statement) {
-        if (!(statement instanceof CtBlock || statement instanceof CtIf || statement instanceof CtFor
-                || statement instanceof CtForEach || statement instanceof CtWhile || statement instanceof CtTry
-                || statement instanceof CtSwitch || statement instanceof CtSynchronized || statement instanceof CtClass
-                || statement instanceof CtComment)) {
-            if (context.isStatement(statement) && !context.isFirstForVariable() && !context.isNextForVariable()) {
-                printer.writeSeparator(";");
-            }
-        }
-        elementPrinterHelper.writeComment(statement, CommentOffset.AFTER);
         super.exitCtStatement(statement);
     }
 
@@ -120,13 +97,6 @@ public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
      */
     @Override
     protected void exitCtExpression(final CtExpression<?> e) {
-        while ((!context.parenthesedExpression.isEmpty()) && e == context.parenthesedExpression.peek()) {
-            context.parenthesedExpression.pop();
-            printer.writeSeparator(")");
-        }
-        if (!(e instanceof CtStatement)) {
-            elementPrinterHelper.writeComment(e, CommentOffset.AFTER);
-        }
         super.exitCtExpression(e);
     }
 
@@ -136,13 +106,7 @@ public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
      * {@inheritDoc}
      */
     protected void enterCtExpression(final CtExpression<?> e) {
-        if (e instanceof CtBinaryOperator<?> && probabilities.shouldInsertBraces()) {
-            context.parenthesedExpression.push(e);
-            printer.writeSeparator("(");
-            super.enterCtExpression(e);
-        } else {
-            super.enterCtExpression(e);
-        }
+        super.enterCtExpression(e);
     }
 
     private PrinterHelper getPrinterHelper() {
