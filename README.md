@@ -88,9 +88,9 @@ required (besides [Usage](#usage)) to use the fork in this project:
     <dependency>
         <groupId>fr.inria.gforge.spoon</groupId>
         <artifactId>spoon-core</artifactId>
-        <version>10.4.1-SNAPSHOT-jar-with-dependencies</version>
+        <version>10.4.1-FORK-jar-with-dependencies</version>
         <scope>system</scope>
-        <systemPath>${project.basedir}/../spoon/target/spoon-core-10.4.1-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+        <systemPath>${project.basedir}/../spoon/target/spoon-core-10.4.1-FORK-jar-with-dependencies.jar</systemPath>
     </dependency>
     ```
 
@@ -117,7 +117,16 @@ To change the project to use a fork of a repository, change the following lines 
   <dependency>
       <groupId>fr.inria.gforge.spoon</groupId>
       <artifactId>spoon-core</artifactId>
-      <version>10.4.1-SNAPSHOT-jar-with-dependencies</version>
+      <version>10.4.1-FORK-jar-with-dependencies</version>
       <scope>compile</scope>
   </dependency>
   ```
+
+### For debugging
+```xml
+<dependency>
+    <groupId>fr.inria.gforge.spoon</groupId>
+    <artifactId>spoon-core</artifactId>
+    <version>10.4.1-FORK</version>
+</dependency>
+```
