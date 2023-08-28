@@ -24,7 +24,7 @@ import spoon.reflect.visitor.printer.CommentOffset;
 /**
  * This class is a modified version of {@link spoon.reflect.visitor.DefaultJavaPrettyPrinter}.
  */
-public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
+public class RdcJavaPrettyPrinter extends RdcJavaPrettyPrinterNew {
 
     /**
      * The (logger) of this class.
@@ -47,7 +47,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      */
     @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public RdcJavaPrettyPrinter(final Environment env, final RdcProbabilities probabilities) {
-        super(env);
+        super(env, probabilities);
         this.probabilities = probabilities;
     }
 
@@ -55,7 +55,7 @@ public class RdcJavaPrettyPrinter extends DefaultJavaPrettyPrinter {
      * {@inheritDoc}
      */
     @Override
-    public DefaultJavaPrettyPrinter setPrinterTokenWriter(final TokenWriter tokenWriter) {
+    public RdcJavaPrettyPrinterNew setPrinterTokenWriter(final RdcTokenWriter tokenWriter) {
         this.printer = tokenWriter;
 
         RdcTokenWriter rdcTokenWriter;

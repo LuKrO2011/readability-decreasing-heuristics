@@ -12,9 +12,9 @@ import java.util.List;
  * This class is a modified version of {@link spoon.reflect.visitor.ElementPrinterHelper}.
  * TODO: This fix does not work, as still all methods of the ElementPrinterHelper are called.
  */
-public class RdcElementPrinterHelper extends ElementPrinterHelper {
+public class RdcElementPrinterHelper extends RdcElementPrinterHelperNew {
 
-    private final DefaultJavaPrettyPrinter prettyPrinter;
+    private final RdcJavaPrettyPrinterNew prettyPrinter;
     private final Environment env;
     private RdcTokenWriter printer;
 
@@ -25,7 +25,7 @@ public class RdcElementPrinterHelper extends ElementPrinterHelper {
      * @param prettyPrinter      The pretty printer to use.
      * @param env                The environment to use.
      */
-    public RdcElementPrinterHelper(final RdcTokenWriter printerTokenWriter, final DefaultJavaPrettyPrinter prettyPrinter,
+    public RdcElementPrinterHelper(final RdcTokenWriter printerTokenWriter, final RdcJavaPrettyPrinterNew prettyPrinter,
                                    final Environment env) {
         super(printerTokenWriter, prettyPrinter, env);
         this.printer = printerTokenWriter;

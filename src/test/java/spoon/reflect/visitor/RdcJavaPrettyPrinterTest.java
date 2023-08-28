@@ -33,7 +33,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
 
         probabilities = new RdcProbabilities();
 
-        DefaultJavaPrettyPrinter prettyPrinter = new RdcJavaPrettyPrinter(env, probabilities);
+        RdcJavaPrettyPrinter prettyPrinter = new RdcJavaPrettyPrinter(env, probabilities);
         PrinterHelper printerHelper = new PrinterHelper(env);
         prettyPrinter.setPrinterTokenWriter(new RdcTokenWriter(printerHelper, probabilities));
         prettyPrinter.setIgnoreImplicit(false);
@@ -82,8 +82,6 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
 
     @Test
     void testNewlineAfterLineComment(@TempDir Path outputDir) {
-        outputDir = Path.of("output");
-
         File original = new File(resources, helloWorld);
         File modified = new File(outputDir.toString(), helloWorld);
 
