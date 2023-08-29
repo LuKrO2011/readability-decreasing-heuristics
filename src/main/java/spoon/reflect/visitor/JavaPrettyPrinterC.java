@@ -589,6 +589,16 @@ public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
             if (!statement.isImplicit()) {
                 printer.writeln();
                 elementPrinterHelper.writeStatement(statement);
+
+                /* It might happen, that two newlines instead of one are printed here even if the probabilities
+                 * say otherwise. However, I could not find a better solution. The problem is, that if an inline
+                 * comment is on its own, it is treated as a statement and therewith RdcElementPrinterHelper (which
+                 * would force a newline otherwise) is not called. If there is no newline, this might destroy syntax.
+                 */
+                // If the last statement is a CtComment, force a linebreak
+                if (statement instanceof CtComment) {
+                    printer.writelnAfterComment();
+                }
             }
         }
         printer.decTab();

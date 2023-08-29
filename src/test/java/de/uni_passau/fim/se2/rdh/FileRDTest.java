@@ -73,4 +73,27 @@ class FileRDTest extends ResourcesTest {
         );
     }
 
+    @Test
+    void testEmptyCatch(@TempDir Path outputDir) {
+        String filename = "EmptyCatch.java";
+        File file = new File(outputDir.toString(), filename);
+
+        AbstractRD fileRD = rdf.create(
+                ProcessingPath.file(resourcesPath.resolve(filename)),
+                ProcessingPath.directory(outputDir),
+                Path.of("src/main/resources/probabilities-newlines.yaml")
+        );
+        Randomness.setSeed(1234);
+
+        fileRD.decreaseReadability();
+
+        DirectoryFlattener.flatten(new File(outputDir.toString()));
+
+        assertAll(
+                () -> assertTrue(file.exists()),
+                () -> assertFalse(getContent(file).contains("// Empty catch }")),
+                this::assertLogIsEmpty
+        );
+    }
+
 }
