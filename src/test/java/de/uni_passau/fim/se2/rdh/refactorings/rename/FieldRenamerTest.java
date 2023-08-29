@@ -36,7 +36,7 @@ class FieldRenamerTest extends ModificationTest {
     }
 
     @Test
-    void testRenameFieldNameAlreadyExists() {
+    void testRenameFieldNameAlreadyExists(@TempDir Path outputDir) {
         String fileName = "NameConflicts.java";
         List<Operation> modifications = applyModifications(outputDir, fileName);
 
@@ -45,7 +45,7 @@ class FieldRenamerTest extends ModificationTest {
     }
 
     @Test
-    void testRenameFieldToOwnName() {
+    void testRenameFieldToOwnName(@TempDir Path outputDir) {
         String fileName = "NoNameConflicts.java";
         List<Operation> modifications = applyModifications(outputDir, fileName);
 
