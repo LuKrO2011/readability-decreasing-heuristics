@@ -208,7 +208,7 @@ public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
     /**
      * Token detector, which delegates tokens to {@link TokenWriter}
      */
-    private TokenWriter printer;
+    private RdcTokenWriter printer;
 
     /**
      * Element printer helper.
