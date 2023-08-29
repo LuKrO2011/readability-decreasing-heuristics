@@ -120,21 +120,42 @@ public class RdcTokenWriter implements TokenWriter {
      * @return This {@link RdcTokenWriter}.
      */
     public RdcTokenWriter writelnAfterComment() {
-        writeNewLines();
+        writeAtLeastNewLines(1);
         return this;
     }
 
     /**
-     * Writes a random number of newlines depending on the probability.
+     * Writes the given number of newlines.
      *
-     * @return This {@link RdcTokenWriter}.
+     * @param amount The number of newlines to write.
      */
-    private RdcTokenWriter writeNewLines() {
-        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
-        for (int i = 0; i < numberOfNewLines; i++) {
+    private void writeNewLines(int amount) {
+        for (int i = 0; i < amount; i++) {
             printerHelper.writeln();
         }
-        return this;
+    }
+
+    /**
+     * Writes a random number of newlines depending on the probability.
+     */
+    private void writeNewLines() {
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
+        writeNewLines(numberOfNewLines);
+    }
+
+    /**
+     * Writes a random number of newlines depending on the probability. The number of newlines will be at least the
+     * given minimum.
+     *
+     * @param min The minimum number of newlines to write.
+     */
+    private void writeAtLeastNewLines(int min) {
+        int numberOfNewLines = probabilities.getRandomNumberOf(CharacterType.NEWLINE);
+        if (numberOfNewLines < min) {
+            numberOfNewLines = min;
+        }
+
+        writeNewLines(numberOfNewLines);
     }
 
     /**

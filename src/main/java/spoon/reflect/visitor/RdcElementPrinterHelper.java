@@ -42,7 +42,7 @@ public class RdcElementPrinterHelper extends ElementPrinterHelperC {
         if (!env.isCommentsEnabled() || comment == null) {
             return;
         }
-        prettyPrinter.scan(comment);
+        prettyPrinter.scan(comment); // TODO: Modify the comment (remove linebreaks), Change comment type
 
         // If the comment is inline, a forced newline is needed to separate the comment from the next element.
         if(comment.getCommentType() == CtComment.CommentType.INLINE) {

@@ -104,7 +104,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
     }
 
     @Test
-    void testNewlineAfterLineComment2(@TempDir Path outputDir) {
+    void testSingleLineComment(@TempDir Path outputDir) {
         String file = "LineComment.java";
         File original = new File(resources, file);
         File modified = new File(outputDir.toString(), file);
