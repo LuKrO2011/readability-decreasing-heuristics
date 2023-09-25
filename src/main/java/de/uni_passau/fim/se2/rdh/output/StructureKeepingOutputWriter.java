@@ -47,18 +47,20 @@ public class StructureKeepingOutputWriter extends AbstractOutputWriter {
 
 
     private void writeOutput(final Path inputDir, final String fileName, final CtClass<?> clazz) {
-        // TODO: Adjust validation
-        /* boolean validPath = validatePath(inputDir);
+        boolean validPath = validatePath(inputDir);
         boolean validFileName = validateFileName(inputDir, fileName);
         boolean validClass = validateClass(clazz);
 
         // If the path, file name or class is invalid, return
         if (!validPath || !validFileName || !validClass) {
             return;
-        }*/
+        }
 
         // Create the output subdirectory
         Path outputDir = createOutputDir(inputDir, inputBasePath, outputBaseDir);
+        if (outputDir == null) {
+            return;
+        }
 
         // Get the printer
         Environment env = spoon.getEnvironment();
@@ -85,15 +87,27 @@ public class StructureKeepingOutputWriter extends AbstractOutputWriter {
      * @param inputDir      the input directory
      * @param inputBaseDir  the base directory of all input files of the used refactoring processor
      * @param outputBaseDir the base directory of the output
-     * @return the output directory
+     * @return the output directory or null if the output directory could not be created
      */
     private static Path createOutputDir(final Path inputDir, final Path inputBaseDir, final Path outputBaseDir) {
         // Get the relative path of the input directory
         Path relativePath = inputBaseDir.relativize(inputDir);
 
-        // Create the output directory
+        // Calculate the output directory
         Path outputDir = Paths.get(outputBaseDir.toString(), relativePath.toString());
-        outputDir.toFile().mkdirs();
+
+        // Check if the output directory already exists
+        if (outputDir.toFile().exists()) {
+            return outputDir;
+        }
+
+        // If the output directory does not exist, create it
+        boolean success = outputDir.toFile().mkdirs();
+        if (!success) {
+            LOG.error("Could not create output directory: {}", outputDir);
+            return null;
+        }
+
         return outputDir;
     }
 
@@ -114,8 +128,7 @@ public class StructureKeepingOutputWriter extends AbstractOutputWriter {
     }
 
     /**
-     * Validate the given file name. The file name must not be empty, must not be null, must not be a directory and must
-     * not already exist.
+     * Validate the given file name. The file name must not be empty, must not be null, must not be a directory.
      *
      * @param path     the path to the file
      * @param fileName the file name
@@ -131,12 +144,6 @@ public class StructureKeepingOutputWriter extends AbstractOutputWriter {
         if (Paths.get(fileName).toFile().isDirectory()) {
             if (LOG.isErrorEnabled()) {
                 LOG.error("File name is a directory: {}", fileName);
-            }
-            return false;
-        }
-        if (Paths.get(path.toString(), fileName).toFile().exists()) {
-            if (LOG.isErrorEnabled()) {
-                LOG.error("File already exists: {}", fileName);
             }
             return false;
         }
