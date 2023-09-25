@@ -12,7 +12,8 @@ public final class Config {
     private String modelPath;
     private String pythonScriptPath;
     private Scope scope = Scope.FILE;
-    private RenameMode renameMethodMode = RenameMode.ITERATIVE;
+    private RenameMode renameMethodMode = RenameMode.ITERATIVE; // TODO: Add input validation?
+    private OutputMode outputMode = OutputMode.NEW_DIRECTORY; // TODO: Add input validation?
 
     /**
      * Creates a new {@link Config} all paths null.
@@ -31,11 +32,13 @@ public final class Config {
         this.pythonScriptPath = config.getPythonScriptPath();
         this.scope = config.getScope();
         this.renameMethodMode = config.getRenameMethodMode();
+        this.outputMode = config.getOutputMode();
     }
 
     @Override
     public String toString() {
-        return "Config{condaPath='%s', modelPath='%s', pythonScriptPath='%s', scope=%s, renameMethodMode=%s}".formatted(
-                condaPath, modelPath, pythonScriptPath, scope, renameMethodMode);
+        return ("Config{condaPath='%s', modelPath='%s', pythonScriptPath='%s', scope=%s, renameMethodMode=%s "
+                + "outputMode=%s}")
+                .formatted(condaPath, modelPath, pythonScriptPath, scope, renameMethodMode, outputMode);
     }
 }

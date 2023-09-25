@@ -3,3 +3,4 @@ modelPath: C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_mod
 pythonScriptPath: C:/Users/lukas/PycharmProjects/code2vec
 scope: FILE # FILE, DIRECTORY
 renameMethodMode: REALISTIC # ITERATIVE, REALISTIC
+outputMode: NEW_DIRECTORY # SAME_DIRECTORY (as input), NEW_DIRECTORY (in output folder) (only for scope FILE and directory input)
