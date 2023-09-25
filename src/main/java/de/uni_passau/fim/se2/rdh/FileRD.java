@@ -38,7 +38,7 @@ public class FileRD extends AbstractRD {
     public void decreaseReadability() {
         Stream<Path> javaFiles = getJavaFiles(getInputDir().getPath());
         javaFiles.forEach(file -> {
-            LOG.info("Processing file {} to {}.", file, getOutputDir().getPath());
+            LOG.info("Processing file {}.", file);
             RefactoringProcessor refactoringProcessor = createRefactoringProcessor();
             refactoringProcessor.process(file.toString());
         });
