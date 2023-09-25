@@ -122,13 +122,21 @@ public class RefactoringProcessor {
     /**
      * Create the output files (java code) using the modified spoon pretty printer. The output is written to the given
      * directory with the given file name.
-     * TODO: Refactor with method before.
      *
      * @param outputDirForFile the directory to write the output to
      * @param fileName         the name of the file
      * @param clazz            the class to write
      */
     public void writeOutput(final ProcessingPath outputDirForFile, final String fileName, final CtClass<?> clazz) {
+        Path outputDirForFilePath = Paths.get(outputDirForFile.getAbsolutePath());
+        boolean validPath = validatePath(outputDirForFilePath);
+        boolean validFileName = validateFileName(outputDirForFilePath, fileName);
+        boolean validClass = validateClass(clazz);
+
+        // If the path, file name or class is invalid, return
+        if (!validPath || !validFileName || !validClass) {
+            return;
+        }
 
         // Get the printer
         Environment env = spoon.getEnvironment();
@@ -146,7 +154,68 @@ public class RefactoringProcessor {
                 LOG.error("Could not write output file: {}", e.getMessage(), e);
             }
         }
+    }
 
+    /**
+     * Validate the given path. The path must exist and must be a directory.
+     *
+     * @param path the path to validate
+     * @return true if the path is valid, false otherwise
+     */
+    private static boolean validatePath(final Path path) {
+        if (!path.toFile().exists() || !path.toFile().isDirectory()) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Output directory does not exist: {}", path);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validate the given file name. The file name must not be empty, must not be null, must not be a directory and must
+     * not already exist.
+     *
+     * @param path     the path to the file
+     * @param fileName the file name
+     * @return true if the file name is valid, false otherwise
+     */
+    private static boolean validateFileName(final Path path, final String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("File name is invalid: {}", fileName);
+            }
+            return false;
+        }
+        if (Paths.get(fileName).toFile().isDirectory()) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("File name is a directory: {}", fileName);
+            }
+            return false;
+        }
+        if (Paths.get(path.toString(), fileName).toFile().exists()) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("File already exists: {}", fileName);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Validate the given class. The class must not be null.
+     *
+     * @param clazz the class to validate
+     * @return true if the class is valid, false otherwise
+     */
+    private static boolean validateClass(final CtClass<?> clazz) {
+        if (clazz == null) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Class is null.");
+            }
+            return false;
+        }
+        return true;
     }
 
     /**
