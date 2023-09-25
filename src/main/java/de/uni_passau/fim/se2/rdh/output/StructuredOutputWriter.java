@@ -1,6 +1,7 @@
 package de.uni_passau.fim.se2.rdh.output;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
@@ -10,6 +11,7 @@ import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.reflect.visitor.filter.TypeFilter;
 
 import java.io.FileWriter;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -31,6 +33,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param spoon         the spoon instance to use
      * @param probabilities the probabilities to use
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The probabilities can be changed by the user at runtime
     public StructuredOutputWriter(final SpoonAPI spoon, final RdcProbabilities probabilities) {
         this.spoon = spoon;
         this.probabilities = probabilities;
@@ -61,7 +64,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
 
         // Write the java code to the output directory with the same file name
         Path path = Paths.get(outputDir.toString(), fileName);
-        try (FileWriter writer = new FileWriter(path.toString())) {
+        try (FileWriter writer = new FileWriter(path.toString(), Charset.defaultCharset())) {
             writer.write(javaCode);
         } catch (Exception e) {
             if (LOG.isErrorEnabled()) {
@@ -177,7 +180,13 @@ public abstract class StructuredOutputWriter implements OutputWriter {
             for (String filePath : fileNames) {
 
                 // Get the file name without the extension
-                String fileName = Paths.get(filePath).getFileName().toString().replace(".java", "");
+                Path fileNameP = Paths.get(filePath).getFileName();
+                if (fileNameP == null) {
+                    LOG.warn("Could not get file name for file {}.", filePath);
+                    continue;
+                }
+
+                String fileName = fileNameP.toString().replace(".java", "");
                 if (clazzName.equals(fileName)) {
                     classDictionary.put(filePath, clazz);
                 }
@@ -193,6 +202,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param files the files
      * @return the common path
      */
+    @SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME") // Method is deprecated anyway.
     @Deprecated
     private static Path getCommonPath(final String[] files) {
         // Convert the array of file paths to a list of Path objects

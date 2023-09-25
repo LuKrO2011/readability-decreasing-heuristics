@@ -145,6 +145,7 @@ public class RefactoringProcessor {
      *
      * @param outputWriter the output writer
      */
+    @SuppressFBWarnings("EI_EXPOSE_REP2") // The output writer can be changed by the user at runtime
     public void setOutputWriter(final OutputWriter outputWriter) {
         this.outputWriter = outputWriter;
     }

@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public class StructureKeepingOutputWriter extends StructuredOutputWriter implements OutputWriter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StructuredOutputWriter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StructureKeepingOutputWriter.class);
     private final Path inputBasePath;
     private final Path outputBaseDir;
 
@@ -76,7 +76,14 @@ public class StructureKeepingOutputWriter extends StructuredOutputWriter impleme
         // Get the input directory and the file names
         Path path = Paths.get(filePath);
         Path inputDir = path.getParent();
-        String inputFileName = path.getFileName().toString();
+        Path inputFileNameP = path.getFileName();
+        String inputFileName;
+        if (inputFileNameP == null) {
+            LOG.warn("Could not get file name for file {}. The file was not saved.", filePath);
+            return;
+        } else {
+            inputFileName = inputFileNameP.toString();
+        }
 
         // Get the class for the file
         CtClass<?> clazz = classDictionary.get(filePath);
