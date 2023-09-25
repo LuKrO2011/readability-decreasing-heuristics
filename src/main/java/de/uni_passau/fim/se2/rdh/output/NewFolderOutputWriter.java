@@ -2,6 +2,9 @@ package de.uni_passau.fim.se2.rdh.output;
 
 import spoon.SpoonAPI;
 
+/**
+ * Writes the output to a new folder.
+ */
 public class NewFolderOutputWriter extends AbstractOutputWriter {
 
     private final SpoonAPI spoon;

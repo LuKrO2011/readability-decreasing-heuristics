@@ -13,22 +13,20 @@ import spoon.reflect.visitor.filter.TypeFilter;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * Writes the output to the same folder as the input files with a different file name.
+ * Writes the output to the output directory and also reproduces the original directory structure in the output
+ * directory.
  */
-public class SameFolderOutputWriter extends AbstractOutputWriter {
+public class StructureKeepingOutputWriter extends AbstractOutputWriter {
 
     private static final Logger LOG = LoggerFactory.getLogger(RefactoringProcessor.class);
     private final SpoonAPI spoon;
-
     private final RdcProbabilities probabilities;
-
-    private static final String RDH_FILE_EXTENSION = "_rdh.java";
-
+    private final Path inputBasePath;
+    private final Path outputBaseDir;
     private String[] input;
 
     /**
@@ -36,29 +34,31 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
      *
      * @param spoon         the spoon instance to use
      * @param probabilities the probabilities to use
+     * @param inputBasePath the base path of all input files of the used refactoring processor
+     * @param outputBaseDir the base directory of the output
      */
-    public SameFolderOutputWriter(final SpoonAPI spoon, final RdcProbabilities probabilities) {
+    public StructureKeepingOutputWriter(final SpoonAPI spoon, final RdcProbabilities probabilities,
+                                        final Path inputBasePath, final Path outputBaseDir) {
         this.spoon = spoon;
         this.probabilities = probabilities;
+        this.inputBasePath = inputBasePath;
+        this.outputBaseDir = outputBaseDir;
     }
 
-    /**
-     * Create the output files (java code) using the modified spoon pretty printer. The output is written to the given
-     * directory with the given file name.
-     *
-     * @param outputDirForFile the directory to write the output to
-     * @param fileName         the name of the file
-     * @param clazz            the class to write
-     */
-    private void writeOutput(final Path outputDirForFile, final String fileName, final CtClass<?> clazz) {
-        boolean validPath = validatePath(outputDirForFile);
-        boolean validFileName = validateFileName(outputDirForFile, fileName);
+
+    private void writeOutput(final Path inputDir, final String fileName, final CtClass<?> clazz) {
+        // TODO: Adjust validation
+        /* boolean validPath = validatePath(inputDir);
+        boolean validFileName = validateFileName(inputDir, fileName);
         boolean validClass = validateClass(clazz);
 
         // If the path, file name or class is invalid, return
         if (!validPath || !validFileName || !validClass) {
             return;
-        }
+        }*/
+
+        // Create the output subdirectory
+        Path outputDir = createOutputDir(inputDir, inputBasePath, outputBaseDir);
 
         // Get the printer
         Environment env = spoon.getEnvironment();
@@ -67,8 +67,8 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
         // Convert the model to java code
         String javaCode = printer.prettyprint(clazz);
 
-        // Write the java code to the output file
-        Path path = Paths.get(outputDirForFile.toString(), fileName);
+        // Write the java code to the output directory with the same file name
+        Path path = Paths.get(outputDir.toString(), fileName);
         try (FileWriter writer = new FileWriter(path.toString())) {
             writer.write(javaCode);
         } catch (Exception e) {
@@ -76,6 +76,25 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
                 LOG.error("Could not write output file: {}", e.getMessage(), e);
             }
         }
+    }
+
+    /**
+     * Creates all subdirectories in the output directory, that are needed to reproduce the original directory
+     * structure. The original directory structure is reproduced by using the input directory as base directory.
+     *
+     * @param inputDir      the input directory
+     * @param inputBaseDir  the base directory of all input files of the used refactoring processor
+     * @param outputBaseDir the base directory of the output
+     * @return the output directory
+     */
+    private static Path createOutputDir(final Path inputDir, final Path inputBaseDir, final Path outputBaseDir) {
+        // Get the relative path of the input directory
+        Path relativePath = inputBaseDir.relativize(inputDir);
+
+        // Create the output directory
+        Path outputDir = Paths.get(outputBaseDir.toString(), relativePath.toString());
+        outputDir.toFile().mkdirs();
+        return outputDir;
     }
 
     /**
@@ -167,13 +186,12 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
             Path path = Paths.get(fileName);
             Path inputDir = path.getParent();
             String inputFileName = path.getFileName().toString();
-            String outputFileName = inputFileName.substring(0, inputFileName.lastIndexOf('.')) + RDH_FILE_EXTENSION;
 
             // Get the class for the file
             CtClass<?> clazz = classDictionary.get(fileName);
 
             // Write the output
-            writeOutput(inputDir, outputFileName, clazz);
+            writeOutput(inputDir, inputFileName, clazz);
         }
     }
 
@@ -201,40 +219,6 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
             }
         }
         return classDictionary;
-    }
-
-
-    /**
-     * Gets the common path of the given files. The common path is the path that is shared by all files. This is never a
-     * file but always a directory.
-     *
-     * @param files the files
-     * @return the common path
-     */
-    @Deprecated
-    private static Path getCommonPath(final String[] files) {
-        // Convert the array of file paths to a list of Path objects
-        List<Path> paths = Arrays.stream(files)
-                .map(Paths::get)
-                .toList();
-
-        // If there's only one path, return its parent directory
-        if (paths.size() == 1) {
-            return paths.get(0).getParent();
-        }
-
-        // Find the shortest path as a starting point for the common path
-        Path commonPath = paths.get(0);
-
-        // Iterate through each path to find the common prefix
-        for (Path path : paths) {
-            commonPath = commonPath.relativize(path);
-        }
-
-        // Build the common path by joining the common prefix with the root directory
-        commonPath = commonPath.isAbsolute() ? commonPath : Paths.get("/").resolve(commonPath);
-
-        return commonPath;
     }
 
 }

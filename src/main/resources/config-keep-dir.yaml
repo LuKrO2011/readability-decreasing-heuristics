@@ -1,0 +1,6 @@
+condaPath: C:/Users/lukas/anaconda3/envs/code2vec
+modelPath: C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_model_iter8.release
+pythonScriptPath: C:/Users/lukas/PycharmProjects/code2vec
+scope: FILE # FILE, DIRECTORY
+renameMethodMode: ITERATIVE # ITERATIVE, REALISTIC
+outputMode: STRUCTURE_KEEPING # SAME_DIRECTORY (as input), NEW_DIRECTORY (in output folder) (only for scope FILE and directory input)

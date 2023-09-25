@@ -5,6 +5,7 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.RenameMode;
 import de.uni_passau.fim.se2.rdh.output.NewFolderOutputWriter;
 import de.uni_passau.fim.se2.rdh.output.SameFolderOutputWriter;
+import de.uni_passau.fim.se2.rdh.output.StructureKeepingOutputWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.imports.StarImporter;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
@@ -46,11 +47,13 @@ public class RefactoringProcessorBuilder {
     /**
      * Creates a new RefactoringProcessor.
      *
+     * @param inputDirPath  the path to the input directory
      * @param outputDirPath the path to the output directory
      * @param probabilities the probabilities to use
      * @return the RefactoringProcessor
      */
-    public RefactoringProcessor create(final ProcessingPath outputDirPath, final RdcProbabilities probabilities) {
+    public RefactoringProcessor create(final ProcessingPath inputDirPath, final ProcessingPath outputDirPath,
+                                       final RdcProbabilities probabilities) {
         // Create spoon launcher
         SpoonAPI spoon = new Launcher();
 
@@ -68,6 +71,9 @@ public class RefactoringProcessorBuilder {
             case NEW_DIRECTORY -> refactoringProcessor.setOutputWriter(new NewFolderOutputWriter(spoon));
             case SAME_DIRECTORY ->
                     refactoringProcessor.setOutputWriter(new SameFolderOutputWriter(spoon, probabilities));
+            case STRUCTURE_KEEPING -> refactoringProcessor.setOutputWriter(
+                    new StructureKeepingOutputWriter(spoon, probabilities, inputDirPath.getPath(),
+                            outputDirPath.getPath()));
             default -> throw new IllegalStateException("Unexpected value: " + config.getOutputMode());
         }
 

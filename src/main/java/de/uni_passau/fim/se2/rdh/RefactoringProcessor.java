@@ -4,6 +4,7 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.output.AbstractOutputWriter;
 import de.uni_passau.fim.se2.rdh.output.NewFolderOutputWriter;
 import de.uni_passau.fim.se2.rdh.output.SameFolderOutputWriter;
+import de.uni_passau.fim.se2.rdh.output.StructureKeepingOutputWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -128,8 +129,13 @@ public class RefactoringProcessor {
         } else if (outputWriter instanceof SameFolderOutputWriter) { // Write the output to the input directory
             ((SameFolderOutputWriter) outputWriter).addInputs(input);
             outputWriter.writeOutput();
+        } else if (outputWriter instanceof StructureKeepingOutputWriter) { // Keep subdirectory structure in output
+            ((StructureKeepingOutputWriter) outputWriter).addInputs(input);
+            outputWriter.writeOutput();
         } else {
-            throw new IllegalStateException("Unexpected value: " + outputWriter.getClass());
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Unknown output writer: {}", outputWriter);
+            }
         }
 
         used = true;
