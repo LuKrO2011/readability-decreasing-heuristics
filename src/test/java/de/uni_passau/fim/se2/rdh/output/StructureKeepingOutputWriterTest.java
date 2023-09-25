@@ -48,4 +48,22 @@ class StructureKeepingOutputWriterTest extends ResourcesTest {
                 this::assertLogIsEmpty
         );
     }
+
+    @Test
+    void testInterface() {
+        File interfaceFile = new File(outputDir.toString(), "Interface.java");
+
+        AbstractRD fileRD = rdf.create(
+                ProcessingPath.directory(resourcesProcessingPath.getPath().resolve("Interface.java")),
+                ProcessingPath.directory(outputDir),
+                PROBABILITIES,
+                STRUCTURED_CONFIG
+        );
+        fileRD.decreaseReadability();
+
+        assertAll(
+                () -> assertTrue(interfaceFile.exists()),
+                this::assertLogIsEmpty
+        );
+    }
 }

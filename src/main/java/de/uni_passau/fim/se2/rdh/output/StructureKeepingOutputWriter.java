@@ -4,7 +4,7 @@ import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
-import spoon.reflect.declaration.CtClass;
+import spoon.reflect.declaration.CtType;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,6 +48,12 @@ public class StructureKeepingOutputWriter extends StructuredOutputWriter impleme
         // Get the relative path of the input directory
         Path relativePath = inputBaseDir.relativize(inputDir);
 
+        // Only use the relative path if it is not empty and not ".." etc.
+        if (relativePath.toString().isEmpty() || relativePath.toString().startsWith("..")) {
+            LOG.info("Did not create output directory for input directory {}", inputDir);
+            return outputBaseDir;
+        }
+
         // Calculate the output directory
         Path outputDir = Paths.get(outputBaseDir.toString(), relativePath.toString());
 
@@ -72,7 +78,7 @@ public class StructureKeepingOutputWriter extends StructuredOutputWriter impleme
      * This output writer writes the class into subfolders of the output folder to reproduce the original directory
      * structure.
      */
-    protected void writeClass(final String filePath, final HashMap<String, CtClass<?>> classDictionary) {
+    protected void writeClass(final String filePath, final HashMap<String, CtType<?>> classDictionary) {
         // Get the input directory and the file names
         Path path = Paths.get(filePath);
         Path inputDir = path.getParent();
@@ -86,7 +92,7 @@ public class StructureKeepingOutputWriter extends StructuredOutputWriter impleme
         }
 
         // Get the class for the file
-        CtClass<?> clazz = classDictionary.get(filePath);
+        CtType<?> clazz = classDictionary.get(filePath);
 
         // Create the output subdirectory
         Path outputDir = createOutputDir(inputDir, inputBasePath, outputBaseDir);

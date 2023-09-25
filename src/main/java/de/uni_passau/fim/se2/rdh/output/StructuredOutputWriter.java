@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.compiler.Environment;
 import spoon.reflect.declaration.CtClass;
+import spoon.reflect.declaration.CtInterface;
+import spoon.reflect.declaration.CtType;
 import spoon.reflect.visitor.RdcJavaPrettyPrinter;
 import spoon.reflect.visitor.filter.TypeFilter;
 
@@ -14,6 +16,7 @@ import java.io.FileWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +49,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param fileName  the name of the file
      * @param clazz     the class to write
      */
-    protected void writeOutput(final Path outputDir, final String fileName, final CtClass<?> clazz) {
+    protected void writeOutput(final Path outputDir, final String fileName, final CtType<?> clazz) {
         boolean validPath = validatePath(outputDir);
         boolean validFileName = validateFileName(outputDir, fileName);
         boolean validClass = validateClass(clazz);
@@ -125,7 +128,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param clazz the class to validate
      * @return true if the class is valid, false otherwise
      */
-    private static boolean validateClass(final CtClass<?> clazz) {
+    private static boolean validateClass(final CtType<?> clazz) {
         if (clazz == null) {
             if (LOG.isErrorEnabled()) {
                 LOG.error("Class is null.");
@@ -143,10 +146,14 @@ public abstract class StructuredOutputWriter implements OutputWriter {
     @Override
     public void writeOutput(final String... inputs) {
         // Get all files of the processed model
+        List<CtType<?>> classesAndInterfaces = new ArrayList<>();
         List<CtClass<?>> classes = spoon.getModel().getElements(new TypeFilter<>(CtClass.class));
+        classesAndInterfaces.addAll(classes);
+        List<CtInterface<?>> interfaces = spoon.getModel().getElements(new TypeFilter<>(CtInterface.class));
+        classesAndInterfaces.addAll(interfaces);
 
         // Match the input files to spoon classes
-        HashMap<String, CtClass<?>> classDictionary = matchInputs(classes, List.of(inputs));
+        HashMap<String, CtType<?>> classDictionary = matchInputs(classesAndInterfaces, List.of(inputs));
 
         // Write the output to the directory of the input file
         for (String fileName : inputs) {
@@ -160,7 +167,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param filePath        the path to the file
      * @param classDictionary the dictionary that maps file paths to spoon classes
      */
-    abstract void writeClass(String filePath, HashMap<String, CtClass<?>> classDictionary);
+    abstract void writeClass(String filePath, HashMap<String, CtType<?>> classDictionary);
 
     /**
      * Match the input file names to the spoon model files and store the matches in a dictionary.
@@ -169,10 +176,10 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param fileNames    the file names
      * @return the dictionary
      */
-    protected HashMap<String, CtClass<?>> matchInputs(final List<CtClass<?>> spoonClasses,
+    protected HashMap<String, CtType<?>> matchInputs(final List<CtType<?>> spoonClasses,
                                                       final List<String> fileNames) {
-        HashMap<String, CtClass<?>> classDictionary = new HashMap<>();
-        for (CtClass<?> clazz : spoonClasses) {
+        HashMap<String, CtType<?>> classDictionary = new HashMap<>();
+        for (CtType<?> clazz : spoonClasses) {
             String clazzName = clazz.getQualifiedName();
 
             // Get the class name without the package

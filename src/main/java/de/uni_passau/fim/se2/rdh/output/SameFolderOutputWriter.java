@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spoon.SpoonAPI;
 import spoon.reflect.declaration.CtClass;
+import spoon.reflect.declaration.CtType;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,7 +35,7 @@ public class SameFolderOutputWriter extends StructuredOutputWriter implements Ou
      * <p>
      * This output writer writes the class to the same folder as the input files with a different file name.
      */
-    protected void writeClass(final String filePath, final HashMap<String, CtClass<?>> classDictionary) {
+    protected void writeClass(final String filePath, final HashMap<String, CtType<?>> classDictionary) {
         // Get the input directory and the file names
         Path path = Paths.get(filePath);
         Path inputDir = path.getParent();
@@ -50,7 +51,7 @@ public class SameFolderOutputWriter extends StructuredOutputWriter implements Ou
         String outputFileName = inputFileName.substring(0, inputFileName.lastIndexOf('.')) + RDH_FILE_EXTENSION;
 
         // Get the class for the file
-        CtClass<?> clazz = classDictionary.get(filePath);
+        CtType<?> clazz = classDictionary.get(filePath);
 
         if (clazz == null) {
             LOG.warn("Could not find class for file {}. The file was not saved.", filePath);
