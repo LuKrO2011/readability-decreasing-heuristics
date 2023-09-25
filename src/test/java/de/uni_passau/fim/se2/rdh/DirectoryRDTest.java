@@ -32,7 +32,7 @@ class DirectoryRDTest extends ResourcesTest {
         DirectoryRD directoryReadabilityDecreaser = rdf.create(
                 resourcesProcessingPath,
                 ProcessingPath.directory(outputDir),
-                ALL_RENAME_REFACTORINGS_CONFIG
+                ALL_RENAME_REFACTORINGS_PROBS
         );
         directoryReadabilityDecreaser.decreaseReadability(fileName);
 

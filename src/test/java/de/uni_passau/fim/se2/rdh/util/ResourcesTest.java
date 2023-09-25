@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static java.nio.file.Files.copy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,7 +48,11 @@ public class ResourcesTest extends LoggerTest {
 
     protected final static Path TEST_RESOURCES = Path.of("src/test/resources");
 
-    protected final static Path ALL_RENAME_REFACTORINGS_CONFIG = MAIN_RESOURCES.resolve("probabilities-rename.yaml");
+    protected final static Path ALL_RENAME_REFACTORINGS_PROBS = MAIN_RESOURCES.resolve("probabilities-rename.yaml");
+    protected final static Path SAME_DIR_CONFIG = MAIN_RESOURCES.resolve("config-same-dir.yaml");
+    protected final static Path STRUCTURED_CONFIG = MAIN_RESOURCES.resolve("config-structured.yaml");
+    protected final static Path PROBABILITIES = MAIN_RESOURCES.resolve("probabilities.yaml");
+
 
     @BeforeEach
     void setupResourcesPath() {
@@ -214,5 +219,20 @@ public class ResourcesTest extends LoggerTest {
             fail(e);
         }
         return "";
+    }
+
+    /**
+     * Copy the given file into the given directory.
+     *
+     * @param originalPath The file to copy.
+     * @param newDir      The directory to copy the file into.
+     */
+    protected static void copyFileIntoDirectory(Path originalPath, Path newDir) {
+        Path newFilePath = newDir.resolve(originalPath.getFileName());
+        try {
+            copy(originalPath, newFilePath.toAbsolutePath());
+        } catch (IOException e) {
+            fail(e);
+        }
     }
 }

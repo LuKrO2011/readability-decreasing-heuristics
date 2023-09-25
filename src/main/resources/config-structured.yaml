@@ -3,4 +3,4 @@ modelPath: C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_mod
 pythonScriptPath: C:/Users/lukas/PycharmProjects/code2vec
 scope: FILE
 renameMethodMode: ITERATIVE
-outputMode: STRUCTURE_KEEPING
+outputMode: STRUCTURED
