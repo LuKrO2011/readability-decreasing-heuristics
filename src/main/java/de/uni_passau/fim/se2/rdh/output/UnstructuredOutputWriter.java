@@ -3,9 +3,9 @@ package de.uni_passau.fim.se2.rdh.output;
 import spoon.SpoonAPI;
 
 /**
- * Writes the output to a new folder.
+ * Writes the output to a new folder. The folder structure is not preserved, instead the spoon structure is used.
  */
-public class NewFolderOutputWriter implements OutputWriter {
+public class UnstructuredOutputWriter implements OutputWriter {
 
     private final SpoonAPI spoon;
 
@@ -14,7 +14,7 @@ public class NewFolderOutputWriter implements OutputWriter {
      *
      * @param spoon the spoon instance to use
      */
-    public NewFolderOutputWriter(final SpoonAPI spoon) {
+    public UnstructuredOutputWriter(final SpoonAPI spoon) {
         this.spoon = spoon;
     }
 

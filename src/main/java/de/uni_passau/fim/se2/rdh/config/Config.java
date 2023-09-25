@@ -13,7 +13,7 @@ public final class Config {
     private String pythonScriptPath;
     private Scope scope = Scope.FILE;
     private RenameMode renameMethodMode = RenameMode.ITERATIVE; // TODO: Add input validation?
-    private OutputMode outputMode = OutputMode.NEW_DIRECTORY; // TODO: Add input validation?
+    private OutputMode outputMode = OutputMode.UNSTRUCTURED; // TODO: Add input validation?
 
     /**
      * Creates a new {@link Config} all paths null.

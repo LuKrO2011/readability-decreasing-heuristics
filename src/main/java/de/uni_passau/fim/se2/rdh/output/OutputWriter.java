@@ -6,7 +6,7 @@ package de.uni_passau.fim.se2.rdh.output;
 public interface OutputWriter {
 
     /**
-     * Writes the output. Therefore, the modified spoon pretty printer is used.
+     * Writes the output (java files). Therefore, a spoon pretty printer can be used.
      *
      * @param inputs the inputs to write the output for
      */

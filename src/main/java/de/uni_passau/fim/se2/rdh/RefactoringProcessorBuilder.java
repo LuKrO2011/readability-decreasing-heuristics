@@ -3,7 +3,7 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.RenameMode;
-import de.uni_passau.fim.se2.rdh.output.NewFolderOutputWriter;
+import de.uni_passau.fim.se2.rdh.output.UnstructuredOutputWriter;
 import de.uni_passau.fim.se2.rdh.output.SameFolderOutputWriter;
 import de.uni_passau.fim.se2.rdh.output.StructureKeepingOutputWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
@@ -68,10 +68,10 @@ public class RefactoringProcessorBuilder {
 
         // Set the output writer
         switch (config.getOutputMode()) {
-            case NEW_DIRECTORY -> refactoringProcessor.setOutputWriter(new NewFolderOutputWriter(spoon));
+            case UNSTRUCTURED -> refactoringProcessor.setOutputWriter(new UnstructuredOutputWriter(spoon));
             case SAME_DIRECTORY ->
                     refactoringProcessor.setOutputWriter(new SameFolderOutputWriter(spoon, probabilities));
-            case STRUCTURE_KEEPING -> refactoringProcessor.setOutputWriter(
+            case STRUCTURED -> refactoringProcessor.setOutputWriter(
                     new StructureKeepingOutputWriter(spoon, probabilities, inputDirPath.getPath(),
                             outputDirPath.getPath()));
             default -> throw new IllegalStateException("Unexpected value: " + config.getOutputMode());

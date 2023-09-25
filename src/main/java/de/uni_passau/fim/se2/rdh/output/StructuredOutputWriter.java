@@ -44,8 +44,6 @@ public abstract class StructuredOutputWriter implements OutputWriter {
      * @param clazz     the class to write
      */
     protected void writeOutput(final Path outputDir, final String fileName, final CtClass<?> clazz) {
-        // TODO: Add defensive programming here
-        /*
         boolean validPath = validatePath(outputDir);
         boolean validFileName = validateFileName(outputDir, fileName);
         boolean validClass = validateClass(clazz);
@@ -53,7 +51,7 @@ public abstract class StructuredOutputWriter implements OutputWriter {
         // If the path, file name or class is invalid, return
         if (!validPath || !validFileName || !validClass) {
             return;
-        }*/
+        }
 
         Environment env = spoon.getEnvironment();
         RdcJavaPrettyPrinter printer = new RdcJavaPrettyPrinter(env, probabilities);
@@ -89,7 +87,8 @@ public abstract class StructuredOutputWriter implements OutputWriter {
     }
 
     /**
-     * Validate the given file name. The file name must not be empty, must not be null, must not be a directory.
+     * Validate the given file name. The file name must not be empty, must not be null, must not be a directory and must
+     * not exist already.
      *
      * @param path     the path to the file
      * @param fileName the file name
@@ -108,13 +107,12 @@ public abstract class StructuredOutputWriter implements OutputWriter {
             }
             return false;
         }
-        /*
         if (Paths.get(path.toString(), fileName).toFile().exists()) {
             if (LOG.isErrorEnabled()) {
                 LOG.error("File already exists: {}", fileName);
             }
             return false;
-        }*/
+        }
         return true;
     }
 
