@@ -5,7 +5,7 @@ import spoon.SpoonAPI;
 /**
  * Writes the output to a new folder.
  */
-public class NewFolderOutputWriter extends AbstractOutputWriter {
+public class NewFolderOutputWriter implements OutputWriter {
 
     private final SpoonAPI spoon;
 
@@ -19,10 +19,13 @@ public class NewFolderOutputWriter extends AbstractOutputWriter {
     }
 
     /**
-     * Create the output files (java code) using the modified spoon pretty printer.
+     * Create the output files (java code) using the modified spoon pretty printer. The output is written to the given
+     * directory. The subdirectory and filename depend on the package and the class name.
+     *
+     * @param inputs Ignored
      */
     @Override
-    public void writeOutput() {
+    public void writeOutput(final String... inputs) {
         spoon.prettyprint();
     }
 

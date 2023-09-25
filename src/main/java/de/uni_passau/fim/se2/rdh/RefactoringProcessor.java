@@ -1,10 +1,7 @@
 package de.uni_passau.fim.se2.rdh;
 
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
-import de.uni_passau.fim.se2.rdh.output.AbstractOutputWriter;
-import de.uni_passau.fim.se2.rdh.output.NewFolderOutputWriter;
-import de.uni_passau.fim.se2.rdh.output.SameFolderOutputWriter;
-import de.uni_passau.fim.se2.rdh.output.StructureKeepingOutputWriter;
+import de.uni_passau.fim.se2.rdh.output.OutputWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.util.ProcessingPath;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -33,7 +30,7 @@ public class RefactoringProcessor {
     private final List<AbstractModification> modifications;
 
     private boolean used = false;
-    private AbstractOutputWriter outputWriter;
+    private OutputWriter outputWriter;
 
     /**
      * Creates a new RefactoringProcessor.
@@ -122,22 +119,7 @@ public class RefactoringProcessor {
 
         spoon.buildModel();
         modifications.forEach(AbstractModification::apply);
-
-        // Write the output
-        if (outputWriter instanceof NewFolderOutputWriter) { // Create a new folder for the output
-            outputWriter.writeOutput();
-        } else if (outputWriter instanceof SameFolderOutputWriter) { // Write the output to the input directory
-            ((SameFolderOutputWriter) outputWriter).addInputs(input);
-            outputWriter.writeOutput();
-        } else if (outputWriter instanceof StructureKeepingOutputWriter) { // Keep subdirectory structure in output
-            ((StructureKeepingOutputWriter) outputWriter).addInputs(input);
-            outputWriter.writeOutput();
-        } else {
-            if (LOG.isErrorEnabled()) {
-                LOG.error("Unknown output writer: {}", outputWriter);
-            }
-        }
-
+        outputWriter.writeOutput(input);
         used = true;
     }
 
@@ -163,7 +145,7 @@ public class RefactoringProcessor {
      *
      * @param outputWriter the output writer
      */
-    public void setOutputWriter(final AbstractOutputWriter outputWriter) {
+    public void setOutputWriter(final OutputWriter outputWriter) {
         this.outputWriter = outputWriter;
     }
 }
