@@ -16,7 +16,8 @@ class RefactoringProcessorTest extends ResourcesTest {
     void testDisplay() {
         RdcProbabilities rdcProbabilities = new RdcProbabilities();
         RefactoringProcessor readabilityDecreaser =
-                new RefactoringProcessorBuilder().create(resourcesProcessingPath, rdcProbabilities);
+                new RefactoringProcessorBuilder().create(resourcesProcessingPath, resourcesProcessingPath,
+                        rdcProbabilities);
 
         readabilityDecreaser.display();
     }

@@ -5,7 +5,7 @@ import java.nio.file.Path;
  */
 public class HelloWorld {
     
-    private static final int field;
+    private static final int field; // Tangeling comment after field variable
 
     public Path method() {
         int variable = 1 + field;
