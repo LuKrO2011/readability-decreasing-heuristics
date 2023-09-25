@@ -20,14 +20,11 @@ import java.util.List;
 
 public class SameFolderOutputWriter extends AbstractOutputWriter {
 
-
-    private final ProcessingPath outputDir = null; // Null if output should be written to input directory
     private static final Logger LOG = LoggerFactory.getLogger(RefactoringProcessor.class);
     private final SpoonAPI spoon;
 
     private final RdcProbabilities probabilities;
 
-    private boolean used = false;
     private static final String RDH_FILE_EXTENSION = "_rdh.java";
 
     private String[] input;
@@ -51,10 +48,9 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
      * @param fileName         the name of the file
      * @param clazz            the class to write
      */
-    private void writeOutput(final ProcessingPath outputDirForFile, final String fileName, final CtClass<?> clazz) {
-        Path outputDirForFilePath = Paths.get(outputDirForFile.getAbsolutePath());
-        boolean validPath = validatePath(outputDirForFilePath);
-        boolean validFileName = validateFileName(outputDirForFilePath, fileName);
+    private void writeOutput(final Path outputDirForFile, final String fileName, final CtClass<?> clazz) {
+        boolean validPath = validatePath(outputDirForFile);
+        boolean validFileName = validateFileName(outputDirForFile, fileName);
         boolean validClass = validateClass(clazz);
 
         // If the path, file name or class is invalid, return
@@ -70,7 +66,7 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
         String javaCode = printer.prettyprint(clazz);
 
         // Write the java code to the output file
-        Path path = Paths.get(outputDirForFile.getAbsolutePath(), fileName);
+        Path path = Paths.get(outputDirForFile.toString(), fileName);
         try (FileWriter writer = new FileWriter(path.toString())) {
             writer.write(javaCode);
         } catch (Exception e) {
@@ -159,31 +155,16 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
         // Get all files of the processed model
         List<CtClass<?>> classes = spoon.getModel().getElements(new TypeFilter<>(CtClass.class));
 
-        // TODO: Refactor extract method
-        // Match the input file names and the classes using a dictionary
-        HashMap<String, CtClass<?>> classDictionary = new HashMap<>();
-        for (CtClass<?> clazz : classes) {
-            String clazzName = clazz.getQualifiedName();
-
-            // Get the class name without the package
-            clazzName = clazzName.substring(clazzName.lastIndexOf('.') + 1);
-            for (String filePath : input) {
-
-                // Get the file name without the extension
-                String fileName = Paths.get(filePath).getFileName().toString().replace(".java", "");
-                if (clazzName.equals(fileName)) {
-                    classDictionary.put(filePath, clazz);
-                }
-            }
-        }
+        // Match the input files to spoon classes
+        HashMap<String, CtClass<?>> classDictionary = matchInputs(classes, List.of(input));
 
         // Write the output to the directory of the input file
         for (String fileName : input) {
 
             // Get the input directory and the file names
-            ProcessingPath inputDir =
-                    ProcessingPath.directory(getCommonPath(input)); // TODO: Remove function getCommonPath
-            String inputFileName = Paths.get(fileName).getFileName().toString();
+            Path path = Paths.get(fileName);
+            Path inputDir = path.getParent();
+            String inputFileName = path.getFileName().toString();
             String outputFileName = inputFileName.substring(0, inputFileName.lastIndexOf('.')) + RDH_FILE_EXTENSION;
 
             // Get the class for the file
@@ -195,13 +176,40 @@ public class SameFolderOutputWriter extends AbstractOutputWriter {
     }
 
     /**
+     * Match the input file names to the spoon model files and store the matches in a dictionary.
+     *
+     * @param spoonClasses the spoon classes
+     * @param fileNames    the file names
+     * @return the dictionary
+     */
+    private HashMap<String, CtClass<?>> matchInputs(final List<CtClass<?>> spoonClasses, final List<String> fileNames) {
+        HashMap<String, CtClass<?>> classDictionary = new HashMap<>();
+        for (CtClass<?> clazz : spoonClasses) {
+            String clazzName = clazz.getQualifiedName();
+
+            // Get the class name without the package
+            clazzName = clazzName.substring(clazzName.lastIndexOf('.') + 1);
+            for (String filePath : fileNames) {
+
+                // Get the file name without the extension
+                String fileName = Paths.get(filePath).getFileName().toString().replace(".java", "");
+                if (clazzName.equals(fileName)) {
+                    classDictionary.put(filePath, clazz);
+                }
+            }
+        }
+        return classDictionary;
+    }
+
+
+    /**
      * Gets the common path of the given files. The common path is the path that is shared by all files. This is never a
      * file but always a directory.
-     * TODO: Necessary or always a single file?
      *
      * @param files the files
      * @return the common path
      */
+    @Deprecated
     private static Path getCommonPath(final String[] files) {
         // Convert the array of file paths to a list of Path objects
         List<Path> paths = Arrays.stream(files)

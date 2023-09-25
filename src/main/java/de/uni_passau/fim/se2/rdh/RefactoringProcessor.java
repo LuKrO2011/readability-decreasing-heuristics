@@ -25,14 +25,13 @@ import java.util.List;
  */
 public class RefactoringProcessor {
 
-    private ProcessingPath outputDir = null; // Null if output should be written to input directory
+    private ProcessingPath outputDir;
     private static final Logger LOG = LoggerFactory.getLogger(RefactoringProcessor.class);
     private final SpoonAPI spoon;
     private final RdcProbabilities probabilities;
     private final List<AbstractModification> modifications;
 
     private boolean used = false;
-    private static final String RDH_FILE_EXTENSION = "_rdh.java";
     private AbstractOutputWriter outputWriter;
 
     /**
