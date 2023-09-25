@@ -3,6 +3,8 @@ package de.uni_passau.fim.se2.rdh;
 import de.uni_passau.fim.se2.rdh.config.Config;
 import de.uni_passau.fim.se2.rdh.config.RdcProbabilities;
 import de.uni_passau.fim.se2.rdh.config.RenameMode;
+import de.uni_passau.fim.se2.rdh.output.NewFolderOutputWriter;
+import de.uni_passau.fim.se2.rdh.output.SameFolderOutputWriter;
 import de.uni_passau.fim.se2.rdh.refactorings.AbstractModification;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.imports.StarImporter;
 import de.uni_passau.fim.se2.rdh.refactorings.experimental.inline.MethodInliner;
@@ -61,28 +63,13 @@ public class RefactoringProcessorBuilder {
         // Add the refactorings
         modifications.forEach(refactoringProcessor::addModification);
 
-        return refactoringProcessor;
-    }
-
-    /**
-     * Creates a new RefactoringProcessor that writes the output to the input directory.
-     * TODO: Refactor common code with method before.
-     *
-     * @param probabilities the probabilities to use
-     * @return the RefactoringProcessor
-     */
-    public RefactoringProcessor create(final RdcProbabilities probabilities) {
-        // Create spoon launcher
-        SpoonAPI spoon = new Launcher();
-
-        // Create the refactorings
-        List<AbstractModification> modifications = getRefactorings(spoon, probabilities);
-
-        // Create the processor
-        RefactoringProcessor refactoringProcessor = new RefactoringProcessor(spoon, probabilities);
-
-        // Add the refactorings
-        modifications.forEach(refactoringProcessor::addModification);
+        // Set the output writer
+        switch (config.getOutputMode()) {
+            case NEW_DIRECTORY -> refactoringProcessor.setOutputWriter(new NewFolderOutputWriter(spoon));
+            case SAME_DIRECTORY ->
+                    refactoringProcessor.setOutputWriter(new SameFolderOutputWriter(spoon, probabilities));
+            default -> throw new IllegalStateException("Unexpected value: " + config.getOutputMode());
+        }
 
         return refactoringProcessor;
     }

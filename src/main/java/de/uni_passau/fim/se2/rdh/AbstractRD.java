@@ -129,6 +129,6 @@ public abstract class AbstractRD {
      * @return the created {@link RefactoringProcessor}
      */
     protected RefactoringProcessor createRefactoringProcessor() {
-        return rpBuilder.create(probabilities);
+        return rpBuilder.create(outputDir, probabilities);
     }
 }
