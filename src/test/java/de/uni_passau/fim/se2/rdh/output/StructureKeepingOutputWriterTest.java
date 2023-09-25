@@ -50,7 +50,7 @@ class StructureKeepingOutputWriterTest extends ResourcesTest {
     }
 
     @Test
-    void testInterface() {
+    void testInterface(@TempDir Path outputDir) {
         File interfaceFile = new File(outputDir.toString(), "Interface.java");
 
         AbstractRD fileRD = rdf.create(
