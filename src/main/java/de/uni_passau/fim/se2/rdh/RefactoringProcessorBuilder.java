@@ -65,6 +65,29 @@ public class RefactoringProcessorBuilder {
     }
 
     /**
+     * Creates a new RefactoringProcessor that writes the output to the input directory.
+     * TODO: Refactor common code with method before.
+     *
+     * @param probabilities the probabilities to use
+     * @return the RefactoringProcessor
+     */
+    public RefactoringProcessor create(final RdcProbabilities probabilities) {
+        // Create spoon launcher
+        SpoonAPI spoon = new Launcher();
+
+        // Create the refactorings
+        List<AbstractModification> modifications = getRefactorings(spoon, probabilities);
+
+        // Create the processor
+        RefactoringProcessor refactoringProcessor = new RefactoringProcessor(spoon, probabilities);
+
+        // Add the refactorings
+        modifications.forEach(refactoringProcessor::addModification);
+
+        return refactoringProcessor;
+    }
+
+    /**
      * Initializes the refactorings.
      * TODO: Use a map?
      *
