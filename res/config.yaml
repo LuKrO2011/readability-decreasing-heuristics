@@ -1,0 +1,6 @@
+condaPath: C:/MyPath
+modelPath: C:/MyPath
+pythonScriptPath: C:/MyPath
+scope: FILE # FILE, DIRECTORY
+renameMethodMode: ITERATIVE # ITERATIVE, REALISTIC
+outputMode: STRUCTURE_KEEPING # (default spoon output structure), SAME_DIRECTORY (output dir=input dir), STRUCTURED (output dir=input dir + /output), STRUCTURE_KEEPING (subfolder from input dir created in output dir)
