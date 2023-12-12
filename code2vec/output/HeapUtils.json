@@ -1,0 +1,272 @@
+[
+	{
+		"original_name": "logHeapHistogram",
+		"predictions": [
+			{
+				"name": "stop",
+				"probability": 0.993032693862915
+			},
+			{
+				"name": "start",
+				"probability": 0.004043763969093561
+			},
+			{
+				"name": "run",
+				"probability": 0.0012096620630472898
+			},
+			{
+				"name": "doStop",
+				"probability": 0.0008789449348114431
+			},
+			{
+				"name": "cancel",
+				"probability": 0.0004372799303382635
+			},
+			{
+				"name": "destroy",
+				"probability": 0.0002336320176254958
+			},
+			{
+				"name": "stopServer",
+				"probability": 5.428349686553702e-05
+			},
+			{
+				"name": "dispose",
+				"probability": 4.128438013140112e-05
+			},
+			{
+				"name": "close",
+				"probability": 3.52965435013175e-05
+			},
+			{
+				"name": "stopped",
+				"probability": 3.3135118428617716e-05
+			}
+		]
+	},
+	{
+		"original_name": "maybeCreateHeapDump",
+		"predictions": [
+			{
+				"name": "mkdirs",
+				"probability": 0.2879789173603058
+			},
+			{
+				"name": "bootstrap",
+				"probability": 0.2174166589975357
+			},
+			{
+				"name": "readElement",
+				"probability": 0.14127644896507263
+			},
+			{
+				"name": "dump",
+				"probability": 0.07382035255432129
+			},
+			{
+				"name": "shrink",
+				"probability": 0.05785330757498741
+			},
+			{
+				"name": "doRefresh",
+				"probability": 0.048559658229351044
+			},
+			{
+				"name": "writeToStream",
+				"probability": 0.04728631302714348
+			},
+			{
+				"name": "readdir",
+				"probability": 0.04325791075825691
+			},
+			{
+				"name": "flushAll",
+				"probability": 0.04277371987700462
+			},
+			{
+				"name": "dumpHeap",
+				"probability": 0.0397767499089241
+			}
+		]
+	},
+	{
+		"original_name": "getJcmdPath",
+		"predictions": [
+			{
+				"name": "eval",
+				"probability": 0.4537406861782074
+			},
+			{
+				"name": "setCollectors",
+				"probability": 0.15621288120746613
+			},
+			{
+				"name": "run",
+				"probability": 0.09026331454515457
+			},
+			{
+				"name": "getTestDataDir",
+				"probability": 0.08962957561016083
+			},
+			{
+				"name": "getEnvironment",
+				"probability": 0.06609261780977249
+			},
+			{
+				"name": "getIn",
+				"probability": 0.055157918483018875
+			},
+			{
+				"name": "getAntHome",
+				"probability": 0.02547851763665676
+			},
+			{
+				"name": "testParser",
+				"probability": 0.022381573915481567
+			},
+			{
+				"name": "getDefaultConfig",
+				"probability": 0.02083553560078144
+			},
+			{
+				"name": "getBaseName",
+				"probability": 0.020207364112138748
+			}
+		]
+	},
+	{
+		"original_name": "logProcessOutput",
+		"predictions": [
+			{
+				"name": "run",
+				"probability": 0.3404819369316101
+			},
+			{
+				"name": "readAll",
+				"probability": 0.14508993923664093
+			},
+			{
+				"name": "close",
+				"probability": 0.13643698394298553
+			},
+			{
+				"name": "exec",
+				"probability": 0.12691831588745117
+			},
+			{
+				"name": "finish",
+				"probability": 0.07006943970918655
+			},
+			{
+				"name": "execute",
+				"probability": 0.06430282443761826
+			},
+			{
+				"name": "cleanup",
+				"probability": 0.037114355713129044
+			},
+			{
+				"name": "process",
+				"probability": 0.032636817544698715
+			},
+			{
+				"name": "read",
+				"probability": 0.02562318556010723
+			},
+			{
+				"name": "serve",
+				"probability": 0.02132624015212059
+			}
+		]
+	},
+	{
+		"original_name": "getProcessId",
+		"predictions": [
+			{
+				"name": "getPid",
+				"probability": 0.9534446597099304
+			},
+			{
+				"name": "getApplicationId",
+				"probability": 0.03390615060925484
+			},
+			{
+				"name": "getId",
+				"probability": 0.006228161975741386
+			},
+			{
+				"name": "getProcessId",
+				"probability": 0.0051985266618430614
+			},
+			{
+				"name": "getPluginId",
+				"probability": 0.0008717254968360066
+			},
+			{
+				"name": "getUserId",
+				"probability": 0.00013870869588572532
+			},
+			{
+				"name": "getBundleId",
+				"probability": 7.767151691950858e-05
+			},
+			{
+				"name": "pid",
+				"probability": 6.168659456307068e-05
+			},
+			{
+				"name": "getTimeout",
+				"probability": 4.448507388588041e-05
+			},
+			{
+				"name": "getUniqueId",
+				"probability": 2.8256699806661345e-05
+			}
+		]
+	},
+	{
+		"original_name": "getProcessIdFromJvmName",
+		"predictions": [
+			{
+				"name": "getPid",
+				"probability": 0.9169638156890869
+			},
+			{
+				"name": "getProcessId",
+				"probability": 0.04092896357178688
+			},
+			{
+				"name": "getUptime",
+				"probability": 0.017189448699355125
+			},
+			{
+				"name": "getId",
+				"probability": 0.013623985461890697
+			},
+			{
+				"name": "getRuntime",
+				"probability": 0.0041375476866960526
+			},
+			{
+				"name": "getNextId",
+				"probability": 0.003359887981787324
+			},
+			{
+				"name": "uptime",
+				"probability": 0.0013320225989446044
+			},
+			{
+				"name": "pid",
+				"probability": 0.0009651582804508507
+			},
+			{
+				"name": "getUniqueIdentifier",
+				"probability": 0.0008349531562998891
+			},
+			{
+				"name": "findPid",
+				"probability": 0.0006642254302278161
+			}
+		]
+	}
+]
