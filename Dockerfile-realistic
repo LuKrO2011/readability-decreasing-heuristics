@@ -30,7 +30,7 @@ RUN ~/miniconda3/bin/conda init zsh
 WORKDIR /app
 
 # Copy jar
-COPY /target/readability-decreasing-heuristics-1.0-SNAPSHOT-jar-with-dependencies.jar /app
+COPY /target/readability-decreasing-heuristics-1.0-SNAPSHOT-jar-with-dependencies.jar /app/rdh.jar
 
 # Copy code2vec requirements
 COPY /code2vec/requirements.txt /app
