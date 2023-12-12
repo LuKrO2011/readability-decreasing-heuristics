@@ -23,7 +23,7 @@ RUN mkdir -p ~/miniconda3
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
 RUN bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 RUN rm -rf ~/miniconda3/miniconda.sh
-RUN~/miniconda3/bin/conda init bash
+RUN ~/miniconda3/bin/conda init bash
 RUN ~/miniconda3/bin/conda init zsh
 
 # Set working directory
@@ -36,7 +36,7 @@ COPY /target/readability-decreasing-heuristics-1.0-SNAPSHOT-jar-with-dependencie
 COPY /code2vec/requirements.txt /app
 
 # Create a conda environment from the requirements file
-RUN ~/miniconda3/bin/conda create -n code2vec --file /app/requirements.txt
+RUN ~/miniconda3/bin/conda create -n code2vec --file /app/requirements.txt -y
 
 # Copy code2vec
 # COPY /code2vec/java14_model /app/code2vec/java14_model
