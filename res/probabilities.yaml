@@ -15,7 +15,7 @@ decTab:
   - 0.0  # Probability for three tabs
 space:
   - 0.0  # Probability for no space. Must be 0
-  - 0.8  # Probability for one space
+  - 0.6  # Probability for one space
   - 0.2  # Probability for two spaces
   - 0.0  # Probability for three spaces
 newLineInsteadOfSpace: 0.2
@@ -29,6 +29,6 @@ inlineMethod: 0.0
 removeComment: 0.5
 add0: 0.0
 insertBraces: 0.2
-starImport: 0.0 # Not needed, methods split anyway
+starImport: 0.0
 inlineField: 0.2
 partiallyEvaluate: 0.5
