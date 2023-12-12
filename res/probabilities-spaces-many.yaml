@@ -8,10 +8,15 @@ decTab:
   - 0.0  # Probability for no tab
   - 1.0  # Probability for one tab
 space:
-  - 0.0  # Probability for no space
-  - 1.0  # Probability for one space
+  - 0.0  # Probability for no space. Must be 0
+  - 0.4  # Probability for one space
+  - 0.3  # Probability for two space
+  - 0.2  # Probability for three space
+  - 0.05  # Probability for four space
+  - 0.025  # Probability for five space
+  - 0.025  # Probability for six space
 newLineInsteadOfSpace: 0
-spaceInsteadOfNewline: 0
+spaceInsteadOfNewline: 0.2
 incTabInsteadOfDecTab: 0
 decTabInsteadOfIncTab: 0
 renameVariable: 0

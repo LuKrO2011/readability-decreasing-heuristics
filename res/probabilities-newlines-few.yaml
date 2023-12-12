@@ -1,6 +1,6 @@
 newline:
-  - 0.0  # Probability for no newline
-  - 1.0  # Probability for one newline
+  - 0.7  # Probability for no newline
+  - 0.3  # Probability for one newline
 incTab:
   - 0.0  # Probability for no tab
   - 1.0  # Probability for one tab
@@ -8,10 +8,10 @@ decTab:
   - 0.0  # Probability for no tab
   - 1.0  # Probability for one tab
 space:
-  - 0.0  # Probability for no space
+  - 0.0  # Probability for no space. Must be 0
   - 1.0  # Probability for one space
 newLineInsteadOfSpace: 0
-spaceInsteadOfNewline: 0
+spaceInsteadOfNewline: 0.2
 incTabInsteadOfDecTab: 0
 decTabInsteadOfIncTab: 0
 renameVariable: 0
