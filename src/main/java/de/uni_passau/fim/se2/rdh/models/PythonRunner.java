@@ -33,6 +33,14 @@ public final class PythonRunner {
     public void createMethodNamePredictions(final Path inputPath) {
         FileManager.checkDirectory(inputPath.toFile());
 
+        // Log the command to run the python script.
+        LOG.info("Running python script to create method name predictions: conda run -p {} python {} --load {} "
+                        + "--predict -i {}",
+                config.getCondaPath(),
+                config.getPythonScriptPath() + "/code2vec.py",
+                config.getModelPath(),
+                inputPath.toString());
+
         try {
             // Log the command
             if (LOG.isInfoEnabled()) {
