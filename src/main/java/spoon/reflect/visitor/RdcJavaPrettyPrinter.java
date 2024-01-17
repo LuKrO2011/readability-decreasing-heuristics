@@ -22,6 +22,9 @@ import spoon.reflect.visitor.printer.CommentOffset;
 
 /**
  * This class is a modified version of {@link JavaPrettyPrinterC}, which is a copy of {@link DefaultJavaPrettyPrinter}.
+ * We can not use the Sniper pretty printer, because it only works within the spoon framework itself. We can set the
+ * disableInlineImports in {@link JavaPrettyPrinterC} to true to achieve this, but this might cause, that the code does
+ * not compile anymore.
  */
 public class RdcJavaPrettyPrinter extends JavaPrettyPrinterC {
 

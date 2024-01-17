@@ -3,4 +3,4 @@ modelPath: C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_mod
 pythonScriptPath: C:/Users/lukas/PycharmProjects/code2vec
 scope: FILE # FILE, DIRECTORY
 renameMethodMode: ITERATIVE # ITERATIVE, REALISTIC
-outputMode: UNSTRUCTURED # (default spoon output structure), SAME_DIRECTORY (output dir=input dir), STRUCTURED (output dir=input dir + /output), STRUCTURE_KEEPING (subfolder from input dir created in output dir)
+outputMode: UNSTRUCTURED # (default spoon output structure), SAME_DIRECTORY (output dir=input dir), STRUCTURED (output dir=input dir + /output)
