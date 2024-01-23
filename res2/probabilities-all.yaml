@@ -1,7 +1,7 @@
 newline:
-  - 0.05  # Probability for no newline
-  - 0.9   # Probability for one newline
-  - 0.05  # Probability for two newlines
+  - 0.1  # Probability for no newline
+  - 0.8   # Probability for one newline
+  - 0.1  # Probability for two newlines
 incTab:
   - 0.1  # Probability for no tab
   - 0.85  # Probability for one tab

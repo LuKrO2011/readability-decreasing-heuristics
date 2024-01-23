@@ -9,9 +9,9 @@ decTab:
   - 1.0  # Probability for one tab
 space:
   - 0.0  # Probability for no space. Must be 0
-  - 0.8  # Probability for one space
-  - 0.15  # Probability for two space
-  - 0.05  # Probability for three space
+  - 0.7  # Probability for one space
+  - 0.2  # Probability for two space
+  - 0.1  # Probability for three space
 newLineInsteadOfSpace: 0
 spaceInsteadOfNewline: 0.05
 incTabInsteadOfDecTab: 0
