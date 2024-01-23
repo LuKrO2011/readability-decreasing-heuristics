@@ -1,0 +1,28 @@
+newline:
+  - 0.0  # Probability for no newline
+  - 1.0  # Probability for one newline
+incTab:
+  - 0.0  # Probability for no tab
+  - 1.0  # Probability for one tab
+decTab:
+  - 0.0  # Probability for no tab
+  - 1.0  # Probability for one tab
+space:
+  - 0.0  # Probability for no space. Must be 0
+  - 0.8  # Probability for one space
+  - 0.15  # Probability for two space
+  - 0.05  # Probability for three space
+newLineInsteadOfSpace: 0.05
+spaceInsteadOfNewline: 0.05
+incTabInsteadOfDecTab: 0
+decTabInsteadOfIncTab: 0
+renameVariable: 0
+renameField: 0
+renameMethod: 0
+inlineMethod: 0
+removeComment: 0
+add0: 0
+insertBraces: 0
+starImport: 0
+inlineField: 0
+partiallyEvaluate: 0
