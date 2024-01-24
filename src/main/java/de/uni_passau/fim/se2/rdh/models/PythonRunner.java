@@ -42,6 +42,16 @@ public final class PythonRunner {
                 inputPath.toString());
 
         try {
+            // Log the command
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Running python script with command: conda run -p {} python {}/code2vec.py --load {} "
+                                + "--predict -i {}",
+                        config.getCondaPath(),
+                        config.getPythonScriptPath(),
+                        config.getModelPath(),
+                        inputPath.toString());
+            }
+
             ProcessBuilder processBuilder =
                     new ProcessBuilder("conda", "run", "-p", config.getCondaPath(), "python",
                             config.getPythonScriptPath() + "/code2vec.py",

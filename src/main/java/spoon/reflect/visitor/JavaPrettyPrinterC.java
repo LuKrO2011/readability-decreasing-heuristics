@@ -140,6 +140,7 @@ import static spoon.reflect.visitor.ElementPrinterHelperC.PrintTypeArguments.ONL
 /**
  * This is a modified version of {@link DefaultJavaPrettyPrinter}. All changes are marked with "RDC".
  * Required to change the signature of {@link #setPrinterTokenWriter(RdcTokenWriter)}.
+ * Own change: disableInlineImports
  */
 public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
 
@@ -225,7 +226,12 @@ public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
      * Default value is "true" for backward compatibility.
      * If false: obey "implicit" directive
      */
-    protected boolean ignoreImplicit = true;
+    protected boolean ignoreImplicit = false;
+
+    /**
+     * If true: Never prints the fully qualified name of a type.
+     */
+    protected boolean disableInlineImports = true;
 
     /**
      * EXPERIMENTAL: If true, the printer will attempt to print a minimal set of round brackets in
@@ -1956,6 +1962,9 @@ public class JavaPrettyPrinterC implements CtVisitor, PrettyPrinter {
     }
 
     private boolean printQualified(CtTypeReference<?> ref) {
+        if (disableInlineImports){
+            return false;
+        }
         return ignoreImplicit || !ref.isSimplyQualified();
     }
 

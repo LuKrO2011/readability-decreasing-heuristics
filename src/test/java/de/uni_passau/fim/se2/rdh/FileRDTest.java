@@ -73,6 +73,27 @@ class FileRDTest extends ResourcesTest {
         );
     }
 
+    @Disabled("Can be used to generate a actual output file. Requires the output file to not exist yet.")
+    @Test
+    void testRunAnalytics(){
+        Path outputDir = Path.of("output");
+
+        String filename = "Analytics.java";
+        File file = new File(outputDir.toString(), filename);
+
+        AbstractRD fileRD = rdf.create(
+                ProcessingPath.file(resourcesPath.resolve(filename)),
+                ProcessingPath.directory(outputDir),
+                Path.of("src/main/resources/probabilities.yaml"),
+                Path.of("src/main/resources/config-structured.yaml")
+        );
+        Randomness.setSeed(1234);
+
+        fileRD.decreaseReadability();
+
+        DirectoryFlattener.flatten(new File(outputDir.toString()));
+    }
+
     @Test
     void testEmptyCatch(@TempDir Path outputDir) {
         String filename = "EmptyCatch.java";
