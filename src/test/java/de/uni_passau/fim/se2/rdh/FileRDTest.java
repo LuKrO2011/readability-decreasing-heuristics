@@ -73,21 +73,60 @@ class FileRDTest extends ResourcesTest {
         );
     }
 
-    @Disabled("Can be used to generate a actual output file. Requires the output file to not exist yet.")
+//    @Disabled("Can be used to generate a actual output file. Requires the output file to not exist yet.")
     @Test
     void testRunAnalytics(){
         Path outputDir = Path.of("output");
 
-        String filename = "Analytics.java";
+        String filename = "TestCSAllocateCustomResource.java";
         File file = new File(outputDir.toString(), filename);
 
+        Path probabilitiesPath = Path.of("res2/probabilities-all-8.yaml");
+        Path configPath = Path.of("res2/config.yaml");
         AbstractRD fileRD = rdf.create(
                 ProcessingPath.file(resourcesPath.resolve(filename)),
                 ProcessingPath.directory(outputDir),
-                Path.of("src/main/resources/probabilities.yaml"),
-                Path.of("src/main/resources/config-structured.yaml")
+                probabilitiesPath,
+                configPath
         );
-        Randomness.setSeed(1234);
+        Randomness.setSeed(456);
+
+        fileRD.decreaseReadability();
+
+        filename = "NewReservation.java";
+        file = new File(outputDir.toString(), filename);
+
+        fileRD = rdf.create(
+                ProcessingPath.file(resourcesPath.resolve(filename)),
+                ProcessingPath.directory(outputDir),
+                probabilitiesPath,
+                configPath
+        );
+
+        fileRD.decreaseReadability();
+
+        filename = "HelloWorld.java";
+        file = new File(outputDir.toString(), filename);
+
+        fileRD = rdf.create(
+                ProcessingPath.file(resourcesPath.resolve(filename)),
+                ProcessingPath.directory(outputDir),
+                probabilitiesPath,
+                configPath
+        );
+
+        fileRD.decreaseReadability();
+
+
+        filename = "AreaShop.java";
+        file = new File(outputDir.toString(), filename);
+
+        fileRD = rdf.create(
+                ProcessingPath.file(resourcesPath.resolve(filename)),
+                ProcessingPath.directory(outputDir),
+                probabilitiesPath,
+                configPath
+        );
 
         fileRD.decreaseReadability();
 
