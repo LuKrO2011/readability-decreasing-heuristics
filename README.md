@@ -1,10 +1,10 @@
-# Readability Decreasing Heuristics
+# REDEC
 
-The Readability Decreasing Heuristics (RDH) project is a Java code processing tool that employs a collection of
-heuristics to intentionally reduce the readability of the code. This project achieves its goal by transforming the
-Abstract Syntax Tree (AST) of the code using [Spoon](https://github.com/LuKrO2011/spoon.git), a powerful library for
-Java code analysis and transformation. The primary objective of this project is to generate training data for a source
-code readability classifier.
+REDEC is a Java code processing tool that employs a collection of heuristics to intentionally reduce the readability of
+the code. 
+This project achieves its goal by transforming Java code into the Abstract Syntax Tree (AST) using [Spoon](https://github.com/LuKrO2011/spoon.git),
+a library for Java code analysis and transformation.
+The primary objective of this project is to generate training data for a code readability classifier.
 
 ## Usage
 
