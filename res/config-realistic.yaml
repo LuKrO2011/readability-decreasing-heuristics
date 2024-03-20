@@ -1,6 +1,0 @@
-condaPath: ~/miniconda3/envs/code2vec
-modelPath: /app/code2vec/models/java14_model/saved_model_iter8.release
-pythonScriptPath: /app/code2vec
-scope: FILE
-renameMethodMode: REALISTIC
-outputMode: STRUCTURED
