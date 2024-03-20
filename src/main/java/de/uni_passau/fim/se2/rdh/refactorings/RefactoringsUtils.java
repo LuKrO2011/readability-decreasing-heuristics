@@ -26,7 +26,7 @@ public final class RefactoringsUtils {
         final List<CtInvocation<?>> invocations = new ArrayList<>();
 
         /*
-         * TODO: Use filter instead for all methods with same signature? @see CtRenameLocalVariableRefactoring,
+         * Use filter instead for all methods with same signature? @see CtRenameLocalVariableRefactoring,
          *  @see VariableReferenceFunction. Consider super/subclasses?
          */
         // Add own executable

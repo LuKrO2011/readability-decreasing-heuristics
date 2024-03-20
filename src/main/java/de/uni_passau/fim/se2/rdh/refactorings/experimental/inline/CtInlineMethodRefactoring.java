@@ -13,11 +13,6 @@ import spoon.support.reflect.code.CtReturnImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
- TODO: Handle static methods
- TODO: Handle methods with multiple return statements
- TODO: Handle variable naming conflicts
-*/
 
 /**
  * This class implements the refactoring for inlining a method.

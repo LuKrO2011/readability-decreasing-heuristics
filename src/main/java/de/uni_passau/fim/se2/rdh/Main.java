@@ -56,7 +56,6 @@ public final class Main implements Callable<Integer> {
 
     /**
      * The path to the input. Can be a file or a directory.
-     * TODO: Add support for console input.
      */
     @CommandLine.Parameters(
             index = "0",
@@ -102,7 +101,6 @@ public final class Main implements Callable<Integer> {
 
     /**
      * Sets the seed for the random instance.
-     * TODO: Use the provided seed in RdcProbabilities.
      *
      * @param seed The seed.
      */
@@ -203,8 +201,6 @@ public final class Main implements Callable<Integer> {
             return AbstractRDFactory.DEFAULT_PROBABILITIES_FILE;
         }
 
-        // TODO: Check if the file exists...
-
         return Path.of(probabilitiesPath);
     }
 
@@ -218,8 +214,6 @@ public final class Main implements Callable<Integer> {
         if (configPath == null) {
             return AbstractRDFactory.DEFAULT_CONFIG_FILE;
         }
-
-        // TODO: Check if the file exists...
 
         return Path.of(configPath);
     }

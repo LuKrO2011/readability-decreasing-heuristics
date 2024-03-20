@@ -47,21 +47,9 @@ class StarImporterTest extends SpoonTest {
         // Perform the refactoring
         List<Operation> diffOperations = getDiffOperations(original, modified);
 
-        /*
-        TODO: Have a look at the following changes:
-            - import static Global.currentTimeMillis;
-            - import org.apache.cassandra.config.DatabaseDescriptor (is processed, probably not correctly replaced
-            or reintroduced by printer)
-            - import org.apache.cassandra.io.util.File;
-            - import org.apache.cassandra.io.util.PathUtils;
-            - Double imports
-            - How far can one further remove before .*
-            - make sure no references are lost (see diff, e.g. java.io.File/org.apache.cassandra.io.util.File)
-         */
         assertAll(
             () -> assertThat(diffOperations).hasSize(0),
             this::assertLogIsEmpty
-            // TODO: Check that the correct operations were performed
         );
     }
 

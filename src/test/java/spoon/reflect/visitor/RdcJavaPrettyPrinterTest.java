@@ -113,7 +113,7 @@ class RdcJavaPrettyPrinterTest extends ResourcesTest {
         File original = new File(resources, file);
         File modified = new File(outputDir.toString(), file);
 
-        // TODO: When space instead of newline is written, the tab is also written
+        // When space instead of newline is written, the tab is also written
         probabilities.setSpaceInsteadOfNewline(1.0);
 
         spoon.setSourceOutputDirectory(outputDir.toString());

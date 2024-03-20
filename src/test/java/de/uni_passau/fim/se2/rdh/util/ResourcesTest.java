@@ -190,7 +190,6 @@ public class ResourcesTest extends LoggerTest {
 
     /**
      * Check if the operation is an inline method operation.
-     * TODO: Implement
      */
     protected static boolean isInlineMethod(Operation<?> operation) {
         throw new IllegalStateException("Not implemented yet.");

@@ -36,15 +36,8 @@ public class RealisticMethodRenamer extends MethodRenamer {
      */
     private static final Logger LOG = LoggerFactory.getLogger(RealisticMethodRenamer.class);
 
-    // TODO: Put this into config file?
-    /**
-     * The index of the prediction quality in the prediction data. The lower the index, the higher the quality.
-     */
-    public static final int PREDICTION_QUALITY_INDEX = 0;
-
     private final SimpleMethodRenamer backup;
 
-    // TODO: Get this from config file
     private final NameSelectionMode nameSelectionMode = NameSelectionMode.LONGEST;
 
     /**

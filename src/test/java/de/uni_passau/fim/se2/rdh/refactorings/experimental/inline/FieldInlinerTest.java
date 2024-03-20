@@ -52,7 +52,6 @@ class FieldInlinerTest extends SpoonTest {
         assertAll(
                 () -> assertThat(diffOperations).hasSize(2),
                 this::assertLogIsEmpty
-                // TODO: Check that the correct operations were performed
         );
     }
 

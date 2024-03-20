@@ -68,9 +68,6 @@ public final class RdcProbabilities {
     @Probability
     private double partiallyEvaluate;
 
-    // TODO: writeFullyQualifiedName
-    // TODO: writeStarImport
-
     /**
      * Creates a new {@link RdcProbabilities} object with the default probabilities (= no modification).
      */
@@ -133,7 +130,6 @@ public final class RdcProbabilities {
      * @param characterType The {@link CharacterType} to get the probabilities for.
      * @return The probabilities for the given {@link CharacterType}.
      */
-    // TODO: How can this be done more elegant using a enum constructor?
     private List<Double> getProbabilitiesFor(final CharacterType characterType) {
         return switch (characterType) {
             case NEWLINE -> newline;
@@ -160,7 +156,6 @@ public final class RdcProbabilities {
      * @param characterType The {@link CharacterType} to get the probability for.
      * @return The probability for swapping the given {@link CharacterType} with another character.
      */
-    // TODO: How can this be done more elegant using a enum constructor?
     private double getSwapProbabilityFor(final CharacterType characterType) {
         return switch (characterType) {
             case NEWLINE -> spaceInsteadOfNewline;

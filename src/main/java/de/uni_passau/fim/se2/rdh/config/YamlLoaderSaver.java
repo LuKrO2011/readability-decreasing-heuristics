@@ -72,7 +72,6 @@ public class YamlLoaderSaver {
     public Config loadConfig(@NotBlank final Path configPath) throws IOException {
         Config loadedData = (Config) load(configPath, Config.class);
 
-        // TODO: Validate?
         return loadedData;
     }
 

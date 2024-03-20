@@ -60,12 +60,9 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
 
     /**
      * {@inheritDoc} There is a name conflict if there is a method with the same name and signature
-     * TODO: Check for super/subclass conflicts
-     * TODO: Create class for detecting conflicts and use it in RealisticMethodRenamer (and others?)
      */
     @Override
     protected void detectNameConflicts() {
-        // TODO: Abstract this part into superclass?
         // Check if the target already has the new name
         if (target.getSimpleName().equals(newName)) {
             return;
@@ -102,7 +99,7 @@ public class CtRenameMethodRefactoring extends AbstractRenameRefactoring<CtMetho
      */
     private List<CtMethod<?>> methodsWithSameName(final String name) {
         // Create a method with the new name as the target
-        CtMethod<?> newMethod = target.clone(); // TODO: Try copy method
+        CtMethod<?> newMethod = target.clone();
         newMethod.setSimpleName(name);
 
         // Find all executables with same name and signature

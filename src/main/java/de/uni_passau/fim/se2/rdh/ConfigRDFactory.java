@@ -14,7 +14,6 @@ import static de.uni_passau.fim.se2.rdh.config.Scope.FILE;
 
 /**
  * Builds a concrete ReadabilityDecreaser. The scope of the ReadabilityDecreaser depends on the config.
- * TODO: Delete other Factories?
  */
 public class ConfigRDFactory extends AbstractRDFactory {
 

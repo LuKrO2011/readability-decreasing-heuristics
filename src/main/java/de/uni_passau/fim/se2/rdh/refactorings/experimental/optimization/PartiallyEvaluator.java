@@ -45,7 +45,6 @@ public class PartiallyEvaluator extends AbstractModification {
     /**
      * Evaluates whatever is possible. E.g.: private static final int FOO = 42; private static final int BAR = 42;
      * private static final int FOO_BAR = FOO + BAR; -> private static final int FOO_BAR = 84;
-     * TODO: Consider array accesses
      */
     private void partiallyEvaluate() {
 

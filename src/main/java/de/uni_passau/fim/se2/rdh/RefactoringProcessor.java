@@ -52,7 +52,6 @@ public class RefactoringProcessor {
 
     /**
      * Creates a new RefactoringProcessor that writes the output to the input directory.
-     * TODO: Refactor with method before.
      *
      * @param spoon         the spoon instance to use
      * @param probabilities the probabilities to use

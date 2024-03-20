@@ -47,7 +47,6 @@ class RealisticMethodRenamerTest extends ModificationTest {
         assertAll(
                 () -> assertThat(diffOperations).hasSize(3),
                 () -> assertThat(diffOperations).allMatch(ResourcesTest::isRenameMethod)
-                // this::assertLogIsEmpty TODO: Has warnings as the generation for the abstract class does not work yet
         );
     }
 

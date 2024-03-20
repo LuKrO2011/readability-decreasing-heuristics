@@ -56,7 +56,6 @@ public class CtRenameFieldRefactoring extends AbstractRenameRefactoring<CtField<
      */
     @Override
     protected void detectNameConflicts() {
-        // TODO: Abstract this part into superclass?
         // Check if the target already has the new name
         if (target.getSimpleName().equals(newName)) {
             return;

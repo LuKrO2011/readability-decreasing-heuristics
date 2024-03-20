@@ -82,7 +82,6 @@ public class RefactoringProcessorBuilder {
 
     /**
      * Initializes the refactorings.
-     * TODO: Use a map?
      *
      * @param spoon         the spoon instance
      * @param probabilities the probabilities to use

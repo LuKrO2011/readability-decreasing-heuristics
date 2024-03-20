@@ -50,7 +50,6 @@ class OperationInserterTest extends SpoonTest {
         assertAll(
             () -> assertThat(diffOperations).hasSize(3),
             this::assertLogIsEmpty
-            // TODO: Check that the correct operations were performed
         );
     }
 }
