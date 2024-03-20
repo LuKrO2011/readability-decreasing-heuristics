@@ -1,6 +1,6 @@
-condaPath: C:/Users/lukas/anaconda3/envs/code2vec
-modelPath: C:/Users/lukas/PycharmProjects/Code2Vec/models/java14_model/saved_model_iter8.release
-pythonScriptPath: C:/Users/lukas/PycharmProjects/code2vec
+condaPath: / #[PATH_TO_ANACONDA]/envs/[CODE2VEC_ENV]
+modelPath: / #[PATH_TO_CODE2VEC_MODEL].release
+pythonScriptPath: / #[PATH_TO_CODE2VEC_PROJECT]
 scope: FILE
 renameMethodMode: ITERATIVE
 outputMode: SAME_DIRECTORY
